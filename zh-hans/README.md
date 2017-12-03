@@ -9,7 +9,7 @@ MySQL on TerarkDB 是一款依托于 Terark(terark.com) 公司研发的 TerarkDB
 - 更强的随机读性能，通常会比其他存储引擎快 3～5倍
 
 
-### 注意事项
+### 3.注意事项
 #### MyRocks
 - MyRocks 基于 MySQL-5.6，同时也 Back port 了部分 MySQL-5.7 特有的功能
 - MyRocks 功能上相对原生 MySQL-5.6 有一些限制：[MyRocks-limitations](https://github.com/facebook/mysql-5.6/wiki/MyRocks-limitations)
@@ -20,6 +20,6 @@ MySQL on TerarkDB 是一款依托于 Terark(terark.com) 公司研发的 TerarkDB
   - TerarkDB 的**顺序读**比 TerarkDB 自身的**随机读**无明显优势
   - RocksDB/InnoDB 等传统存储引擎的**顺序读**比它们自身的**随机读**要快几百倍，甚至几千倍以上
 
-### 联系我们
+### 4.联系我们
 - contact@terark.com
 - [www.terark.com](http://www.terark.com)
