@@ -1,17 +1,26 @@
 # 常见问题
+## MySQL on TerarkDB 在什么场景下最适用?
+MySQL on TerarkDB 在大多数场景下都很出色，尤其在随机读非常多，并且文本数据较多的场景下表现最为出众。
 
-## 1.MySQL on TerarkDB 在什么场景下最适用?
-MySQL on TerarkDB 在大多数场景下都很出色，但在随机读非常多，并且文本数据较多的场景下表现最为出众。
-
-## 2.MySQL on TearkDB 和原生的 MySQL 兼容性如何?
+## MySQL on TearkDB 和原生的 MySQL 兼容性如何?
 MySQL on TerarkDB 使用 [MyRocks](https://github.com/facebook/mysql-5.6/wiki/) 作为 TerarkDB 和 MySQL 的适配层.
 
 MySQL on TerarkDB 支持所有 MyRocks 有的特性, 当然，MyRocks 对于部分 MySQL 特性还未支持（因此 MySQL on TerarkDB 也暂时不支持）
 
 具体的功能限制可以参考：[MyRocks Limits](https://github.com/facebook/mysql-5.6/wiki/MyRocks-limitations)
 
+## 如何主动执行 compact?
+```
+set global rocksdb_compact_cf = 'default';
+```
+其中 '`default`' 是 ColumnFamily 的名字，也可以 compact 其他 ColumnFamily，例如：
+```
+set global rocksdb_compact_cf = '__system__';
+```
+'`default`' 是普通数据所在的 ColumnFamily<br/>
+'`__system__`' 是数据字典、元数据所在的 ComlumnFamily
 
-## 3.如果通过 `load data infile` 快速加载巨大的数据文件?
+## 如何通过 `load data infile` 快速加载巨大的数据文件?
 
 由于 MySQL on TerarkDB 基于 MyRocks 开发, 而 MyRocks 主要针对较小的事务进行了优化，所以对于较大的数据集加载需要一些特殊操作：
 
@@ -33,13 +42,7 @@ MyRocks 对这两个选项的说明如下：
 - rocksdb-commit-in-the-middle : Commit rows implicitly every rocksdb-bulk-load-size, during bulk load/insert/update/deletes.
 - rocksdb-bulk-load-size : Sets the number of keys to accumulate before committing them to the storage engine during bulk loading.
 
-## 4.如何主动执行 compact?
-
-```
-set global rocksdb_compact_cf='default';
-```
-
-## 5.在写入性能较差的磁盘（如 HDD）中如何配置 WAL 以提高性能?
+## 在写入性能较差的磁盘（如 HDD）中如何配置 WAL 以提高性能?
 
 在 `my.cnf` 中添加如下设置：
 ```
