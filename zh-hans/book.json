@@ -1,0 +1,22 @@
+{
+    "author": "royguo@terark.com",
+    "links": {
+        "sidebar": {
+            "官方网站": "https://www.terark.com",
+            "MySQL on TerarkDB使用手册": "https://www.terark.com/docs/mysql-on-terarkdb-manual/"
+        }
+    },
+    "plugins" : 
+    [
+        "advanced-emoji",
+        "disqus",
+        "todo",
+        "emphasize",
+        "katex",
+        "mermaid-compat",
+        "chart",
+        "search-pro",
+        "-search",
+        "toc"
+    ]
+}
