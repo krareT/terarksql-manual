@@ -3,7 +3,8 @@
 该仓库是用来生成 gitbook 文档用的，请严格按照以下说明来添加资料
 
 - Gitbook 访问地址(会自动发布)：https://terark.gitbooks.io/mysql-on-terarkdb-manual/content/
-- Terark 官网访问地址（需手动发布）：https://terark.com/docs/mysql-on-terarkdb-manual/zh-hans/
+- Terark 官网访问地址（会自动发布）：https://terark.com/docs/mysql-on-terarkdb-manual/
+  - 因为 push 后会触发编译发布逻辑，请不要频繁的 push 代码
 
 
 ## 目录结构说明
@@ -19,5 +20,4 @@
 
 1. 请首先在 zh-hans/SUMMARY.md(中文) 中找到合适的位置把新文档添加到目录中
 2. 在 zh-hans/ 目录下创建新文档
-3. 新的文档 push 到仓库后，可以通过 gitbook 来访问查看效果
-4. 由于 Gitbook 国内访问较慢，所以我们在自己的官网上独立部署了文档，但需要手动更新，请编写完成后通知管理员更新
+3. 新的文档 push 到仓库后，可以通过 gitbook 或官网地址来查看效果
