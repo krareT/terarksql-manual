@@ -15,11 +15,11 @@ MySQL on TerarkDB 由 TerarkDB 存储引擎和 MyRocks 组成：
 
 
 ### 3.注意事项
-#### 3.1.MyRocks 说明
+#### 3.1.MyRocks
 - MyRocks 基于 MySQL-5.6，同时也 Back port 了部分 MySQL-5.7 特有的功能
 - MyRocks 功能上相对原生 MySQL-5.6 有一些限制：[MyRocks-limitations](https://github.com/facebook/mysql-5.6/wiki/MyRocks-limitations)
 
-#### 3.2.TerarkDB 说明
+#### 3.2.TerarkDB
 - TerarkDB 的压缩速度低于官方 RocksDB（因为压缩过程中计算量更大）
 - TerarkDB 的顺序读相比**略低于**官方 RocksDB
   - TerarkDB 的**顺序读**比 TerarkDB 自身的**随机读**无明显优势
