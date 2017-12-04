@@ -9,9 +9,10 @@
 - [性能测试报告](benchmarks.md)
     * [Amazon Movie Reviews 测试](amazon_movie_reviews_benchmark.md)
     * MySQL Sysbench 测试
+    * [在机械硬盘上的表现](hdd_benchmark.md)
 - 测试方法
     * 使用 YCSB 测试
-- MySQL 兼容性
+- [MySQL 兼容性](mysql_compatibility.md)
 - 技术背景
     * 系统架构
     * RocksDB 简介
