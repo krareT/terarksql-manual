@@ -1,8 +1,12 @@
 # 文档协作说明
 
-该仓库是用来生成 gitbook 文档用的
+该仓库是用来生成 gitbook 文档用的，请严格按照以下说明来添加资料
 
-## 结构说明
+- Gitbook 访问地址(会自动发布)：https://terark.gitbooks.io/mysql-on-terarkdb-manual/content/
+- Terark 官网访问地址（需手动发布）：https://terark.com/docs/mysql-on-terarkdb-manual/zh-hans/
+
+
+## 目录结构说明
 - en/  英文文档路径
 - zh-hans/  中文文档路径
   - SUMMARY.md  文档目录，该文件中的目录需要引用同一目录下的其他 md 文档
@@ -11,9 +15,9 @@
   - 每个文档所使用的图片，请单独创建文件夹，如 `images/ycsb_benchmark/xxx.svg`
 
   
-## 添加新文档
+## 添加新文档步骤
 
 1. 请首先在 zh-hans/SUMMARY.md(中文) 中找到合适的位置把新文档添加到目录中
 2. 在 zh-hans/ 目录下创建新文档
-3. 新的文档 push 到仓库后，可以通过 gitbook(https://terark.gitbooks.io/mysql-on-terarkdb-manual/content/) 来访问查看效果
-4. 由于 gitbook 国内访问较慢，所以我们在自己的官网上独立部署了文档，但需要手动更新，请编写完成后通知管理员
+3. 新的文档 push 到仓库后，可以通过 gitbook 来访问查看效果
+4. 由于 Gitbook 国内访问较慢，所以我们在自己的官网上独立部署了文档，但需要手动更新，请编写完成后通知管理员更新
