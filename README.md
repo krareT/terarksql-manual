@@ -12,7 +12,7 @@
   - SUMMARY.md  文档目录，该文件中的目录需要引用同一目录下的其他 md 文档
   - xxx.md 每个独立的文档
 - images/ 所有的图片均统一放在此处（包括多语言）
-  - 每个文档所使用的图片，请单独创建文件夹，如 `images/ycsb_benchmark/xxx.svg`
+  - 每个文档所使用的图片，请单独创建文件夹，如 `images/ycsb_benchmark/xxx.svg`
 
   
 ## 添加新文档步骤
