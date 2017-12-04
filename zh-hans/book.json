@@ -3,7 +3,7 @@
     "links": {
         "sidebar": {
             "官方网站": "https://www.terark.com",
-            "MySQL on TerarkDB使用手册": "https://www.terark.com/docs/mysql-on-terarkdb-manual/"
+            "MySQL on TerarkDB使用手册": "/"
         }
     },
     "plugins" : 
