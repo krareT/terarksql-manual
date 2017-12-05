@@ -59,7 +59,6 @@
 - 内存限制使用 cgroups 达成
 - 测试客户端均在内网的其他服务器运行(使用千兆交换机连接)
 - 所有的读测试使用 16 线程，每一线程启动一个连接
-
 - InnoDB 使用默认配置选项
   - 因为 InnoDB 使用文件 IO 接口读取文件，cgroups 无法限制系统缓存，所以使用内核参数限制内存
 - RocksDB 启用 `allow_mmap_reads` 选项，以便使用 cgroups 限制内存，BlockSize 为 16k
