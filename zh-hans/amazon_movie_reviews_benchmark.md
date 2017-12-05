@@ -21,9 +21,10 @@
 - 测试工具
   - YCSB([https://github.com/Terark/YCSB-mongo](https://github.com/Terark/YCSB-mongo))
 - 测试数据
-  - 由于 YCSB 的数据都是纯随机字符串生成的，离用户的真实场景相差较大，我们修改了 YCSB，使其使用 [Amazon movie data (~8 million reviews)](https://snap.stanford.edu/data/web-Movies.html) 数据进行测试
+  - 由于 YCSB 的数据都是纯随机字符串生成的，离用户的真实场景相差较大
+  - 所以我们修改了 YCSB，让它可以使用 [Amazon movie data (~8 million reviews)](https://snap.stanford.edu/data/web-Movies.html) 数据进行测试
 - 测试数据集尺寸
-  - 约为 9.1GB
+  - 原始数据约 9.1GB，数据清洗后约 8G
   - 约 800万条数据
   - 平均每条数据大约 1KB
 - 测试使用的引擎
