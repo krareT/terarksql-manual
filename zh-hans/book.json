@@ -18,5 +18,9 @@
         "search-pro",
         "-search",
         "toc"
-    ]
+    ],
+    "styles":
+    {
+      "website": "styles/website.css"
+    }
 }
