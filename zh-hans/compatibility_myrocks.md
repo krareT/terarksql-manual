@@ -1,10 +1,16 @@
-# MySQL on TerarkDB 兼容性测试报告
-
-MySQL on TerarkDB 基于 MyRocks，使用了基于 Terark 可检索压缩专利技术的 RocksDB 作为存储引擎，故其兼容性取决于 MyRocks 的兼容性。
+# 对比原版 MyRocks 的兼容性
 
 ## 总结
 
-MyRocks 针对自身特点提供了一系列的测试。这些测试共有五类：rocksdb，rocksdb_hotbackup，rocksdb_rpl，rocksdb_stress，rocksdb_sys_vars，以下是 MySQL on TerarkDB 的测试结果。
+MyRocks 针对自身特点提供了一系列的测试,这些测试共有五类：
+
+- rocksdb
+- rocksdb_hotbackup
+- rocksdb_rpl
+- rocksdb_stress
+- rocksdb_sys_vars
+
+针对这几类测试，以下是 MySQL on TerarkDB 的运行结果如下，其中部分失败的原因，在详细说明中做了阐述：
 
 | suite | total | succes | fail |
 | ----- |:-----:|:-----:|:-----:|
