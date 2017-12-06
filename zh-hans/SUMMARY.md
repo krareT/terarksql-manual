@@ -13,7 +13,7 @@
 - [常见测试方法](benchmark_tools.md)
     * [使用 YCSB 进行测试](benchmark_tool_ycsb.md)
 - [兼容性](compatibility.md)
-    * [对比 MyRocks 的兼容性](campatibility_myrocks.md)
+    * [对比 MyRocks 的兼容性](compatibility_myrocks.md)
     * [对比 MySQL 的兼容性](compatibility_mysql.md)
 - 技术背景
     * 系统架构
