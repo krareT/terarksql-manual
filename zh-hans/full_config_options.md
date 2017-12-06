@@ -4,10 +4,6 @@
 ### 1.说明
 下表中所有的环境变量均需要在使用时添加前缀 `TerarkZipTable_`，如对于 `localTempDir` 变量，您需要设置的环境变量是`TerarkZipTable_localTempDir`.
 
-除了 TerarkDB 自身的参数(TerarkZipTableOptions 的参数)，其它属于 RocksDB 自身的参数，如果在环境变量中指定，就会覆盖应用程序指定的参数。例如，如果应用程序(例如 MyRocks)指定了 `write_buffer_size=67108864`(`64M`)，同时这里的环境变量也指定了 `TerarkZipTable_write_buffer_size=2G`，那么应用程序指定的 `64M` 就会被覆盖。
-
-所以，如果(使用RocksDB的)应用程序自身有一套灵活完整的参数配置机制，最好使用它本身的参数配置机制。通过这里的环境变量指定 RocksDB 的参数只是作为一种补充（如果应用程序的参数配置机制不够完善的话）。
-
 ### 2.参数表
 
 **1) `TerarkZipTableOptions` 类中的参数**
@@ -38,8 +34,6 @@
 
 **2) `ColumnFamilyOptions` 类中的参数**
 
-*请尽量使用应用程序自身的参数配置机制，因为这里的配置拥有最高的优先级，只在必要情况下作为一种补充机制*
-
 |type|env var `suffix` or<br/>ColumnFamilyOptions::`member`|Default|
 |----|-------|-----------------------|
 |enum by<br/>string|compaction_style|universal|
@@ -52,8 +46,6 @@
 
 **3) `DBOptions` 类中的参数**
 
-*请尽量使用应用程序自身的参数配置机制，因为这里的配置拥有最高的优先级，只在必要情况下作为一种补充机制*
-
 |type|env var `suffix` or <br/>DBOptions::`member`|Default|
 |----|-------|-----------------------|
 |int|base_background_compactions|3|
@@ -62,8 +54,6 @@
 |int|max_subcompactions|1|
 
 **3) `ColumnFamilyOptions::compaction_options_universal` 中的参数**
-
-*这些参数虽然是 RocksDB 自身的参数，但是绝大多数应用都不使用 universal compaction，所以这几个参数可以看成是 TerarkDB 的参数。*
 
 |type|env var `suffix` 或者 <br/>ColumnFamilyOptions::compaction_options_universal::`member`|Default|
 |----|-------|-----------------------|
