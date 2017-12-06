@@ -75,7 +75,6 @@
   - 多个 `column families` 需要通过 ',' 分割:<br/>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`TerarkZipTable_blackListColumnFamily=cf1,cf2,cf3`
   - 可以考虑将 `日志数据` 或者短时间存在的数据放到黑名单
-
 - `TerarkDictZipBlobStore_zipThreads`
   - 如果这个变量不是 `0`, TerarkDB 的 SST Builder 会通过 `read -> compress -> write` 这个过程来压缩，这个过程由所有的 SST Builder 共享。这个变量代表上述过程的 `compress` 阶段的线程数.
   - 如果该变量比物理 CPU 数更大，将使用物理 CPU 数作为使用值.
