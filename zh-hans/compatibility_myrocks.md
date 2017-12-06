@@ -18,7 +18,7 @@ MyRocks 针对自身特点提供了一系列的测试,这些测试共有五类�
 | rocksdb_stress | 2 | 2 | 0 |
 | rocksdb_sys_vars | 110 | 108 | 2 |
 | rocksdb_hotbackup | 6 | 4 | 2|
-| rocksdb_rpl | 13 | 12 | 1 |
+| rocksdb_rpl | 12 | 11 | 1 |
 
 ## 详细说明
 
