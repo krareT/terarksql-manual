@@ -252,13 +252,10 @@ mysqltest: At line 27: query 'SET rocksdb_bulk_load=0' succeeded - should have f
 
 MySQL on TerarkDB 不使用 zstd 压缩算法。
 
-#### 1.13 rocksdb.bulk_load_rev_data
+#### 1.13 rocksdb.bulk_load_rev_data，rocksdb.bulk_load_rev_cf_and_data
 
-同 1.8
+MySQL on TerarkDB 默认设置 `TerarkZipTable_target_file_size_base` 为系统内存的一半，但是 MyRocks 会使用该值的 3 倍来申请内存而引发  `bad_alloc` 异常。将其设置为较小的数值即可通过。
 
-#### 1.14 rocksdb.bulk_load_rev_cf_and_data
-
-同 1.8
 
 ### 2. rocksdb_sys_vars
 #### 2.1 rocksdb_sys_vars.all_vars
