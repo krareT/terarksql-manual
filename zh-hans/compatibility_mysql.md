@@ -55,12 +55,41 @@ rocksdb 引擎相关的测试情况在[这里](compatibility_myrocks.md)，innod
 | large_tests | 1 | 1 | 0 |
 | perfschema_stress | 314 | 314 | 0 |
 
-### main
+### 1. main
 ```
 Failing test(s): main.admission_control_multi_query main.ssl_8k_key main.ssl_crl main.openssl_1 main.plugin_auth_sha256_tls
 main.ssl-session-reuse main.ssl main.ssl_compress main.mysql_shutdown_logging main.mysqld--help-notwin-profiling
 main.innodb_mysql_lock main.mysqlshow main.commit_1innodb main.enable_multiple_engines main.admission_control_stress
 ```
+
+#### 1.1 SSL 加密算法不同
+
+涉及测试：
+```
+main.ssl_8k_key main.ssl_crl main.plugin_auth_sha256_tls main.ssl-session-reuse main.ssl main.ssl_compress
+```
+
+错误信息如下：
+```
+SHOW STATUS LIKE 'ssl_Cipher'；
+Variable_name	Value
+-Ssl_cipher	ECDHE-RSA-AES128-GCM-SHA256
++Ssl_cipher	ECDHE-RSA-AES256-GCM-SHA384
+```
+
+#### 1.2 access denied
+
+涉及测试：
+```
+main.openssl_1 main.mysql_shutdown_logging
+```
+
+错误信息如下：
+```
+mysqltest: At line 24: query 'connect  con2,localhost,ssl_user2,,,,,SSL' failed: 1045: Access denied for user 'ssl_user2'@'localhost' (using password: NO)
+```
+
+#### 1.3 统计信息不一致
 
 ### sys_vars
 ```
