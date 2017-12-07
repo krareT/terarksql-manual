@@ -57,16 +57,34 @@ rocksdb 引擎相关的测试情况在[这里](compatibility_myrocks.md)，innod
 
 ### 1. main
 ```
-Failing test(s): main.admission_control_multi_query main.ssl_8k_key main.ssl_crl main.openssl_1 main.plugin_auth_sha256_tls
-main.ssl-session-reuse main.ssl main.ssl_compress main.mysql_shutdown_logging main.mysqld--help-notwin-profiling
-main.innodb_mysql_lock main.mysqlshow main.commit_1innodb main.enable_multiple_engines main.admission_control_stress
+Failing test(s):
+    main.admission_control_multi_query
+    main.ssl_8k_key
+    main.ssl_crl
+    main.openssl_1
+    main.plugin_auth_sha256_tls
+    main.ssl-session-reuse
+    main.ssl
+    main.ssl_compress
+    main.mysql_shutdown_logging
+    main.mysqld--help-notwin-profiling
+    main.innodb_mysql_lock
+    main.mysqlshow
+    main.commit_1innodb
+    main.enable_multiple_engines
+    main.admission_control_stress
 ```
 
 #### 1.1 SSL 加密算法不同
 
 涉及测试：
 ```
-main.ssl_8k_key main.ssl_crl main.plugin_auth_sha256_tls main.ssl-session-reuse main.ssl main.ssl_compress
+main.ssl_8k_key
+main.ssl_crl
+main.plugin_auth_sha256_tls
+main.ssl-session-reuse
+main.ssl
+main.ssl_compress
 ```
 
 错误信息如下：
@@ -103,22 +121,43 @@ Failing test(s): binlog.binlog_row_binlog
 
 ### rpl
 ```
-Failing test(s): rpl.rpl_ssl rpl.rpl_report rpl.rpl_stm_innodb
+Failing test(s):
+    rpl.rpl_ssl
+    rpl.rpl_report
+    rpl.rpl_stm_innodb
 ```
 
 ### xtrabackup
 ```
-Failing test(s): xtrabackup.xb_with_xbstream xtrabackup.xb_drop_tables xtrabackup.xb_basic 
-xtrabackup.xb_rechecksum xtrabackup.xb_rechecksum_compressed xtrabackup.xb_with_logs 
-xtrabackup.xb_gtid xtrabackup.xb_partitioned_table xtrabackup.xb_compressed_table
+Failing test(s):
+    xtrabackup.xb_with_xbstream
+    xtrabackup.xb_drop_tables
+    xtrabackup.xb_basic
+    xtrabackup.xb_rechecksum
+    xtrabackup.xb_rechecksum_compressed
+    xtrabackup.xb_with_logs
+    xtrabackup.xb_gtid
+    xtrabackup.xb_partitioned_table
+    xtrabackup.xb_compressed_table
 ```
 
 ### engines/rr_trx
 ```
-Failing test(s): engines/rr_trx.rr_iud_rollback-multi-50 engines/rr_trx.rr_c_stats 
-engines/rr_trx.rr_replace_7-8 engines/rr_trx.rr_id_900 engines/rr_trx.rr_id_3 
-engines/rr_trx.rr_insert_select_2 engines/rr_trx.rr_c_count_not_zero engines/rr_trx.rr_i_40-44 
-engines/rr_trx.rr_s_select-uncommitted engines/rr_trx.rr_sc_sum_total engines/rr_trx.rr_u_10-19_nolimit 
-engines/rr_trx.rr_sc_select-limit-nolimit_4 engines/rr_trx.rr_sc_select-same_2 engines/rr_trx.rr_u_10-19 
-engines/rr_trx.rr_u_4 engines/rr_trx.init_innodb
+Failing test(s):
+    engines/rr_trx.rr_iud_rollback-multi-50
+    engines/rr_trx.rr_c_stats
+    engines/rr_trx.rr_replace_7-8
+    engines/rr_trx.rr_id_900
+    engines/rr_trx.rr_id_3
+    engines/rr_trx.rr_insert_select_2
+    engines/rr_trx.rr_c_count_not_zero
+    engines/rr_trx.rr_i_40-44
+    engines/rr_trx.rr_s_select-uncommitted
+    engines/rr_trx.rr_sc_sum_total
+    engines/rr_trx.rr_u_10-19_nolimit
+    engines/rr_trx.rr_sc_select-limit-nolimit_4
+    engines/rr_trx.rr_sc_select-same_2
+    engines/rr_trx.rr_u_10-19
+    engines/rr_trx.rr_u_4
+    engines/rr_trx.init_innodb
 ```
