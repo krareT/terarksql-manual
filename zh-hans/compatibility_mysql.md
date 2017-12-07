@@ -30,30 +30,30 @@ rocksdb,rocksdb_rpl,rocksdb_sys_vars,rocksdb_hotbackup,rocksdb_stress
 
 rocksdb 引擎相关的测试情况在[这里](compatibility_myrocks.md)，innodb 和 ndb 引擎相关的测试略去，剩余的测试情况如下：
 
-| suite | total | success | fail |
-|:----: |:------:|:------:|:-----:|
-| main | 871 | 856 | 15 |
-| sys_vars | 725 | 724 | 1 |
-| binlog | 165 | 164 | 1 |
-| federated | 7 | 7 | 0 |
-| rpl | 921 |  915 | 6 |
-| rpl_recovery | 51 | 51 | 0 |
-| perfschema | 314 | 314 | 0 |
-| funcs_1 | 103 | 103 | 0 |
-| opt_trace | 13 | 13 | 0 |
-| parts | 115 | 115 | 0 |
-| auth_sec | 7 | 7 | 0 |
-| connection_control | 8 | 8 | 0 |
-| json | 25 | 25 | 0 |
-| funcs_2 | 3 | 3 | 0 |
-| multiengine | 2 | 2 | 0 |
-| stress | 5 | 5 | 0 |
-| xtrabackup | 9 | 0 | 9 |
-| engines/funcs | 310 | 310 | 0 |
-| engines/iuds | 13 | 13 | 0 |
-| engines/rr_trx | 16 | 0 | 16 |
-| large_tests | 1 | 1 | 0 |
-| perfschema_stress | 314 | 314 | 0 |
+| suite              |total|success| fail |
+|:------------------:|:---:|:-----:|:----:|
+| main               | 871 | 856 | **15**|
+| sys_vars           | 725 | 724 | **1** |
+| binlog             | 165 | 164 | **1** |
+| federated          |   7 |   7 |   0   |
+| rpl                | 921 | 915 | **6** |
+| rpl_recovery       |  51 |  51 |   0   |
+| perfschema         | 314 | 314 |   0   |
+| funcs_1            | 103 | 103 |   0   |
+| opt_trace          |  13 | 13  |   0   |
+| parts              | 115 | 115 |   0   |
+| auth_sec           |   7 |   7 |   0   |
+| connection_control |   8 |   8 |   0   |
+| json               |  25 |  25 |   0   |
+| funcs_2            |   3 |   3 |   0   |
+| multiengine        |   2 |   2 |   0   |
+| stress             |   5 |   5 |   0   |
+| xtrabackup         |   9 |   0 | **9** |
+| engines/funcs      | 310 | 310 |   0   |
+| engines/iuds       |  13 |  13 |   0   |
+| engines/rr_trx     |  16 |   0 | **16**|
+| large_tests        |   1 |   1 |   0   |
+| perfschema_stress  | 314 | 314 |   0   |
 
 ### 1. main
 ```
