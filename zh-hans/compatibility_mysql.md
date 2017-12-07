@@ -32,11 +32,11 @@ rocksdb 引擎相关的测试情况在[这里](compatibility_myrocks.md)，innod
 
 | suite              |total|success| fail |
 |:------------------:|:---:|:-----:|:----:|
-| main               | 871 | 856 | **15**|
-| sys_vars           | 725 | 724 | **1** |
-| binlog             | 165 | 164 | **1** |
+| main               | 871 | 857 | **14**|
+| sys_vars           | 725 | 725 |   0   |
+| binlog             | 165 | 165 |   0   |
 | federated          |   7 |   7 |   0   |
-| rpl                | 921 | 915 | **6** |
+| rpl                | 921 | 918 | **3** |
 | rpl_recovery       |  51 |  51 |   0   |
 | perfschema         | 314 | 314 |   0   |
 | funcs_1            | 103 | 103 |   0   |
@@ -70,12 +70,11 @@ Failing test(s):
     main.mysqld--help-notwin-profiling
     main.innodb_mysql_lock
     main.mysqlshow
-    main.commit_1innodb
-    main.enable_multiple_engines
-    main.admission_control_stress
+    main.commit_1innodb
+    main.admission_control_stress
 ```
 
-#### 1.1 SSL 加密算法不同
+#### 1.1 SSL 加密算法与预期不同
 
 涉及测试：
 ```
@@ -99,7 +98,8 @@ Variable_name	Value
 
 涉及测试：
 ```
-main.openssl_1 main.mysql_shutdown_logging
+main.openssl_1
+main.mysql_shutdown_logging
 ```
 
 错误信息如下：
@@ -109,25 +109,119 @@ mysqltest: At line 24: query 'connect  con2,localhost,ssl_user2,,,,,SSL' failed:
 
 #### 1.3 统计信息不一致
 
-### sys_vars
+涉及测试：
 ```
-Failing test(s): sys_vars.all_vars
-```
-
-### binlog
-```
-Failing test(s): binlog.binlog_row_binlog
+main.mysqld--help-notwin-profiling
+main.mysqlshow
 ```
 
-### rpl
+我们在 MyRocks 的 information_schema 数据库中添加了一个 ROCKSDB_TF_OPTIONS，以及添加了一个用于 flush `__system__` column family 的背景线程，故统计系统与预期不一致。
+
+main.mysqld--help-notwin-profiling：
+```
+--- /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/r/mysqld--help-notwin-profiling.result	2017-11-01 06:42:45.000000000 +0300
++++ /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/var/log/mysqld--help-notwin-profiling.reject	2017-12-07 15:19:19.211744312 +0300
+@@ -1298,6 +1298,9 @@
+  --rocksdb-strict-collation-exceptions=name 
+  List of tables (using regex) that are excluded from the
+  case sensitive collation enforcement
++ --rocksdb-system-cf-background-flush-interval=# 
++ interval(seconds) of background flush column family
++ '__system__' for RocksDB . 0 to disable
+  --rocksdb-table-cache-numshardbits=# 
+  DBOptions::table_cache_numshardbits for RocksDB
+  --rocksdb-table-stats-sampling-pct=# 
+@@ -1305,6 +1308,10 @@
+  statistics about table properties. Specify either 0 to
+  sample everything or percentage [1..100]. By default 10%
+  of entries are sampled.
++ --rocksdb-tf-options[=name] 
++ Enable or disable ROCKSDB_TF_OPTIONS plugin. Possible
++ values are ON, OFF, FORCE (don't start if the plugin
++ fails to load).
+  --rocksdb-tmpdir[=name] 
+  Directory for temporary files during DDL operations.
+  --rocksdb-trace-sst-api 
+@@ -2048,8 +2055,10 @@
+ rocksdb-store-row-debug-checksums FALSE
+ rocksdb-strict-collation-check TRUE
+ rocksdb-strict-collation-exceptions (No default value)
++rocksdb-system-cf-background-flush-interval 120
+ rocksdb-table-cache-numshardbits 6
+ rocksdb-table-stats-sampling-pct 10
++rocksdb-tf-options ON
+ rocksdb-tmpdir (No default value)
+ rocksdb-trace-sst-api FALSE
+ rocksdb-trx ON
+```
+
+main.mysqlshow：
+```
+--- /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/r/mysqlshow.result	2017-11-01 06:42:45.000000000 +0300
++++ /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/var/log/mysqlshow.reject	2017-12-07 15:14:16.721734704 +0300
+@@ -138,6 +138,7 @@
+ | ROCKSDB_LOCKS                         |
+ | ROCKSDB_PERF_CONTEXT                  |
+ | ROCKSDB_PERF_CONTEXT_GLOBAL           |
++| ROCKSDB_TF_OPTIONS                    |
+ | ROCKSDB_TRX                           |
+ | ROUTINES                              |
+ | SCHEMATA                              |
+@@ -220,6 +221,7 @@
+ | ROCKSDB_LOCKS                         |
+ | ROCKSDB_PERF_CONTEXT                  |
+ | ROCKSDB_PERF_CONTEXT_GLOBAL           |
++| ROCKSDB_TF_OPTIONS                    |
+ | ROCKSDB_TRX                           |
+ | ROUTINES                              |
+ | SCHEMATA                              |
+```
+
+#### 1.4 timeout
+
+涉及测试：
+```
+main.admission_control_multi_query main.admission_control_stress
+```
+
+### 2. rpl
 ```
 Failing test(s):
     rpl.rpl_ssl
-    rpl.rpl_report
-    rpl.rpl_stm_innodb
+```
+2.1 SSL 加密算法与预期不同
+
+涉及测试：
+```
+rpl.rpl_ssl
 ```
 
-### xtrabackup
+错误信息如下：
+```
+--- /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/suite/rpl/r/rpl_ssl.result	2017-06-08 06:26:45.000000000 +0300
++++ /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/var/3/log/rpl_ssl.reject	2017-12-07 15:42:42.519286165 +0300
+@@ -28,7 +28,7 @@
+ Master_SSL_CA_File = 'MYSQL_TEST_DIR/std_data/cacert.pem'
+ Master_SSL_Cert = 'MYSQL_TEST_DIR/std_data/client-cert.pem'
+ Master_SSL_Key = 'MYSQL_TEST_DIR/std_data/client-key.pem'
+-Master_SSL_Actual_Cipher = 'ECDHE-RSA-AES128-GCM-SHA256'
++Master_SSL_Actual_Cipher = 'ECDHE-RSA-AES256-GCM-SHA384'
+ Master_SSL_Subject = '/C=SE/ST=Uppsala/O=MySQL AB/CN=localhost'
+ Master_SSL_Issuer = '/C=SE/ST=Uppsala/L=Uppsala/O=MySQL AB'
+ include/check_slave_is_running.inc
+@@ -44,7 +44,7 @@
+ Master_SSL_CA_File = 'MYSQL_TEST_DIR/std_data/cacert.pem'
+ Master_SSL_Cert = 'MYSQL_TEST_DIR/std_data/client-cert.pem'
+ Master_SSL_Key = 'MYSQL_TEST_DIR/std_data/client-key.pem'
+-Master_SSL_Actual_Cipher = 'ECDHE-RSA-AES128-GCM-SHA256'
++Master_SSL_Actual_Cipher = 'ECDHE-RSA-AES256-GCM-SHA384'
+ Master_SSL_Subject = '/C=SE/ST=Uppsala/O=MySQL AB/CN=localhost'
+ Master_SSL_Issuer = '/C=SE/ST=Uppsala/L=Uppsala/O=MySQL AB'
+ include/check_slave_is_running.inc
+```
+
+
+### 3. xtrabackup
 ```
 Failing test(s):
     xtrabackup.xb_with_xbstream
@@ -141,7 +235,9 @@ Failing test(s):
     xtrabackup.xb_compressed_table
 ```
 
-### engines/rr_trx
+找不到可执行文件 `MYSQL_INNOBACKUPEX`
+
+### 4. engines/rr_trx
 ```
 Failing test(s):
     engines/rr_trx.rr_iud_rollback-multi-50
