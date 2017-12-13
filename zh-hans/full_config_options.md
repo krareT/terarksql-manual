@@ -67,7 +67,7 @@
 |type|env var full name|Default|
 |----|-------|-----------------------|
 |string|`TerarkZipTable_blackListColumnFamily`|`empty`|
-|int|`TerarkDictZipBlobStore_zipThreads`|min(8, physical\_cpu\_num)|
+|int|`DictZipBlobStore_zipThreads`|min(8, physical\_cpu\_num)|
 
 - `TerarkZipTable_blackListColumnFamily`
   - 只要定义了环境变量 TerarkZipTable_localTempDir，就会使用 TerarkZipTable，用户代码中设置的 option 参数就会全部失效
@@ -75,7 +75,7 @@
   - 多个 `column families` 需要通过 ',' 分割:<br/>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`TerarkZipTable_blackListColumnFamily=cf1,cf2,cf3`
   - 可以考虑将 `日志数据` 或者短时间存在的数据放到黑名单
-- `TerarkDictZipBlobStore_zipThreads`
+- `DictZipBlobStore_zipThreads`
   - 如果这个变量不是 `0`, TerarkDB 的 SST Builder 会通过 `read -> compress -> write` 这个过程来压缩，这个过程由所有的 SST Builder 共享。这个变量代表上述过程的 `compress` 阶段的线程数.
   - 如果该变量比物理 CPU 数更大，将使用物理 CPU 数作为使用值.
   - 如果该变量是 `0`, TerarkDB 将不会使用 `read -> compress -> write` 这个过程，而是由调用线程来执行压缩.
