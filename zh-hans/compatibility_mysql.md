@@ -32,8 +32,8 @@ rocksdb 引擎相关的测试情况在[这里](compatibility_myrocks.md)，innod
 
 | suite              |total|success| fail |
 |:------------------:|:---:|:-----:|:----:|
-| main               | 871 | 857 | **14**|
-| sys_vars           | 725 | 725 |   0   |
+| main               | 871 | 861 | **10**|
+| sys_vars           | 727 | 727 |   0   |
 | binlog             | 165 | 165 |   0   |
 | federated          |   7 |   7 |   0   |
 | rpl                | 921 | 918 | **3** |
@@ -53,7 +53,7 @@ rocksdb 引擎相关的测试情况在[这里](compatibility_myrocks.md)，innod
 | engines/iuds       |  13 |  13 |   0   |
 | engines/rr_trx     |  16 |   0 | **16**|
 | large_tests        |   1 |   1 |   0   |
-| perfschema_stress  | 314 | 314 |   0   |
+| perfschema_stress  |   4 |   2 | **2** |
 
 ### 1. main
 ```
@@ -175,13 +175,6 @@ main.mysqlshow：
  | ROCKSDB_TRX                           |
  | ROUTINES                              |
  | SCHEMATA                              |
-```
-
-#### 1.4 timeout
-
-涉及测试：
-```
-main.admission_control_multi_query main.admission_control_stress
 ```
 
 ### 2. rpl
