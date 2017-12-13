@@ -20,7 +20,7 @@ MyRocks currently lacks a large number of features compared to InnoDB:
 
 ## MyRocks 对 mysql-test 的测试情况
 
-MyRocks 的测试有以下 36 种：
+MySQL 随源码发布了一个测试框架 [mysql-test-run](https://dev.mysql.com/doc/dev/mysql-server/latest/PAGE_MYSQL_TEST_RUN.html)，并附带了大量的测试。MyRocks 继承了这个框架和所有的测试，并针对自身特点做了修改以及添加了对 RocksDB 引擎的测试。MyRocks 的测试有以下 36 种 suite：
 ```
 main,auth_sec,connection_control,federated,funcs_2,json,multiengine,opt_trace,perfschema,stress,
 xtrabackup,binlog,engines,funcs_1,large_tests,parts,perfschema_stress,rpl,rpl_recovery,sys_vars,
@@ -28,12 +28,12 @@ innodb_fts,innodb_zip,ndb_big,ndb_rpl,rpl_ndb,innodb,innodb_stress,jp,ndb,ndb_bi
 rocksdb,rocksdb_rpl,rocksdb_sys_vars,rocksdb_hotbackup,rocksdb_stress
 ```
 
-rocksdb 引擎相关的测试情况在[这里](compatibility_myrocks.md)，innodb 和 ndb 引擎相关的测试略去，剩余的测试情况如下：
+rocksdb 引擎相关的测试情况在[这里](compatibility_myrocks.md)，innodb 和 ndb 引擎相关的测试与此次兼容性无关，故略去，剩余的测试情况如下：
 
-| suite              |total|success| fail |
-|:------------------:|:---:|:-----:|:----:|
-| main               | 871 | 861 | **10**|
-| sys_vars           | 727 | 727 |   0   |
+| suite              |total|success| fail | skipped |
+|:------------------:|:---:|:-----:|:----:|:-------:|
+| main               | 876 | 865 | **11**|  47 |
+| sys_vars           | 727 | 727 |   0   |  
 | binlog             | 165 | 165 |   0   |
 | federated          |   7 |   7 |   0   |
 | rpl                | 921 | 918 | **3** |
@@ -55,10 +55,15 @@ rocksdb 引擎相关的测试情况在[这里](compatibility_myrocks.md)，innod
 | large_tests        |   1 |   1 |   0   |
 | perfschema_stress  |   4 |   2 | **2** |
 
+其中 fail 的测试为当前版本 MyRocks 未能通过的测试，skipped 的测试为需要特殊的条件或者设置才能运行。
+
+下面详细说明每个 suite 中的失败或者被跳过的原因
+
 ### 1. main
+
+#### 1.1 失败的测试
 ```
 Failing test(s):
-    main.admission_control_multi_query
     main.ssl_8k_key
     main.ssl_crl
     main.openssl_1
@@ -71,10 +76,13 @@ Failing test(s):
     main.innodb_mysql_lock
     main.mysqlshow
     main.commit_1innodb
-    main.admission_control_stress
+    main.ssl_ca
 ```
+共 13 个，按失败原因分类可分为一下几类
 
-#### 1.1 SSL 加密算法与预期不同
+#### 1.1.1 SSL 加密算法与预期不同
+
+测试预期使用的 SSL 加密算法与当前进行测试时使用的加密算法不一致导致测试结果与预期不一致。
 
 涉及测试：
 ```
@@ -84,9 +92,10 @@ main.plugin_auth_sha256_tls
 main.ssl-session-reuse
 main.ssl
 main.ssl_compress
+main.ssl_ca
 ```
 
-错误信息如下：
+错误信息类似如下：
 ```
 SHOW STATUS LIKE 'ssl_Cipher'；
 Variable_name	Value
@@ -94,7 +103,9 @@ Variable_name	Value
 +Ssl_cipher	ECDHE-RSA-AES256-GCM-SHA384
 ```
 
-#### 1.2 access denied
+#### 1.1.2 access denied
+
+在测试过程中，测试程序不能连接到服务器，具体原因待查证。
 
 涉及测试：
 ```
@@ -107,7 +118,9 @@ main.mysql_shutdown_logging
 mysqltest: At line 24: query 'connect  con2,localhost,ssl_user2,,,,,SSL' failed: 1045: Access denied for user 'ssl_user2'@'localhost' (using password: NO)
 ```
 
-#### 1.3 统计信息不一致
+#### 1.1.3 统计信息不一致
+
+我们在 MyRocks 的 information_schema 数据库中添加了一个 ROCKSDB_TF_OPTIONS，以及添加了一个用于 flush `__system__` column family 的背景线程，故统计系统与预期不一致。
 
 涉及测试：
 ```
@@ -115,7 +128,7 @@ main.mysqld--help-notwin-profiling
 main.mysqlshow
 ```
 
-我们在 MyRocks 的 information_schema 数据库中添加了一个 ROCKSDB_TF_OPTIONS，以及添加了一个用于 flush `__system__` column family 的背景线程，故统计系统与预期不一致。
+错误信息如下：
 
 main.mysqld--help-notwin-profiling：
 ```
