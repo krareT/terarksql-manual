@@ -32,7 +32,7 @@ rocksdb 引擎相关的测试情况在[这里](compatibility_myrocks.md)，innod
 
 | suite              |total|success| fail | skipped |
 |:------------------:|:---:|:-----:|:----:|:-------:|
-| main               | 876 | 865 | **11**|  47 |
+| main               | 878 | 867 | **11**|  45 |
 | sys_vars           | 727 | 727 |   0   |  
 | binlog             | 165 | 165 |   0   |
 | federated          |   7 |   7 |   0   |
@@ -73,12 +73,10 @@ Failing test(s):
     main.ssl_compress
     main.mysql_shutdown_logging
     main.mysqld--help-notwin-profiling
-    main.innodb_mysql_lock
     main.mysqlshow
-    main.commit_1innodb
     main.ssl_ca
 ```
-共 13 个，按失败原因分类可分为一下几类
+共 11 个，按失败原因分类可分为一下几类
 
 #### 1.1.1 SSL 加密算法与预期不同
 
@@ -94,6 +92,7 @@ main.ssl
 main.ssl_compress
 main.ssl_ca
 ```
+共 7 个。
 
 错误信息类似如下：
 ```
@@ -112,6 +111,7 @@ Variable_name	Value
 main.openssl_1
 main.mysql_shutdown_logging
 ```
+共 2 个。
 
 错误信息如下：
 ```
@@ -127,6 +127,7 @@ mysqltest: At line 24: query 'connect  con2,localhost,ssl_user2,,,,,SSL' failed:
 main.mysqld--help-notwin-profiling
 main.mysqlshow
 ```
+共 2 个。
 
 错误信息如下：
 
@@ -190,19 +191,101 @@ main.mysqlshow：
  | SCHEMATA                              |
 ```
 
+#### 1.2 跳过的测试
+
+##### 1.2.1 need windows
+
+测试需要运行在 Windows 平台上
+
+涉及测试：
+```
+main.named_pipe
+main.shm
+main.secure_file_priv_win
+main.partition_windows
+main.perror-win
+main.variables-win
+main.windows
+main.mysqld--help-win
+main.symlink_windows
+main.mysqlbinlog_raw_mode_win
+```
+共 10 个
+
+##### 1.2.2 is_embedded
+
+需要嵌入式版 MySQL 程序
+
+涉及测试：
+```
+main.mysql_embedded
+main.server_uuid_embedded
+main.events_embedded
+```
+共 3 个
+
+##### 1.2.3 其他
+
+需要特殊的设置或者特殊编译程序，但是不能合适的设置或者没有找到合适设置方法
+
+```
+main.bug46261                            w1 [ skipped ]  Example plugin requires the environment variable \$EXAMPLE_PLUGIN to be set (normally done by mtr)
+main.plugin_load                         w3 [ skipped ]  Example plugin requires the environment variable \$EXAMPLE_PLUGIN to be set (normally done by mtr)
+main.plugin_load_option                  w4 [ skipped ]  Example plugin requires the environment variable \$EXAMPLE_PLUGIN to be set (normally done by mtr)
+main.plugin                              w1 [ skipped ]  Example plugin requires the environment variable \$EXAMPLE_PLUGIN to be set (normally done by mtr)
+main.plugin_not_embedded                 w1 [ skipped ]  Example plugin requires the environment variable \$EXAMPLE_PLUGIN to be set (normally done by mtr)
+main.multi_plugin_load                   w2 [ skipped ]  Need the plugin test_plugin_server
+main.udf                                 w2 [ skipped ]  UDF requires the environment variable \$UDF_EXAMPLE_LIB to be set (normally done by mtr)
+main.udf_skip_grants                     w1 [ skipped ]  UDF requires the environment variable \$UDF_EXAMPLE_LIB to be set (normally done by mtr)
+main.partition_open_files_limit          w4 [ skipped ]  Need open_files_limit to be lower than 1025
+main.archive_plugin                      w1 [ skipped ]  archive plugin not available
+main.blackhole_plugin                    w1 [ skipped ]  blackhole plugin not available;
+main.ssl-sha512                          w4 [ skipped ]  Test requires: 'not_openssl'
+main.query_cache_ps_ps_prot              w1 [ skipped ]  Test requires: ps-protocol enabled, other protocols disabled
+main.grant_lowercase_fs                  w1 [ skipped ]  Test requires: 'case_insensitive_file_system'
+main.lowercase_fs_on                     w1 [ skipped ]  Test requires: 'case_insensitive_file_system'
+main.innodb_recovery_with_upper_case_names w3 [ skipped ]  Test requires: 'case_insensitive_file_system'
+main.lowercase_table4                    w2 [ skipped ]  Test requires: 'case_insensitive_file_system'
+main.jemalloc                            w1 [ skipped ]  Test requires jemalloc
+main.mysqld--help-notwin                 w1 [ skipped ]  Test requires: 'have_noprofiling'
+main.ctype_cp932_binlog_row              w2 [ skipped ]  Test requires: 'have_binlog_format_row'
+main.not_partition                       w1 [ skipped ]  Test requires: 'true'
+main.system_mysql_db_fix40123            w3 [ skipped ]  Test need MYSQL_FIX_PRIVILEGE_TABLES
+main.system_mysql_db_fix50030            w3 [ skipped ]  Test needs MYSQL_FIX_PRIVILEGE_TABLES
+main.system_mysql_db_fix50117            w3 [ skipped ]  Test needs MYSQL_FIX_PRIVILEGE_TABLES
+main.fix_priv_tables                     w3 [ skipped ]  Test need MYSQL_FIX_PRIVILEGE_TABLES
+main.timezone3                           w3 [ skipped ]  Test requires: 'have_moscow_leap_timezone'
+main.lowercase_mixed_tmpdir_innodb       w2 [ skipped ]  Test requires: 'lowercase2'
+main.lowercase_table2                    w3 [ skipped ]  Test requires: 'lowercase2'
+main.slow_log_legacy_user                w1 [ skipped ]  Test requires full regex (not supported in gcc 4.8 and prior)
+main.sp_trans_log                        w3 [ skipped ]  Test requires: 'have_binlog_format_row'
+main.dynamic_tracing                     w1 [ skipped ]  dtrace/stap tool requires additional privileges to run this test.
+main.func_encrypt_nossl                  w4 [ skipped ]  Test requires: 'not_openssl'
+```
+
+共 32 个。
+
 ### 2. rpl
 ```
 Failing test(s):
     rpl.rpl_ssl
 ```
-2.1 SSL 加密算法与预期不同
+
+#### 2.1 失败的测试
+
+##### 2.1.1 SSL 加密算法与预期不同
+
+测试预期使用的 SSL 加密算法与当前进行测试时使用的加密算法不一致导致测试结果与预期不一致。
 
 涉及测试：
 ```
 rpl.rpl_ssl
 ```
+共 1 个
 
 错误信息如下：
+
+rpl.rpl_ssl：
 ```
 --- /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/suite/rpl/r/rpl_ssl.result	2017-06-08 06:26:45.000000000 +0300
 +++ /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/var/3/log/rpl_ssl.reject	2017-12-07 15:42:42.519286165 +0300
@@ -226,6 +309,66 @@ rpl.rpl_ssl
  include/check_slave_is_running.inc
 ```
 
+#### 2.2 跳过的测试
+
+##### 2.2.1 Need windows
+
+需要运行在 Windows 平台上。
+
+涉及测试如下：
+```
+sys_vars.shared_memory_base_name_basic
+sys_vars.shared_memory_basic
+sys_vars.named_pipe_basic
+```
+共 3 个。
+
+##### 2.2.2 Need a 32 bit machine/binary
+
+需要 32 位版本程序和平台。
+
+涉及测试如下：
+```
+sys_vars.log_warnings_basic_32
+sys_vars.binlog_cache_size_basic_32
+sys_vars.binlog_stmt_cache_size_basic_32
+sys_vars.max_connect_errors_basic_32
+sys_vars.bulk_insert_buffer_size_basic_32
+sys_vars.max_seeks_for_key_basic_32
+sys_vars.max_tmp_tables_basic_32
+sys_vars.max_write_lock_count_basic_32
+sys_vars.min_examined_row_limit_basic_32
+sys_vars.slave_transaction_retries_basic_32
+sys_vars.multi_range_count_basic_32
+sys_vars.myisam_max_sort_file_size_basic_32
+sys_vars.delayed_insert_limit_basic_32
+sys_vars.myisam_repair_threads_basic_32
+sys_vars.delayed_queue_size_basic_32
+sys_vars.sort_buffer_size_basic_32
+sys_vars.myisam_sort_buffer_size_basic_32
+sys_vars.net_retry_count_basic_32
+sys_vars.query_alloc_block_size_basic_32
+sys_vars.query_cache_limit_basic_32
+sys_vars.query_cache_min_res_unit_basic_32
+sys_vars.range_alloc_block_size_basic_32
+sys_vars.join_buffer_size_basic_32
+sys_vars.key_cache_age_threshold_basic_32
+```
+共 24 个。
+
+##### 2.2.3 其他
+
+需要系统关闭 NUMA 和需要完整的正则支持
+
+涉及测试：
+```
+sys_vars.innodb_numa_interleave_basic
+sys_vars.legacy_user_name_pattern_basic
+```
+
+共 2 个。
+
+### 3. binlog
 
 ### 3. xtrabackup
 ```
