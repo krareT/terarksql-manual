@@ -1,7 +1,9 @@
 ## 配置参数说明
 
 ### 1.简介
-MySQl on TerarkDB 通过环境变量获取相应的配置信息，同时支持 TerarkDB 存储引擎的配置参数以及 MyRocks 的配置参数
+MySQL on TerarkDB 的配置分为两部分：
+- MySQL 自身的配置选项，依然通过 my.cnf 进行配置（包括 MyRocks 新支持的部分配置）
+- TerarkDB 相关的配置，均通过环境变量进行配置
 
 由于 `Terark RocksDB` 和官方的 RocksDB 是二进制兼容的，您并不需要重新编译自己的应用层代码
 
