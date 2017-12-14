@@ -41,7 +41,7 @@ rocksdb 引擎相关的测试情况在[这里](compatibility_myrocks.md)，innod
 
 | suite              |total|success| fail | skipped |
 |:------------------:|:---:|:-----:|:----:|:-------:|
-| main               | 879 | 868 | **11**|  44 |
+| main               | 881 | 870 | **11**|  42 |
 | sys_vars           | 727 | 727 |   0   |  29 |
 | binlog             | 182 | 179 | **3** |   5 |
 | federated          |   7 |   7 |   0   |   2 |
@@ -256,7 +256,6 @@ main.innodb_recovery_with_upper_case_names w3 [ skipped ]  Test requires: 'case_
 main.lowercase_table4                    w2 [ skipped ]  Test requires: 'case_insensitive_file_system'
 main.jemalloc                            w1 [ skipped ]  Test requires jemalloc
 main.mysqld--help-notwin                 w1 [ skipped ]  Test requires: 'have_noprofiling'
-main.ctype_cp932_binlog_row              w2 [ skipped ]  Test requires: 'have_binlog_format_row'
 main.not_partition                       w1 [ skipped ]  Test requires: 'true'
 main.system_mysql_db_fix40123            w3 [ skipped ]  Test need MYSQL_FIX_PRIVILEGE_TABLES
 main.system_mysql_db_fix50030            w3 [ skipped ]  Test needs MYSQL_FIX_PRIVILEGE_TABLES
@@ -266,12 +265,11 @@ main.timezone3                           w3 [ skipped ]  Test requires: 'have_mo
 main.lowercase_mixed_tmpdir_innodb       w2 [ skipped ]  Test requires: 'lowercase2'
 main.lowercase_table2                    w3 [ skipped ]  Test requires: 'lowercase2'
 main.slow_log_legacy_user                w1 [ skipped ]  Test requires full regex (not supported in gcc 4.8 and prior)
-main.sp_trans_log                        w3 [ skipped ]  Test requires: 'have_binlog_format_row'
 main.dynamic_tracing                     w1 [ skipped ]  dtrace/stap tool requires additional privileges to run this test.
 main.func_encrypt_nossl                  w4 [ skipped ]  Test requires: 'not_openssl'
 ```
 
-共 31 个。
+共 29 个。
 
 ### 2. sys_vars
 
