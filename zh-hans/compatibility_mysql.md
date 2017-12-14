@@ -34,7 +34,7 @@ rocksdb 引擎相关的测试情况在[这里](compatibility_myrocks.md)，innod
 |:------------------:|:---:|:-----:|:----:|:-------:|
 | main               | 878 | 867 | **11**|  45 |
 | sys_vars           | 727 | 727 |   0   |  
-| binlog             | 165 | 165 |   0   |
+| binlog             | 182 | 179 | **3** |   5 |
 | federated          |   7 |   7 |   0   |
 | rpl                | 921 | 918 | **3** |
 | rpl_recovery       |  51 |  51 |   0   |
@@ -370,7 +370,375 @@ sys_vars.legacy_user_name_pattern_basic
 
 ### 3. binlog
 
-### 3. xtrabackup
+#### 3.1 失败的测试
+```
+Failing test(s): 
+    binlog.binlog_gtid_mysqlbinlog_row_innodb
+    binlog.binlog_gtid_mysqlbinlog_row
+    binlog.binlog_gtid_mysqlbinlog_row_myisam
+```
+
+按其失败的原因可以分为以下几类
+
+##### 3.1.1 测试中测试程序失去连接
+
+在测试中，测试程序失去连接，不能连接到数据库。失去连接的原因待确定。
+
+涉及测试：
+```
+binlog.binlog_gtid_mysqlbinlog_row_innodb
+binlog.binlog_gtid_mysqlbinlog_row_myisam
+```
+共 2 个。
+
+##### 3.1.2 开启 GTID MODE 后 binlog 格式不一致
+
+开启 GTID MODE 后 binlog 格式不一致，具体原因待确认。
+
+涉及测试：
+```
+binlog.binlog_gtid_mysqlbinlog_row
+```
+共 1 个。
+
+#### 3.2 被跳过的测试
+
+##### 3.2.1 ndbcluster disabled
+
+ndbcluster 未启用，导致测试被跳过。
+
+涉及测试：
+```
+binlog.binlog_multi_engine
+```
+共 1 个。
+
+##### 3.2.2 其他
+
+需要特殊的设置或者特殊编译程序，但是不能合适的设置或者没有找到合适设置方法
+
+```
+binlog.binlog_spurious_ddl_errors 'mix'  w2 [ skipped ]  Example plugin requires the environment variable \$EXAMPLE_PLUGIN to be set (normally done by mtr)
+binlog.binlog_spurious_ddl_errors 'stmt' w3 [ skipped ]  Example plugin requires the environment variable \$EXAMPLE_PLUGIN to be set (normally done by mtr)
+binlog.binlog_unsafe 'stmt'              w4 [ skipped ]  UDF requires the environment variable \$UDF_EXAMPLE_LIB to be set (normally done by mtr)
+binlog.binlog_spurious_ddl_errors 'row'  w1 [ skipped ]  Example plugin requires the environment variable \$EXAMPLE_PLUGIN to be set (normally done by mtr)
+```
+共 4 个。
+
+### 4. federated
+
+#### 4.1 被跳过的测试
+
+##### 4.1.1 federated plugin not available
+
+federated 插件不可用，导致测试被跳过。
+
+涉及测试：
+```
+federated.federated_plugin
+```
+共 1 个。
+
+##### 4.1.2 Need bug25714 test program
+
+需要 bug25714 测试程序。
+
+涉及测试：
+```
+federated.federated_bug_25714
+```
+共 1 个。
+
+### 5. rpl
+
+#### 5.1 失败的测试
+
+```
+rpl.rpl_sbm_previous_gtid_event
+rpl.rpl_current_user
+```
+共 2 个。
+
+##### 5.1.1 Test assertion failed
+
+测试中 assertion 失败，具体原因待查。
+
+涉及测试：
+```
+rpl.rpl_sbm_previous_gtid_event
+```
+共 1 个。
+
+##### 5.1.2 Result content mismatch
+
+用户名长度限制由 32 位变为 80 位，测试更新了，但是测试预期结果为更新，导致测试结果与预期不一致。
+
+涉及测试：
+```
+rpl.rpl_current_user
+```
+共 1 个。
+
+错误信息如下：
+
+rpl.rpl_current_user：
+```
+-GRANT CREATE USER ON *.* TO '012345678901234567890123456789012'@'fakehost';
+-ERROR HY000: String '012345678901234567890123456789012' is too long for user name (should be no longer than 32)
++GRANT CREATE USER ON *.* TO 'abcdefghij1234567890abcdefghij1234567890abcdefghij1234567890abcdefghij1234567890a'@'fakehost';
++ERROR HY000: String 'abcdefghij1234567890abcdefghij1234567890abcdefghij1234567890abcdefghij' is too long for user name (should be no longer than 80)
+ # the host name is too long
+ GRANT CREATE USER ON *.* TO 'fakename'@'0123456789012345678901234567890123456789012345678901234567890';
+ ERROR HY000: String '0123456789012345678901234567890123456789012345678901234567890' is too long for host name (should be no longer than 60)
+```
+
+#### 5.2 跳过的测试
+
+##### 5.2.1 Test makes sense only to run with MTS
+
+测试需要使用 MTS 来运行，但是未能确定 MTS 为何。
+
+涉及测试：
+```
+rpl.rpl_stm_mix_mts_show_relaylog_events
+rpl.rpl_parallel_worker_error
+rpl.rpl_mts_relay_log_post_crash_recovery
+rpl.rpl_mts_relay_log_recovery_on_error
+rpl.rpl_row_mts_show_relaylog_events
+rpl.rpl_mts_stop_slave
+```
+
+共 6 个。
+
+##### 5.2.2 This test needs on slave side: InnoDB disabled, default engine: MyISAM
+
+测试需要从库默认使用 MyISAM 引擎，并禁用 InnoDB 引擎，设置方法待查。
+
+涉及测试：
+```
+rpl.rpl_ddl
+```
+共 1 个。
+
+##### 5.2.5 Test requires: 'have_binlog_format_row'
+
+测试需要 binlog-format 为 row，但是设置为 row 后又显示不支持 row 格式，疑为测试 bug。
+
+涉及测试：
+```
+rpl.rpl_row_loaddata_concurrent
+```
+共 1 个。
+
+##### 5.2.4 其他
+
+需要特殊的设置或者特殊编译程序，但是不能合适的设置或者没有找到合适设置方法
+
+```
+rpl.rpl_plugin_load               w4 [ skipped ]  Example plugin requires the environment variable \$EXAMPLE_PLUGIN to be set (normally done by mtr)
+rpl.rpl_udf                        w3 [ skipped ]  UDF requires the environment variable \$UDF_EXAMPLE_LIB to be set (normally done by mtr)
+rpl.rpl_mixed_implicit_commit_binlog 'mix' w3 [ skipped ]  UDF requires the environment variable \$UDF_EXAMPLE_LIB to be set (normally done by mtr)
+rpl.rpl_row_implicit_commit_binlog 'row' w3 [ skipped ]  UDF requires the environment variable \$UDF_EXAMPLE_LIB to be set (normally done by mtr)
+rpl.rpl_stm_implicit_commit_binlog 'stmt' w3 [ skipped ]  UDF requires the environment variable \$UDF_EXAMPLE_LIB to be set (normally done by mtr)
+```
+共 5 个。
+
+### 6. rpl_recovery
+
+#### 6.1 跳过的测试
+
+##### 6.1.1 其他
+
+需要特殊的设置或者特殊编译程序，但是不能合适的设置或者没有找到合适设置方法
+
+```
+rpl_recovery.rpl_crash_safe_idempotent_master_binlog_format w3 [ skipped ]  Test requires: 'have_slave_use_idempotent_for_recovery'
+rpl_recovery.rpl_gtid_mts_stress_crash 'row-idempotent-recovery' w3 [ skipped ]  Test cannot run with idempotent recovery
+rpl_recovery.rpl_gtid_stress_crash 'row-idempotent-recovery' w1 [ skipped ]  Test cannot run with idempotent recovery
+rpl_recovery.rpl_gtid_crash_safe 'row-idempotent-recovery' w1 [ skipped ]  Test cannot run with idempotent recovery
+rpl_recovery.rpl_gtid_crash_safe_idempotent 'row' w1 [ skipped ]  Test requires: 'have_slave_use_idempotent_for_recovery'
+```
+共 5 个。
+
+### 7. perfschema
+
+#### 7.1 跳过的测试
+
+##### 7.1.1 Need windows
+
+测试需要程序运行在 Windows 平台上。
+
+涉及测试：
+```
+perfschema.socket_instances_func_win
+perfschema.socket_summary_by_instance_func_win
+```
+共 2 个。
+
+##### 7.1.2 Need open_files_limit to be at least 5000
+
+需要 open_files_limit 设置为至少 5000，但是未能正确确认，待处理。
+
+涉及测试：
+```
+perfschema.sizing_default
+```
+
+### 8. funcs_1
+
+#### 8.1 跳过的测试
+
+##### 8.1.1 Test requires: embedded server
+
+测试需要嵌入式版程序。
+
+涉及测试：
+```
+funcs_1.is_triggers_embedded
+funcs_1.is_views_embedded
+funcs_1.is_schemata_embedded
+funcs_1.is_statistics_mysql_embedded
+funcs_1.is_columns_is_embedded
+funcs_1.is_table_constraints_mysql_embedded
+funcs_1.is_columns_myisam_embedded
+funcs_1.is_tables_embedded
+funcs_1.is_columns_mysql_embedded
+funcs_1.is_tables_myisam_embedded
+funcs_1.is_tables_mysql_embedded
+funcs_1.is_key_column_usage_embedded
+funcs_1.is_routines_embedded
+```
+共 13 个。
+
+##### 8.1.2 Test requires: ps-protocol enabled, other protocols disabled
+
+需要使用 ps-protocol 协议，并禁用其他协议。
+
+涉及测试：
+```
+funcs_1.processlist_priv_ps
+funcs_1.processlist_val_ps
+```
+共 2 个。
+
+### 9. opt_trace
+
+#### 9.1 跳过的测试
+
+##### 9.1.1 Need ps-protocol
+
+需要使用 ps-protocol 协议。
+
+涉及测试：
+```
+opt_trace.bugs_ps_prot_none
+opt_trace.bugs_ps_prot_all
+opt_trace.security_ps_prot
+opt_trace.range_ps_prot
+opt_trace.subquery_ps_prot
+opt_trace.general_ps_prot_all
+opt_trace.general_ps_prot_none
+opt_trace.general2_ps_prot
+```
+
+共 8 个。
+
+### 10. parts
+
+#### 10.1 跳过的测试
+
+##### 10.1.1 Test requires: 'lowercase2'
+
+测试需要数据库设置 lowercase2，但未能找到正确的设置方法，待确认。
+
+涉及测试：
+```
+parts.partition_mgm_lc2_archive
+parts.partition_mgm_lc2_memory
+parts.partition_mgm_lc2_myisam
+parts.partition_mgm_lc2_innodb
+```
+共 4 个。
+
+##### 10.1.2 Need open_files_limit >= 16450 (see ulimit -n)
+
+测试需要 open_files_limit 设置为大于等于 16450，但未能找到正确的设置方法，待确认。
+
+涉及测试：
+```
+parts.partition_max_parts_hash_myisam
+parts.partition_max_parts_inv_myisam
+parts.partition_max_parts_key_myisam
+parts.partition_max_parts_list_myisam
+parts.partition_max_parts_range_myisam
+parts.partition_max_sub_parts_key_list_myisam
+parts.partition_max_sub_parts_key_range_myisam
+parts.partition_max_sub_parts_list_myisam
+parts.partition_max_sub_parts_range_myisam
+```
+共 9 个。
+
+##### 10.1.3 CAST() in partitioning function is currently not supported.
+
+partitioning function 的 CAST 函数当前版本不支持。
+
+涉及测试：
+```
+parts.partition_value_myisam
+parts.partition_value_innodb
+```
+
+共 2 个。
+
+### 11. auth_sec
+
+#### 11.1 失败的测试
+
+##### 11.1.1 SSL 库版本不同
+
+测试预期的 SSL 版本与当前数据库使用的 SSL 版本不同。
+
+涉及测试：
+```
+auth_sec.cert_verify
+```
+共 1 个。
+
+错误信息如下：
+
+auth_sec.cert_verify：
+```
+ #T1: Host name (/CN=localhost/) as OU name in the server certificate, server certificate verification should fail.
+ #T2: Host name (localhost) as common name in the server certificate, server certificate verification should pass.
+ Variable_name	Value
+-Ssl_version	TLS_VERSION
++Ssl_version	TLS_VERSION.2
+ # restart server using restart
+```
+
+#### 11.2 跳过的测试
+
+##### 11.2.1 Need windows
+
+测试需要程序运行在 Windows 平台上。
+
+涉及测试：
+```
+auth_sec.secure_file_priv_warnings_win
+```
+
+##### 11.2.2 Need YaSSL support
+
+需要 YaSSL 支持。
+
+涉及测试：
+```
+auth_sec.server_withoutssl_client_withssl
+auth_sec.server_withoutssl_client_withoutssl
+```
+共 2 个。
+
+### 12. xtrabackup
 ```
 Failing test(s):
     xtrabackup.xb_with_xbstream
@@ -384,9 +752,9 @@ Failing test(s):
     xtrabackup.xb_compressed_table
 ```
 
-找不到可执行文件 `MYSQL_INNOBACKUPEX`
+找不到可执行文件 `MYSQL_INNOBACKUPEX`，待解决。
 
-### 4. engines/rr_trx
+### 13. engines/rr_trx
 ```
 Failing test(s):
     engines/rr_trx.rr_iud_rollback-multi-50
@@ -406,3 +774,77 @@ Failing test(s):
     engines/rr_trx.rr_u_4
     engines/rr_trx.init_innodb
 ```
+
+测试未正确的初始化，测试程序有错，原版 MySQL 5.6.36 也全部失败。
+
+### 14. large_tests
+
+#### 12.1 跳过的测试
+
+##### 12.1.1 Need open_files_limit to be greater than 6100
+
+需要 open_files_limit 设置为大于等于 6100，但未能找到正确设置方法，待确认。
+6100
+涉及测试：
+```
+large_tests.lock_tables_big
+```
+
+### 15. perfschema_stress
+
+#### 15.1 失败的测试
+
+##### 15.1.1 performance_schema 数据库中相关表结构有差异
+
+因测试为及时更新，当前版本的 performance_schema 数据库中表 events_waits_current、events_waits_history 的结构与测试预期不一致。
+
+涉及测试：
+
+```
+perfschema_stress.read
+```
+共 1 个。
+
+错误信息如下：
+
+perfschema_stress.read：
+```
+ NAME	ENABLED	TIMED
+ SELECT * FROM performance_schema.events_waits_current
+ WHERE (TIMER_END - TIMER_START != TIMER_WAIT);
+-THREAD_ID	EVENT_ID	EVENT_NAME	SOURCE	TIMER_START	TIMER_END	TIMER_WAIT	SPINS	OBJECT_SCHEMA	OBJECT_NAME	OBJECT_TYPE	OBJECT_INSTANCE_BEGIN	NESTING_EVENT_ID	OPERATION	NUMBER_OF_BYTESFLAGS
++THREAD_ID	EVENT_ID	END_EVENT_ID	EVENT_NAME	SOURCE	TIMER_START	TIMER_END	TIMER_WAIT	SPINS	OBJECT_SCHEMA	OBJECT_NAME	INDEX_NAME	OBJECT_TYPE	OBJECT_INSTANCE_BEGIN	NESTING_EVENT_ID	NESTING_EVENT_TYPE	OPERATION	NUMBER_OF_BYTES	FLAGS
+ SELECT * FROM performance_schema.events_waits_history
+ WHERE SPINS != NULL;
+-THREAD_ID	EVENT_ID	EVENT_NAME	SOURCE	TIMER_START	TIMER_END	TIMER_WAIT	SPINS	OBJECT_SCHEMA	OBJECT_NAME	OBJECT_TYPE	OBJECT_INSTANCE_BEGIN	NESTING_EVENT_ID	OPERATION	NUMBER_OF_BYTESFLAGS
++THREAD_ID	EVENT_ID	END_EVENT_ID	EVENT_NAME	SOURCE	TIMER_START	TIMER_END	TIMER_WAIT	SPINS	OBJECT_SCHEMA	OBJECT_NAME	INDEX_NAME	OBJECT_TYPE	OBJECT_INSTANCE_BEGIN	NESTING_EVENT_ID	NESTING_EVENT_TYPE	OPERATION	NUMBER_OF_BYTES	FLAGS
+ SELECT * FROM performance_schema.threads p,
+ performance_schema.events_waits_current e
+ WHERE p.THREAD_ID = e.THREAD_ID
+ AND TIMER_START = 0
+ ORDER BY e.EVENT_ID;
+-THREAD_ID	NAME	TYPE	PROCESSLIST_ID	PROCESSLIST_USER	PROCESSLIST_HOST	PROCESSLIST_DB	PROCESSLIST_COMMAND	PROCESSLIST_TIME	PROCESSLIST_STATE	PROCESSLIST_INFO	PARENT_THREAD_ID	ROLE	INSTRUMENTED	THREAD_ID	EVENT_ID	EVENT_NAME	SOURCE	TIMER_START	TIMER_END	TIMER_WAIT	SPINS	OBJECT_SCHEMA	OBJECT_NAME	OBJECT_TYPE	OBJECT_INSTANCE_BEGIN	NESTING_EVENT_ID	OPERATION	NUMBER_OF_BYTES	FLAGS
++THREAD_ID	NAME	TYPE	PROCESSLIST_ID	PROCESSLIST_USER	PROCESSLIST_HOST	PROCESSLIST_DB	PROCESSLIST_COMMAND	PROCESSLIST_TIME	PROCESSLIST_STATE	PROCESSLIST_INFO	PARENT_THREAD_ID	ROLE	INSTRUMENTED	THREAD_ID	EVENT_ID	END_EVENT_ID	EVENT_NAME	SOURCE	TIMER_START	TIMER_END	TIMER_WAIT	SPINS	OBJECT_SCHEMA	OBJECT_NAME	INDEX_NAME	OBJECT_TYPE	OBJECT_INSTANCE_BEGIN	NESTING_EVENT_ID	NESTING_EVENT_TYPE	OPERATION	NUMBER_OF_BYTES	FLAGS
+ SELECT * FROM performance_schema.events_waits_current
+ WHERE THREAD_ID IN (SELECT THREAD_ID
+ FROM performance_schema.threads
+@@ -20,7 +20,7 @@
+ AND TIMER_END = 0
+ AND TIMER_WAIT != NULL
+ ORDER BY EVENT_ID;
+-THREAD_ID	EVENT_ID	EVENT_NAME	SOURCE	TIMER_START	TIMER_END	TIMER_WAIT	SPINS	OBJECT_SCHEMA	OBJECT_NAME	OBJECT_TYPE	OBJECT_INSTANCE_BEGIN	NESTING_EVENT_ID	OPERATION	NUMBER_OF_BYTESFLAGS
++THREAD_ID	EVENT_ID	END_EVENT_ID	EVENT_NAME	SOURCE	TIMER_START	TIMER_END	TIMER_WAIT	SPINS	OBJECT_SCHEMA	OBJECT_NAME	INDEX_NAME	OBJECT_TYPE	OBJECT_INSTANCE_BEGIN	NESTING_EVENT_ID	NESTING_EVENT_TYPE	OPERATION	NUMBER_OF_BYTES	FLAGS
+ SELECT SUM(COUNT_READ) AS sum_count_read,
+ SUM(COUNT_WRITE) AS sum_count_write,
+ SUM(SUM_NUMBER_OF_BYTES_READ) AS sum_num_bytes_read,
+```
+
+##### 15.1.2 测试未产生任何输出
+
+测试未产生任何输出，原因待确认。
+
+涉及测试：
+```
+perfschema_stress.setup
+```
+共 1 个。
