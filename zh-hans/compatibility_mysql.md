@@ -35,25 +35,25 @@ rocksdb 引擎相关的测试情况在[这里](compatibility_myrocks.md)，innod
 | main               | 878 | 867 | **11**|  45 |
 | sys_vars           | 727 | 727 |   0   |  29 |
 | binlog             | 182 | 179 | **3** |   5 |
-| federated          |   7 |   7 |   0   |
-| rpl                | 921 | 918 | **3** |
-| rpl_recovery       |  51 |  51 |   0   |
-| perfschema         | 314 | 314 |   0   |
-| funcs_1            | 103 | 103 |   0   |
-| opt_trace          |  13 | 13  |   0   |
-| parts              | 115 | 115 |   0   |
-| auth_sec           |   7 |   7 |   0   |
-| connection_control |   8 |   8 |   0   |
-| json               |  25 |  25 |   0   |
-| funcs_2            |   3 |   3 |   0   |
-| multiengine        |   2 |   2 |   0   |
-| stress             |   5 |   5 |   0   |
-| xtrabackup         |   9 |   0 | **9** |
-| engines/funcs      | 310 | 310 |   0   |
-| engines/iuds       |  13 |  13 |   0   |
-| engines/rr_trx     |  16 |   0 | **16**|
-| large_tests        |   1 |   1 |   0   |
-| perfschema_stress  |   4 |   2 | **2** |
+| federated          |   7 |   7 |   0   |   2 |
+| rpl                | 966 | 963 | **3** |  13 |
+| rpl_recovery       |  51 |  51 |   0   |   5 |
+| perfschema         | 314 | 314 |   0   |   3 |
+| funcs_1            | 104 | 104 |   0   |  15 |
+| opt_trace          |  13 | 13  |   0   |   8 |
+| parts              | 115 | 115 |   0   |  15 |
+| auth_sec           |  15 |  14 | **1** |   3 |
+| connection_control |   8 |   8 |   0   |   0 |
+| json               |  25 |  25 |   0   |   0 |
+| funcs_2            |   3 |   3 |   0   |   0 |
+| multiengine        |   2 |   2 |   0   |   0 |
+| stress             |   5 |   5 |   0   |   0 |
+| xtrabackup         |   9 |   0 | **9** |   0 |
+| engines/funcs      | 311 | 311 |   0   |   0 |
+| engines/iuds       |  13 |  13 |   0   |   0 |
+| engines/rr_trx     |  16 |   0 | **16**|   0 |
+| large_tests        |   2 |   2 |   0   |   1 |
+| perfschema_stress  |   4 |   2 | **2** |   0 |
 
 其中 fail 的测试为当前版本 MyRocks 未能通过的测试，skipped 的测试为需要特殊的条件或者设置才能运行。
 
@@ -76,7 +76,7 @@ Failing test(s):
     main.mysqlshow
     main.ssl_ca
 ```
-共 11 个，按失败原因分类可分为一下几类
+共 11 个，按失败原因分类可分为以下几类
 
 #### 1.1.1 SSL 加密算法与预期不同
 
@@ -514,7 +514,7 @@ rpl.rpl_ddl
 ```
 共 1 个。
 
-##### 5.2.5 Test requires: 'have_binlog_format_row'
+##### 5.2.3 Test requires: 'have_binlog_format_row'
 
 测试需要 binlog-format 为 row，但是设置为 row 后又显示不支持 row 格式，疑为测试 bug。
 
@@ -577,6 +577,7 @@ perfschema.socket_summary_by_instance_func_win
 ```
 perfschema.sizing_default
 ```
+共 1 个。
 
 ### 8. funcs_1
 
@@ -720,6 +721,7 @@ auth_sec.cert_verify：
 ```
 auth_sec.secure_file_priv_warnings_win
 ```
+共 1 个。
 
 ##### 11.2.2 Need YaSSL support
 
