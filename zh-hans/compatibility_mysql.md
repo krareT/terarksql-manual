@@ -33,7 +33,7 @@ rocksdb 引擎相关的测试情况在[这里](compatibility_myrocks.md)，innod
 | suite              |total|success| fail | skipped |
 |:------------------:|:---:|:-----:|:----:|:-------:|
 | main               | 878 | 867 | **11**|  45 |
-| sys_vars           | 727 | 727 |   0   |  
+| sys_vars           | 727 | 727 |   0   |  29 |
 | binlog             | 182 | 179 | **3** |   5 |
 | federated          |   7 |   7 |   0   |
 | rpl                | 921 | 918 | **3** |
@@ -265,53 +265,11 @@ main.func_encrypt_nossl                  w4 [ skipped ]  Test requires: 'not_ope
 
 共 32 个。
 
-### 2. rpl
-```
-Failing test(s):
-    rpl.rpl_ssl
-```
+### 2. sys_vars
 
-#### 2.1 失败的测试
+#### 2.1 跳过的测试
 
-##### 2.1.1 SSL 加密算法与预期不同
-
-测试预期使用的 SSL 加密算法与当前进行测试时使用的加密算法不一致导致测试结果与预期不一致。
-
-涉及测试：
-```
-rpl.rpl_ssl
-```
-共 1 个
-
-错误信息如下：
-
-rpl.rpl_ssl：
-```
---- /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/suite/rpl/r/rpl_ssl.result	2017-06-08 06:26:45.000000000 +0300
-+++ /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/var/3/log/rpl_ssl.reject	2017-12-07 15:42:42.519286165 +0300
-@@ -28,7 +28,7 @@
- Master_SSL_CA_File = 'MYSQL_TEST_DIR/std_data/cacert.pem'
- Master_SSL_Cert = 'MYSQL_TEST_DIR/std_data/client-cert.pem'
- Master_SSL_Key = 'MYSQL_TEST_DIR/std_data/client-key.pem'
--Master_SSL_Actual_Cipher = 'ECDHE-RSA-AES128-GCM-SHA256'
-+Master_SSL_Actual_Cipher = 'ECDHE-RSA-AES256-GCM-SHA384'
- Master_SSL_Subject = '/C=SE/ST=Uppsala/O=MySQL AB/CN=localhost'
- Master_SSL_Issuer = '/C=SE/ST=Uppsala/L=Uppsala/O=MySQL AB'
- include/check_slave_is_running.inc
-@@ -44,7 +44,7 @@
- Master_SSL_CA_File = 'MYSQL_TEST_DIR/std_data/cacert.pem'
- Master_SSL_Cert = 'MYSQL_TEST_DIR/std_data/client-cert.pem'
- Master_SSL_Key = 'MYSQL_TEST_DIR/std_data/client-key.pem'
--Master_SSL_Actual_Cipher = 'ECDHE-RSA-AES128-GCM-SHA256'
-+Master_SSL_Actual_Cipher = 'ECDHE-RSA-AES256-GCM-SHA384'
- Master_SSL_Subject = '/C=SE/ST=Uppsala/O=MySQL AB/CN=localhost'
- Master_SSL_Issuer = '/C=SE/ST=Uppsala/L=Uppsala/O=MySQL AB'
- include/check_slave_is_running.inc
-```
-
-#### 2.2 跳过的测试
-
-##### 2.2.1 Need windows
+##### 2.1.1 Need windows
 
 需要运行在 Windows 平台上。
 
@@ -323,7 +281,7 @@ sys_vars.named_pipe_basic
 ```
 共 3 个。
 
-##### 2.2.2 Need a 32 bit machine/binary
+##### 2.1.2 Need a 32 bit machine/binary
 
 需要 32 位版本程序和平台。
 
@@ -356,7 +314,7 @@ sys_vars.key_cache_age_threshold_basic_32
 ```
 共 24 个。
 
-##### 2.2.3 其他
+##### 2.1.3 其他
 
 需要系统关闭 NUMA 和需要完整的正则支持
 
@@ -365,7 +323,6 @@ sys_vars.key_cache_age_threshold_basic_32
 sys_vars.innodb_numa_interleave_basic
 sys_vars.legacy_user_name_pattern_basic
 ```
-
 共 2 个。
 
 ### 3. binlog
@@ -456,10 +413,47 @@ federated.federated_bug_25714
 ```
 rpl.rpl_sbm_previous_gtid_event
 rpl.rpl_current_user
+rpl.rpl_ssl
 ```
-共 2 个。
+共 3 个。
 
-##### 5.1.1 Test assertion failed
+##### 5.1.1 SSL 加密算法与预期不同
+
+测试预期使用的 SSL 加密算法与当前进行测试时使用的加密算法不一致导致测试结果与预期不一致。
+
+涉及测试：
+```
+rpl.rpl_ssl
+```
+共 1 个
+
+错误信息如下：
+
+rpl.rpl_ssl：
+```
+--- /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/suite/rpl/r/rpl_ssl.result	2017-06-08 06:26:45.000000000 +0300
++++ /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/var/3/log/rpl_ssl.reject	2017-12-07 15:42:42.519286165 +0300
+@@ -28,7 +28,7 @@
+ Master_SSL_CA_File = 'MYSQL_TEST_DIR/std_data/cacert.pem'
+ Master_SSL_Cert = 'MYSQL_TEST_DIR/std_data/client-cert.pem'
+ Master_SSL_Key = 'MYSQL_TEST_DIR/std_data/client-key.pem'
+-Master_SSL_Actual_Cipher = 'ECDHE-RSA-AES128-GCM-SHA256'
++Master_SSL_Actual_Cipher = 'ECDHE-RSA-AES256-GCM-SHA384'
+ Master_SSL_Subject = '/C=SE/ST=Uppsala/O=MySQL AB/CN=localhost'
+ Master_SSL_Issuer = '/C=SE/ST=Uppsala/L=Uppsala/O=MySQL AB'
+ include/check_slave_is_running.inc
+@@ -44,7 +44,7 @@
+ Master_SSL_CA_File = 'MYSQL_TEST_DIR/std_data/cacert.pem'
+ Master_SSL_Cert = 'MYSQL_TEST_DIR/std_data/client-cert.pem'
+ Master_SSL_Key = 'MYSQL_TEST_DIR/std_data/client-key.pem'
+-Master_SSL_Actual_Cipher = 'ECDHE-RSA-AES128-GCM-SHA256'
++Master_SSL_Actual_Cipher = 'ECDHE-RSA-AES256-GCM-SHA384'
+ Master_SSL_Subject = '/C=SE/ST=Uppsala/O=MySQL AB/CN=localhost'
+ Master_SSL_Issuer = '/C=SE/ST=Uppsala/L=Uppsala/O=MySQL AB'
+ include/check_slave_is_running.inc
+```
+
+##### 5.1.2 Test assertion failed
 
 测试中 assertion 失败，具体原因待查。
 
@@ -469,7 +463,7 @@ rpl.rpl_sbm_previous_gtid_event
 ```
 共 1 个。
 
-##### 5.1.2 Result content mismatch
+##### 5.1.3 Result content mismatch
 
 用户名长度限制由 32 位变为 80 位，测试更新了，但是测试预期结果为更新，导致测试结果与预期不一致。
 
