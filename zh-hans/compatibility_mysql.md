@@ -792,7 +792,7 @@ large_tests.lock_tables_big
 
 ##### 15.1.1 performance_schema 数据库中相关表结构有差异
 
-因测试为及时更新，当前版本的 performance_schema 数据库中表 events_waits_current、events_waits_history 的结构与测试预期不一致。
+因测试未及时更新，当前版本的 performance_schema 数据库中表 events_waits_current、events_waits_history 的结构与测试预期不一致。
 
 涉及测试：
 
