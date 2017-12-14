@@ -335,7 +335,7 @@ Failing test(s):
     binlog.binlog_gtid_mysqlbinlog_row_myisam
 ```
 
-按其失败的原因可以分为以下几类
+共 3 个，按其失败的原因可以分为以下几类
 
 ##### 3.1.1 测试中测试程序失去连接
 
