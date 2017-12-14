@@ -47,10 +47,10 @@ rocksdb 引擎相关的测试情况在[这里](compatibility_myrocks.md)，innod
 | federated          |   7 |   7 |   0   |   2 |
 | rpl                | 966 | 963 | **3** |  13 |
 | rpl_recovery       |  51 |  51 |   0   |   5 |
-| perfschema         | 314 | 314 |   0   |   3 |
+| perfschema         | 315 | 315 |   0   |   2 |
 | funcs_1            | 104 | 104 |   0   |  15 |
 | opt_trace          |  13 | 13  |   0   |   8 |
-| parts              | 115 | 115 |   0   |  15 |
+| parts              | 124 | 124 |   0   |   6 |
 | auth_sec           |  15 |  14 | **1** |   3 |
 | connection_control |   8 |   8 |   0   |   0 |
 | json               |  25 |  25 |   0   |   0 |
@@ -61,7 +61,7 @@ rocksdb 引擎相关的测试情况在[这里](compatibility_myrocks.md)，innod
 | engines/funcs      | 311 | 311 |   0   |   0 |
 | engines/iuds       |  13 |  13 |   0   |   0 |
 | engines/rr_trx     |  16 |   0 | **16**|   0 |
-| large_tests        |   2 |   2 |   0   |   1 |
+| large_tests        |   3 |   3 |   0   |   0 |
 | perfschema_stress  |   4 |   2 | **2** |   0 |
 
 其中 fail 的测试为当前版本 MyRocks 未能通过的测试，skipped 的测试为需要特殊的条件或者设置才能运行。
@@ -577,16 +577,6 @@ perfschema.socket_summary_by_instance_func_win
 ```
 共 2 个。
 
-##### 7.1.2 Need open_files_limit to be at least 5000
-
-需要 open_files_limit 设置为至少 5000，但是未能正确确认，待处理。
-
-涉及测试：
-```
-perfschema.sizing_default
-```
-共 1 个。
-
 ### 8. funcs_1
 
 #### 8.1 跳过的测试
@@ -663,25 +653,7 @@ parts.partition_mgm_lc2_innodb
 ```
 共 4 个。
 
-##### 10.1.2 Need open_files_limit >= 16450 (see ulimit -n)
-
-测试需要 open_files_limit 设置为大于等于 16450，但未能找到正确的设置方法，待确认。
-
-涉及测试：
-```
-parts.partition_max_parts_hash_myisam
-parts.partition_max_parts_inv_myisam
-parts.partition_max_parts_key_myisam
-parts.partition_max_parts_list_myisam
-parts.partition_max_parts_range_myisam
-parts.partition_max_sub_parts_key_list_myisam
-parts.partition_max_sub_parts_key_range_myisam
-parts.partition_max_sub_parts_list_myisam
-parts.partition_max_sub_parts_range_myisam
-```
-共 9 个。
-
-##### 10.1.3 CAST() in partitioning function is currently not supported.
+##### 10.1.2 CAST() in partitioning function is currently not supported.
 
 partitioning function 的 CAST 函数当前版本不支持。
 
@@ -781,24 +753,11 @@ Failing test(s):
 
 测试未正确的初始化，测试程序有错，原版 MySQL 5.6.36 也全部失败。
 
-### 14. large_tests
+### 14. perfschema_stress
 
-#### 12.1 跳过的测试
+#### 14.1 失败的测试
 
-##### 12.1.1 Need open_files_limit to be greater than 6100
-
-需要 open_files_limit 设置为大于等于 6100，但未能找到正确设置方法，待确认。
-6100
-涉及测试：
-```
-large_tests.lock_tables_big
-```
-
-### 15. perfschema_stress
-
-#### 15.1 失败的测试
-
-##### 15.1.1 performance_schema 数据库中相关表结构有差异
+##### 14.1.1 performance_schema 数据库中相关表结构有差异
 
 因测试未及时更新，当前版本的 performance_schema 数据库中表 events_waits_current、events_waits_history 的结构与测试预期不一致。
 
@@ -843,7 +802,7 @@ perfschema_stress.read：
  SUM(SUM_NUMBER_OF_BYTES_READ) AS sum_num_bytes_read,
 ```
 
-##### 15.1.2 测试未产生任何输出
+##### 14.1.2 测试未产生任何输出
 
 测试未产生任何输出，原因待确认。
 
