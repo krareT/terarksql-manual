@@ -41,7 +41,7 @@ rocksdb 引擎相关的测试情况在[这里](compatibility_myrocks.md)，innod
 
 | suite              |total|success| fail | skipped |
 |:------------------:|:---:|:-----:|:----:|:-------:|
-| main               | 878 | 867 | **11**|  45 |
+| main               | 879 | 868 | **11**|  44 |
 | sys_vars           | 727 | 727 |   0   |  29 |
 | binlog             | 182 | 179 | **3** |   5 |
 | federated          |   7 |   7 |   0   |   2 |
@@ -246,7 +246,6 @@ main.plugin_not_embedded                 w1 [ skipped ]  Example plugin requires
 main.multi_plugin_load                   w2 [ skipped ]  Need the plugin test_plugin_server
 main.udf                                 w2 [ skipped ]  UDF requires the environment variable \$UDF_EXAMPLE_LIB to be set (normally done by mtr)
 main.udf_skip_grants                     w1 [ skipped ]  UDF requires the environment variable \$UDF_EXAMPLE_LIB to be set (normally done by mtr)
-main.partition_open_files_limit          w4 [ skipped ]  Need open_files_limit to be lower than 1025
 main.archive_plugin                      w1 [ skipped ]  archive plugin not available
 main.blackhole_plugin                    w1 [ skipped ]  blackhole plugin not available;
 main.ssl-sha512                          w4 [ skipped ]  Test requires: 'not_openssl'
@@ -272,7 +271,7 @@ main.dynamic_tracing                     w1 [ skipped ]  dtrace/stap tool requir
 main.func_encrypt_nossl                  w4 [ skipped ]  Test requires: 'not_openssl'
 ```
 
-共 32 个。
+共 31 个。
 
 ### 2. sys_vars
 
