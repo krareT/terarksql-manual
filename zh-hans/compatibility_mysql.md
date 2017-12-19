@@ -41,11 +41,11 @@ rocksdb 引擎相关的测试情况在[这里](compatibility_myrocks.md)，innod
 
 | suite              |total|success| fail | skipped |
 |:------------------:|:---:|:-----:|:----:|:-------:|
-| main               | 881 | 870 | **11**|  42 |
+| main               | 883 | 872 | **11**|  40 |
 | sys_vars           | 727 | 727 |   0   |  29 |
-| binlog             | 182 | 179 | **3** |   5 |
+| binlog             | 183 | 180 | **3** |   4 |
 | federated          |   7 |   7 |   0   |   2 |
-| rpl                | 966 | 963 | **3** |  13 |
+| rpl                | 972 | 969 | **3** |   9 |
 | rpl_recovery       |  51 |  51 |   0   |   5 |
 | perfschema         | 315 | 315 |   0   |   2 |
 | funcs_1            | 104 | 104 |   0   |  15 |
@@ -244,8 +244,6 @@ main.plugin_load_option                  w4 [ skipped ]  Example plugin requires
 main.plugin                              w1 [ skipped ]  Example plugin requires the environment variable \$EXAMPLE_PLUGIN to be set (normally done by mtr)
 main.plugin_not_embedded                 w1 [ skipped ]  Example plugin requires the environment variable \$EXAMPLE_PLUGIN to be set (normally done by mtr)
 main.multi_plugin_load                   w2 [ skipped ]  Need the plugin test_plugin_server
-main.udf                                 w2 [ skipped ]  UDF requires the environment variable \$UDF_EXAMPLE_LIB to be set (normally done by mtr)
-main.udf_skip_grants                     w1 [ skipped ]  UDF requires the environment variable \$UDF_EXAMPLE_LIB to be set (normally done by mtr)
 main.archive_plugin                      w1 [ skipped ]  archive plugin not available
 main.blackhole_plugin                    w1 [ skipped ]  blackhole plugin not available;
 main.ssl-sha512                          w4 [ skipped ]  Test requires: 'not_openssl'
@@ -269,7 +267,7 @@ main.dynamic_tracing                     w1 [ skipped ]  dtrace/stap tool requir
 main.func_encrypt_nossl                  w4 [ skipped ]  Test requires: 'not_openssl'
 ```
 
-共 29 个。
+共 27 个。
 
 ### 2. sys_vars
 
@@ -383,10 +381,9 @@ binlog.binlog_multi_engine
 ```
 binlog.binlog_spurious_ddl_errors 'mix'  w2 [ skipped ]  Example plugin requires the environment variable \$EXAMPLE_PLUGIN to be set (normally done by mtr)
 binlog.binlog_spurious_ddl_errors 'stmt' w3 [ skipped ]  Example plugin requires the environment variable \$EXAMPLE_PLUGIN to be set (normally done by mtr)
-binlog.binlog_unsafe 'stmt'              w4 [ skipped ]  UDF requires the environment variable \$UDF_EXAMPLE_LIB to be set (normally done by mtr)
 binlog.binlog_spurious_ddl_errors 'row'  w1 [ skipped ]  Example plugin requires the environment variable \$EXAMPLE_PLUGIN to be set (normally done by mtr)
 ```
-共 4 个。
+共 3 个。
 
 ### 4. federated
 
@@ -536,12 +533,8 @@ rpl.rpl_row_loaddata_concurrent
 
 ```
 rpl.rpl_plugin_load               w4 [ skipped ]  Example plugin requires the environment variable \$EXAMPLE_PLUGIN to be set (normally done by mtr)
-rpl.rpl_udf                        w3 [ skipped ]  UDF requires the environment variable \$UDF_EXAMPLE_LIB to be set (normally done by mtr)
-rpl.rpl_mixed_implicit_commit_binlog 'mix' w3 [ skipped ]  UDF requires the environment variable \$UDF_EXAMPLE_LIB to be set (normally done by mtr)
-rpl.rpl_row_implicit_commit_binlog 'row' w3 [ skipped ]  UDF requires the environment variable \$UDF_EXAMPLE_LIB to be set (normally done by mtr)
-rpl.rpl_stm_implicit_commit_binlog 'stmt' w3 [ skipped ]  UDF requires the environment variable \$UDF_EXAMPLE_LIB to be set (normally done by mtr)
 ```
-共 5 个。
+共 1 个。
 
 ### 6. rpl_recovery
 
