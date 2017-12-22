@@ -89,7 +89,7 @@ Failing test(s):
 
 #### 1.1.1 SSL 加密算法与预期不同
 
-测试预期使用的 SSL 加密算法与当前进行测试时使用的加密算法不一致导致测试结果与预期不一致。
+编译当前测试使用的 MyRocks 时使用的 openssl 版本（1.0.1e）较新，其使用的加密算法与测试预期不同，故导致结果不一致。
 
 涉及测试：
 ```
@@ -113,14 +113,44 @@ Variable_name	Value
 
 #### 1.1.2 access denied
 
-在测试过程中，测试程序不能连接到服务器，具体原因待查证。
+在测试过程中，测试程序不能连接到服务器，原因有以下两个。
+
+##### 1.1.2.1 测试中登录使用的 SSL 加密算法与预期不同
 
 涉及测试：
 ```
 main.openssl_1
+```
+共 1 个。
+
+原因同 1.1.1
+
+测试中使用了如下语句：
+```
+grant select on test.* to ssl_user2@localhost require cipher "ECDHE-RSA-AES128-GCM-SHA256";
+```
+
+将其改为：
+```
+grant select on test.* to ssl_user2@localhost require cipher "ECDHE-RSA-AES256-GCM-SHA384";
+```
+
+便能正确的进行测试。同样因为以上原因，结果会与预期不一致，但这不会对功能有影响。
+
+修改后的测试结果与预期结果差异类似如下：
+```
+ Variable_name	Value
+-Ssl_cipher	ECDHE-RSA-AES128-GCM-SHA256
++Ssl_cipher	ECDHE-RSA-AES256-GCM-SHA384
+```
+
+##### 1.1.2.2 其他
+
+涉及测试：
+```
 main.mysql_shutdown_logging
 ```
-共 2 个。
+共 1 个。
 
 错误信息如下：
 ```
@@ -806,3 +836,4 @@ perfschema_stress.setup
 ## 更新
 
 1. udf_example 插件正确编译并加入到插件库，所有被跳过的 udf 插件相关测试不再被跳过并都正确通过。 2017.12.20
+2. main.openssl_1 测试能正确进行。SSL 加密算法不一致，将测试中的加密算法修改为与平台一致既能通过测试。 2017.12.22
