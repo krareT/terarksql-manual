@@ -802,3 +802,7 @@ perfschema_stress.read：
 perfschema_stress.setup
 ```
 共 1 个。
+
+## 更新
+
+1. udf_example 插件正确编译并加入到插件库，所有被跳过的 udf 插件相关测试不再被跳过并都正确通过。 2017.12.20
