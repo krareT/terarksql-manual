@@ -1,5 +1,5 @@
 
-## 主从测试
+## 主从复制测试
 
 ### 测试环境
 
@@ -10,7 +10,7 @@
 
 ### 测试程序及数据
 
-使用的测试程序为经我们修改过的 [YCSB](https://github.com/Terark/YCSB/tree/dev) （ rpl-test 分支），测试中使用的 workload 为 [FileWorkload](https://github.com/Terark/YCSB/blob/master/README-terark.md) 。
+使用的测试程序为经我们修改过的 [YCSB](https://github.com/Terark/YCSB/tree/rpl-test) （ rpl-test 分支），测试中使用的 workload 为 [FileWorkload](https://github.com/Terark/YCSB/blob/master/README-terark.md) 。
 
 测试程序所使用的配置见附录 1 。
 
@@ -59,6 +59,12 @@ CREATE TABLE `lineitem` (
 | OPS | 968.2 | 989.7 | 951.7 | 975.1 | 969.5 | 982.7 |1000.3 | 996.4 | 949.1 | 988.6 | 993.4 | 978.2 |  975  | 883418646 |
 | SBM |   0   |   0   |   0   |   0   |   0   |   0   |   0   |   0   |   0   |   0   |   0   |   0   |  N/A  | 883418646 |
 
+适当增大 ops，可以看到从库出现了延迟
+
+|     | 5 min |10 min |15 min |20 min |25 min |30 min |35 min |40 min |45 min |50 min |55 min |60 min |  平均  | checksum |
+|:---:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:---------:|
+| OPS | 982.2 | 994.9 |1000.4 |1004.8 |1011.2 | 987.5 |1006.6 | 1002  | 998.1 | 989.5 |1005.7 | 955.4 | 998.9 | 271305144 |
+| SBM |   2   |   4   |   6   |   8   |  15   |  22   |  27   |  33   |  40   |  48   |  56   |   61  |  N/A  | 271305144 |
 
 ### 主 innodb 从 terarkdb
 
