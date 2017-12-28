@@ -16,6 +16,7 @@
 - [兼容性](compatibility.md)
     * [对比 MyRocks 的兼容性](compatibility_myrocks.md)
     * [对比 MySQL 的兼容性](compatibility_mysql.md)
+- [主从复制](replication.md)
 - 技术背景
     * 系统架构
     * RocksDB 简介
