@@ -136,6 +136,16 @@ CREATE TABLE `lineitem` (
 
 主 terarkdb，从 terarkdb 构架下执行流程同上，主、从数据库的数据也能保持一致。
 
+主从切换的操作步骤如下：
+
+1. 停止 YCSB 测试程序。
+2. 等待从库同步完毕并对主、从库数据进行 checksum 检查。
+3. 从库执行 ```stop slave;``` 停止同步。
+4. 从库执行 ```reset master;``` 设置为新的主库。
+5. 原主库执行 ```CHANGE MASTER TO MASTER_HOST='127.0.0.1', MASTER_USER='rpl', MASTER_PORT=3337,  MASTER_PASSWORD='123456'; start slave;``` 将其设置为新的从库，指向新的主库并开始同步。
+6. 启动 YCSB 测试程序。
+
+
 ## 稳定性
 
 稳定性方面的测试，我们构建了一个测试用程序，使用多个线程随机向 MyTerark 里发送包含建表、删表、改表、插入、删除等操作。持续跑了10个小时，MyTerark 依然可以正常运行。以及，在此过程中，使用```kill -9```并重启，程序表现正常。程序如下：
@@ -333,3 +343,7 @@ TerarkZipTable_indexCacheRatio=0.001
 TerarkZipTable_extendedConfigFile=$PWD/license
 TerarkUseDivSufSort=1
 ```
+
+## 更新
+
+1. 添加主从切换的操作步骤。 2018.01.05
