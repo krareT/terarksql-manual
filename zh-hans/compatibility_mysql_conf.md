@@ -1,7 +1,6 @@
 
 以下 case 均需要相关设置，但因为暂时没有找到合适设置方法从而导致被跳过，
 
-
 ```
 main.bug46261                            w1 [ skipped ]  Example plugin requires the environment variable \$EXAMPLE_PLUGIN to be set (normally done by mtr)
 main.plugin_load                         w3 [ skipped ]  Example plugin requires the environment variable \$EXAMPLE_PLUGIN to be set (normally done by mtr)
@@ -44,6 +43,25 @@ rpl_recovery.rpl_gtid_stress_crash 'row-idempotent-recovery' w1 [ skipped ]  Tes
 rpl_recovery.rpl_gtid_crash_safe 'row-idempotent-recovery' w1 [ skipped ]  Test cannot run with idempotent recovery
 rpl_recovery.rpl_gtid_crash_safe_idempotent 'row' w1 [ skipped ]  Test requires: 'have_slave_use_idempotent_for_recovery'
 
+```
 
+#### Test requires: 'lowercase2'
+
+测试需要数据库设置 lowercase2，但未能找到正确的设置方法，待确认。
 
 ```
+parts.partition_mgm_lc2_archive
+parts.partition_mgm_lc2_memory
+parts.partition_mgm_lc2_myisam
+parts.partition_mgm_lc2_innodb
+```
+
+#### CAST() in partitioning function is currently not supported.
+
+partitioning function 的 CAST 函数当前版本不支持。
+
+```
+parts.partition_value_myisam
+parts.partition_value_innodb
+```
+
