@@ -7,7 +7,6 @@
 
 编译当前测试使用的 MyRocks 时使用的 openssl 版本（1.0.1e）较新，其使用的加密算法与测试预期不同，故导致结果不一致。
 
-涉及测试：
 ```
 main.ssl_8k_key
 main.ssl_crl
@@ -18,7 +17,7 @@ main.ssl_compress
 main.ssl_ca
 ```
 
-错误信息类似如下：
+错误信息如下：
 ```
 SHOW STATUS LIKE 'ssl_Cipher'；
 Variable_name	Value
@@ -28,7 +27,6 @@ Variable_name	Value
 
 2. 测试中登录使用的 SSL 加密算法与预期不同
 
-涉及测试：
 ```
 main.openssl_1
 ```
@@ -50,7 +48,7 @@ grant select on test.* to ssl_user2@localhost require cipher "ECDHE-RSA-AES256-G
 ```
 rpl.rpl_ssl
 ```
-错误信息类似如下：
+错误信息如下：
 ```
 -Master_SSL_Actual_Cipher = 'ECDHE-RSA-AES128-GCM-SHA256'
 +Master_SSL_Actual_Cipher = 'ECDHE-RSA-AES256-GCM-SHA384'
