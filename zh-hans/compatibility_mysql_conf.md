@@ -110,7 +110,19 @@ rpl.rpl_mts_stop_slave
 rpl.rpl_ddl
 ```
 
+#### ndbcluster disabled
 
+ndbcluster 未启用，测试跳过。
+```
+binlog.binlog_multi_engine
+```
+
+#### 需要系统关闭 NUMA 和需要完整的正则支持
+
+```
+sys_vars.innodb_numa_interleave_basic
+sys_vars.legacy_user_name_pattern_basic
+```
 
 
 
