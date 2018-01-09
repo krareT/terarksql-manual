@@ -1,7 +1,7 @@
 
 以下列出的 case 是测试程序本身即有问题，
 
-### rpl
+### rpl suite 下的异常 case
 
 测试需要 binlog-format 为 row，但是设置为 row 后又显示不支持 row 格式，疑为测试 bug。
 Test requires: 'have_binlog_format_row'
@@ -11,7 +11,7 @@ rpl.rpl_row_loaddata_concurrent
 ```
 
 
-### engines/rr_trx
+### engines/rr_trx suite 下的异常 case
 
 ```
 engines/rr_trx.rr_iud_rollback-multi-50
@@ -34,7 +34,7 @@ engines/rr_trx.init_innodb
 测试未正确的初始化，原版 MySQL 5.6.36 也全部失败。
 
 
-### perfschema_stress
+### perfschema_stress suite 下的异常 case
 
 因测试未及时更新，当前版本的 performance_schema 数据库中表 events_waits_current、events_waits_history 的结构与测试预期不一致。
 
