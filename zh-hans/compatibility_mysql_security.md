@@ -58,6 +58,7 @@ rpl.rpl_ssl
 
 ### auth_sec
 
+1. SSL 库版本不同
 ```
 auth_sec.cert_verify
 ```
@@ -66,6 +67,14 @@ auth_sec.cert_verify
 -Ssl_version    TLS_VERSION
 +Ssl_version    TLS_VERSION.2
 ```
+
+2. 需要 YaSSL 支持
+```
+auth_sec.server_withoutssl_client_withssl
+auth_sec.server_withoutssl_client_withoutssl
+```
+
+
 
 
 
