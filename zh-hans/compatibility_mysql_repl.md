@@ -1,5 +1,5 @@
 
-### binlog
+### binlog suite 下的异常 case
 
 ```
 binlog.binlog_gtid_mysqlbinlog_row_innodb
@@ -28,7 +28,7 @@ binlog.binlog_gtid_mysqlbinlog_row
 ```
 
 
-### rpl
+### rpl suite 下的异常 case
 
 1. 测试中 assertion 失败，具体原因待查。
 
