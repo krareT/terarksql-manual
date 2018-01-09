@@ -1,7 +1,7 @@
 
-涉及到安全性测试表现异常的 case，基本都与编译使用的 ssl 版本相关。这些 case 分布在不同的 test-suite 中，共 10 个。摘录如下：
+涉及到安全性测试表现异常的 case，基本都与编译使用的 ssl 版本相关：
 
-### main
+### main suite 下的异常 case
 
 1. SSL 加密算法与预期不同
 
@@ -45,7 +45,7 @@ grant select on test.* to ssl_user2@localhost require cipher "ECDHE-RSA-AES256-G
 
 便能正确的进行测试。同样因为以上原因，结果会与预期不一致，但这不会对功能有影响。
 
-### rpl
+### rpl suite 下的异常 case
 
 ```
 rpl.rpl_ssl
@@ -56,7 +56,7 @@ rpl.rpl_ssl
 +Master_SSL_Actual_Cipher = 'ECDHE-RSA-AES256-GCM-SHA384'
 ```
 
-### auth_sec
+### auth_sec suite 下的异常 case
 
 1. SSL 库版本不同
 ```
