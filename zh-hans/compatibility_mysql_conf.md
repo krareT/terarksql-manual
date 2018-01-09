@@ -65,3 +65,52 @@ parts.partition_value_myisam
 parts.partition_value_innodb
 ```
 
+#### Need ps-protocol
+
+需要使用 ps-protocol 协议。
+
+```
+opt_trace.bugs_ps_prot_none
+opt_trace.bugs_ps_prot_all
+opt_trace.security_ps_prot
+opt_trace.range_ps_prot
+opt_trace.subquery_ps_prot
+opt_trace.general_ps_prot_all
+opt_trace.general_ps_prot_none
+opt_trace.general2_ps_prot
+```
+
+#### Test requires: ps-protocol enabled, other protocols disabled
+
+需要使用 ps-protocol 协议，并禁用其他协议。
+
+```
+funcs_1.processlist_priv_ps
+funcs_1.processlist_val_ps
+```
+
+#### Test makes sense only to run with MTS
+
+测试需要使用 MTS 来运行，但是未能确定 MTS 为何。
+
+```
+rpl.rpl_stm_mix_mts_show_relaylog_events
+rpl.rpl_parallel_worker_error
+rpl.rpl_mts_relay_log_post_crash_recovery
+rpl.rpl_mts_relay_log_recovery_on_error
+rpl.rpl_row_mts_show_relaylog_events
+rpl.rpl_mts_stop_slave
+```
+
+#### This test needs on slave side: InnoDB disabled, default engine: MyISAM
+
+测试需要从库默认使用 MyISAM 引擎，并禁用 InnoDB 引擎，设置方法待查。
+
+```
+rpl.rpl_ddl
+```
+
+
+
+
+
