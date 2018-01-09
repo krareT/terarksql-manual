@@ -1,5 +1,5 @@
 
-### xtrabackup
+以下是备份相关的异常 case，
 
 ```
 xtrabackup.xb_with_xbstream
@@ -13,4 +13,4 @@ xtrabackup.xb_partitioned_table
 xtrabackup.xb_compressed_table
 ```
 
-找不到可执行文件 MYSQL_INNOBACKUPEX，待解决。
+异常原因是“找不到可执行文件 MYSQL_INNOBACKUPEX”，待解决。
