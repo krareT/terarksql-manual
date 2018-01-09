@@ -16,12 +16,12 @@
 - [兼容性](compatibility.md)
     * [对比 MyRocks 的兼容性](compatibility_myrocks.md)
     * [对比 MySQL 的兼容性](compatibility_mysql.md)
-      * [备份测试报告](compatibility_mysql_backup.md)
-      * [配置无效相关的测试报告](compatibility_mysql_conf.md)
-      * [主从同步测试报告](compatibility_mysql_repl.md)
-      * [安全性测试报告](compatibility_mysql_security.md)
-      * [测试本身有问题](compatibility_mysql_testcase_error.md)
-      * [其他](compatibility_mysql_others.md)
+      * [备份异常](compatibility_mysql_backup.md)
+      * [配置无效导致异常](compatibility_mysql_conf.md)
+      * [主从同步异常](compatibility_mysql_repl.md)
+      * [安全性异常](compatibility_mysql_security.md)
+      * [测试本身有问题](compatibility_mysql_testcase_error.md)
+      * [其他异常](compatibility_mysql_others.md)
 - [主从同步测试](replication.md)
 - 技术背景
     * 系统架构
