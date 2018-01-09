@@ -67,6 +67,13 @@ main.mysqlshow：
  | SCHEMATA                              |
 ```
 
+### 测试未产生任何输出
+
+```
+perfschema_stress.setup
+```
+
+原因待确认。
 
 ### 测试需要运行在 windows 平台上
 
