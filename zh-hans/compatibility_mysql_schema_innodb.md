@@ -89,7 +89,7 @@
 | LRU_IO_TOTAL                     | bigint(21) unsigned | NO   |     | 0       |       |
 | LRU_IO_CURRENT                   | bigint(21) unsigned | NO   |     | 0       |       |
 | UNCOMPRESS_TOTAL                 | bigint(21) unsigned | NO   |     | 0       |       |
-| UNCOMPRESS_CURRENT               | bigint(21) unsigned | NO   |     | 0       |       |
+| UNCOMPRESS_CURRENT               | bigint(21) unsigned | NO   |     | 0       |  NULL |
 
 
 #### INNODB_CMP
@@ -114,7 +114,7 @@
 | uncompress_primary_ops     | int(11) | NO   |     | 0       |       |
 | uncompress_primary_time    | int(11) | NO   |     | 0       |       |
 | uncompress_secondary_ops   | int(11) | NO   |     | 0       |       |
-| uncompress_secondary_time  | int(11) | NO   |     | 0       |       |
+| uncompress_secondary_time  | int(11) | NO   |     | 0       |  NULL |
 
 
 #### INNODB_CMPMEM
@@ -126,7 +126,7 @@
 | pages_used           | int(11)    | NO   |     | 0       |       |
 | pages_free           | int(11)    | NO   |     | 0       |       |
 | relocation_ops       | bigint(21) | NO   |     | 0       |       |
-| relocation_time      | int(11)    | NO   |     | 0       |       |
+| relocation_time      | int(11)    | NO   |     | 0       |  NULL |
 
 
 #### INNODB_CMPMEM_RESET
@@ -138,7 +138,7 @@
 | pages_used           | int(11)    | NO   |     | 0       |       |
 | pages_free           | int(11)    | NO   |     | 0       |       |
 | relocation_ops       | bigint(21) | NO   |     | 0       |       |
-| relocation_time      | int(11)    | NO   |     | 0       |       |
+| relocation_time      | int(11)    | NO   |     | 0       |  NULL |
 
 
 #### INNODB_CMP_PER_INDEX
@@ -152,7 +152,7 @@
 | compress_ops_ok | int(11)      | NO   |     | 0       |       |
 | compress_time   | int(11)      | NO   |     | 0       |       |
 | uncompress_ops  | int(11)      | NO   |     | 0       |       |
-| uncompress_time | int(11)      | NO   |     | 0       |       |
+| uncompress_time | int(11)      | NO   |     | 0       |  NULL |
 
 
 #### INNODB_CMP_PER_INDEX_RESET
@@ -166,7 +166,7 @@
 | compress_ops_ok | int(11)      | NO   |     | 0       |       |
 | compress_time   | int(11)      | NO   |     | 0       |       |
 | uncompress_ops  | int(11)      | NO   |     | 0       |       |
-| uncompress_time | int(11)      | NO   |     | 0       |       |
+| uncompress_time | int(11)      | NO   |     | 0       |  NULL |
 
 
 #### INNODB_CMP_RESET
@@ -191,7 +191,7 @@
 | uncompress_primary_ops     | int(11) | NO   |     | 0       |       |
 | uncompress_primary_time    | int(11) | NO   |     | 0       |       |
 | uncompress_secondary_ops   | int(11) | NO   |     | 0       |       |
-| uncompress_secondary_time  | int(11) | NO   |     | 0       |       |
+| uncompress_secondary_time  | int(11) | NO   |     | 0       |  NULL |
 
 
 #### INNODB_FILE_STATUS
@@ -209,14 +209,14 @@
 | SVC:MAX_MSECS  | bigint(21) unsigned | NO   |     | 0       |       |
 | WAIT:SECS      | double              | NO   |     | 0       |       |
 | WAIT:MSECS/R   | double              | NO   |     | 0       |       |
-| WAIT:MAX_MSECS | bigint(21) unsigned | NO   |     | 0       |       |
+| WAIT:MAX_MSECS | bigint(21) unsigned | NO   |     | 0       |  NULL |
 
 
 #### INNODB_FT_BEING_DELETED
 
 | Field  | Type                | Null | Key | Default | Extra |
 |--------|---------------------|------|-----|---------|-------|
-| DOC_ID | bigint(21) unsigned | NO   |     | 0       |       |
+| DOC_ID | bigint(21) unsigned | NO   |     | 0       |  NULL |
 
 
 #### INNODB_FT_CONFIG
@@ -224,21 +224,21 @@
 | Field | Type         | Null | Key | Default | Extra |
 |-------|--------------|------|-----|---------|-------|
 | KEY   | varchar(193) | NO   |     |         |       |
-| VALUE | varchar(193) | NO   |     |         |       |
+| VALUE | varchar(193) | NO   |     |         |  NULL |
 
 
 #### INNODB_FT_DEFAULT_STOPWORD
 
 | Field | Type        | Null | Key | Default | Extra |
 |-------|-------------|------|-----|---------|-------|
-| value | varchar(18) | NO   |     |         |       |
+| value | varchar(18) | NO   |     |         |  NULL |
 
 
 #### INNODB_FT_DELETED
 
 | Field  | Type                | Null | Key | Default | Extra |
 |--------|---------------------|------|-----|---------|-------|
-| DOC_ID | bigint(21) unsigned | NO   |     | 0       |       |
+| DOC_ID | bigint(21) unsigned | NO   |     | 0       |  NULL |
 
 
 #### INNODB_FT_INDEX_CACHE
@@ -250,7 +250,7 @@
 | LAST_DOC_ID  | bigint(21) unsigned | NO   |     | 0       |       |
 | DOC_COUNT    | bigint(21) unsigned | NO   |     | 0       |       |
 | DOC_ID       | bigint(21) unsigned | NO   |     | 0       |       |
-| POSITION     | bigint(21) unsigned | NO   |     | 0       |       |
+| POSITION     | bigint(21) unsigned | NO   |     | 0       |  NULL |
 
 
 #### INNODB_FT_INDEX_TABLE
@@ -262,7 +262,7 @@
 | LAST_DOC_ID  | bigint(21) unsigned | NO   |     | 0       |       |
 | DOC_COUNT    | bigint(21) unsigned | NO   |     | 0       |       |
 | DOC_ID       | bigint(21) unsigned | NO   |     | 0       |       |
-| POSITION     | bigint(21) unsigned | NO   |     | 0       |       |
+| POSITION     | bigint(21) unsigned | NO   |     | 0       |  NULL |
 
 
 #### INNODB_LOCKS
@@ -278,7 +278,7 @@
 | lock_space  | bigint(21) unsigned | YES  |     | NULL    |       |
 | lock_page   | bigint(21) unsigned | YES  |     | NULL    |       |
 | lock_rec    | bigint(21) unsigned | YES  |     | NULL    |       |
-| lock_data   | varchar(8192)       | YES  |     | NULL    |       |
+| lock_data   | varchar(8192)       | YES  |     | NULL    |  NULL |
 
 
 #### INNODB_LOCK_WAITS
@@ -288,7 +288,7 @@
 | requesting_trx_id | varchar(18) | NO   |     |         |       |
 | requested_lock_id | varchar(81) | NO   |     |         |       |
 | blocking_trx_id   | varchar(18) | NO   |     |         |       |
-| blocking_lock_id  | varchar(81) | NO   |     |         |       |
+| blocking_lock_id  | varchar(81) | NO   |     |         |  NULL |
 
 
 #### INNODB_METRICS
@@ -311,7 +311,7 @@
 | TIME_RESET      | datetime     | YES  |     | NULL    |       |
 | STATUS          | varchar(193) | NO   |     |         |       |
 | TYPE            | varchar(193) | NO   |     |         |       |
-| COMMENT         | varchar(193) | NO   |     |         |       |
+| COMMENT         | varchar(193) | NO   |     |         |  NULL |
 
 
 #### INNODB_SYS_COLUMNS
@@ -323,7 +323,7 @@
 | POS      | bigint(21) unsigned | NO   |     | 0       |       |
 | MTYPE    | int(11)             | NO   |     | 0       |       |
 | PRTYPE   | int(11)             | NO   |     | 0       |       |
-| LEN      | int(11)             | NO   |     | 0       |       |
+| LEN      | int(11)             | NO   |     | 0       |  NULL |
 
 
 #### INNODB_SYS_DATAFILES
@@ -331,7 +331,7 @@
 | Field | Type             | Null | Key | Default | Extra |
 |-------|------------------|------|-----|---------|-------|
 | SPACE | int(11) unsigned | NO   |     | 0       |       |
-| PATH  | varchar(4000)    | NO   |     |         |       |
+| PATH  | varchar(4000)    | NO   |     |         |  NULL |
 
 
 #### INNODB_SYS_DOCSTORE_FIELDS
@@ -341,7 +341,7 @@
 | INDEX_ID      | bigint(21) unsigned | NO   |     | 0       |       |
 | POS           | int(11) unsigned    | NO   |     | 0       |       |
 | DOCUMENT_PATH | blob                | YES  |     | NULL    |       |
-| DOCUMENT_TYPE | int(11) unsigned    | NO   |     | 0       |       |
+| DOCUMENT_TYPE | int(11) unsigned    | NO   |     | 0       |  NULL |
 
 
 #### INNODB_SYS_FIELDS
@@ -350,7 +350,7 @@
 |----------|---------------------|------|-----|---------|-------|
 | INDEX_ID | bigint(21) unsigned | NO   |     | 0       |       |
 | NAME     | varchar(193)        | NO   |     |         |       |
-| POS      | int(11) unsigned    | NO   |     | 0       |       |
+| POS      | int(11) unsigned    | NO   |     | 0       |  NULL |
 
 
 #### INNODB_SYS_FOREIGN
@@ -361,7 +361,7 @@
 | FOR_NAME | varchar(193)     | NO   |     |         |       |
 | REF_NAME | varchar(193)     | NO   |     |         |       |
 | N_COLS   | int(11) unsigned | NO   |     | 0       |       |
-| TYPE     | int(11) unsigned | NO   |     | 0       |       |
+| TYPE     | int(11) unsigned | NO   |     | 0       |  NULL |
 
 
 #### INNODB_SYS_FOREIGN_COLS
@@ -371,7 +371,7 @@
 | ID           | varchar(193)     | NO   |     |         |       |
 | FOR_COL_NAME | varchar(193)     | NO   |     |         |       |
 | REF_COL_NAME | varchar(193)     | NO   |     |         |       |
-| POS          | int(11) unsigned | NO   |     | 0       |       |
+| POS          | int(11) unsigned | NO   |     | 0       |  NULL |
 
 
 #### INNODB_SYS_INDEXES
@@ -384,7 +384,7 @@
 | TYPE     | int(11)             | NO   |     | 0       |       |
 | N_FIELDS | int(11)             | NO   |     | 0       |       |
 | PAGE_NO  | int(11)             | NO   |     | 0       |       |
-| SPACE    | int(11)             | NO   |     | 0       |       |
+| SPACE    | int(11)             | NO   |     | 0       |  NULL |
 
 
 #### INNODB_SYS_TABLES
@@ -398,7 +398,7 @@
 | SPACE         | int(11)             | NO   |     | 0       |       |
 | FILE_FORMAT   | varchar(10)         | YES  |     | NULL    |       |
 | ROW_FORMAT    | varchar(12)         | YES  |     | NULL    |       |
-| ZIP_PAGE_SIZE | int(11) unsigned    | NO   |     | 0       |       |
+| ZIP_PAGE_SIZE | int(11) unsigned    | NO   |     | 0       |  NULL |
 
 
 #### INNODB_SYS_TABLESPACES
@@ -411,7 +411,7 @@
 | FILE_FORMAT   | varchar(10)      | YES  |     | NULL    |       |
 | ROW_FORMAT    | varchar(22)      | YES  |     | NULL    |       |
 | PAGE_SIZE     | int(11) unsigned | NO   |     | 0       |       |
-| ZIP_PAGE_SIZE | int(11) unsigned | NO   |     | 0       |       |
+| ZIP_PAGE_SIZE | int(11) unsigned | NO   |     | 0       |  NULL |
 
 
 #### INNODB_SYS_TABLESTATS
@@ -426,7 +426,7 @@
 | OTHER_INDEX_SIZE  | bigint(21) unsigned | NO   |     | 0       |       |
 | MODIFIED_COUNTER  | bigint(21) unsigned | NO   |     | 0       |       |
 | AUTOINC           | bigint(21) unsigned | NO   |     | 0       |       |
-| REF_COUNT         | int(11)             | NO   |     | 0       |       |
+| REF_COUNT         | int(11)             | NO   |     | 0       |  NULL |
 
 
 #### INNODB_TRX
@@ -456,6 +456,6 @@
 | trx_adaptive_hash_latched  | int(1)              | NO   |     | 0                   |       |
 | trx_adaptive_hash_timeout  | bigint(21) unsigned | NO   |     | 0                   |       |
 | trx_is_read_only           | int(1)              | NO   |     | 0                   |       |
-| trx_autocommit_non_locking | int(1)              | NO   |     | 0                   |       |
+| trx_autocommit_non_locking | int(1)              | NO   |     | 0                   |  NULL |
 
 
