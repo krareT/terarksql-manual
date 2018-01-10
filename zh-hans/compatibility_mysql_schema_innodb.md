@@ -1,6 +1,6 @@
 
 
-### 以下是 InnoDB 表的具体描述:
+### 以下是 information_schema 库里 InnoDB 表的具体描述:
 
 #### INNODB_BUFFER_PAGE
 
