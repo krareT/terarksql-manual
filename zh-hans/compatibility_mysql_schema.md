@@ -82,7 +82,7 @@ INNODB_BUFFER_PAGE
 | IO_FIX              | varchar(64)         | YES  |     | NULL    |       |
 | IS_OLD              | varchar(3)          | YES  |     | NULL    |       |
 | FREE_PAGE_CLOCK     | bigint(21) unsigned | NO   |     | 0       |       |
-|---------------------|---------------------|------|-----|---------|-------|
+
 
 INNODB_BUFFER_PAGE_LRU
 
@@ -108,7 +108,7 @@ INNODB_BUFFER_PAGE_LRU
 | IO_FIX              | varchar(64)         | YES  |     | NULL    |       |
 | IS_OLD              | varchar(3)          | YES  |     | NULL    |       |
 | FREE_PAGE_CLOCK     | bigint(21) unsigned | NO   |     | 0       |       |
-|---------------------|---------------------|------|-----|---------|-------|
+
 
 INNODB_BUFFER_POOL_STATS
 
@@ -146,7 +146,7 @@ INNODB_BUFFER_POOL_STATS
 | LRU_IO_CURRENT                   | bigint(21) unsigned | NO   |     | 0       |       |
 | UNCOMPRESS_TOTAL                 | bigint(21) unsigned | NO   |     | 0       |       |
 | UNCOMPRESS_CURRENT               | bigint(21) unsigned | NO   |     | 0       |       |
-|----------------------------------|---------------------|------|-----|---------|-------|
+
 
 INNODB_CMP
 
@@ -171,7 +171,7 @@ INNODB_CMP
 | uncompress_primary_time    | int(11) | NO   |     | 0       |       |
 | uncompress_secondary_ops   | int(11) | NO   |     | 0       |       |
 | uncompress_secondary_time  | int(11) | NO   |     | 0       |       |
-|----------------------------|---------|------|-----|---------|-------|
+
 
 INNODB_CMPMEM
 
@@ -183,7 +183,7 @@ INNODB_CMPMEM
 | pages_free           | int(11)    | NO   |     | 0       |       |
 | relocation_ops       | bigint(21) | NO   |     | 0       |       |
 | relocation_time      | int(11)    | NO   |     | 0       |       |
-|----------------------|------------|------|-----|---------|-------|
+
 
 INNODB_CMPMEM_RESET
 
@@ -195,7 +195,7 @@ INNODB_CMPMEM_RESET
 | pages_free           | int(11)    | NO   |     | 0       |       |
 | relocation_ops       | bigint(21) | NO   |     | 0       |       |
 | relocation_time      | int(11)    | NO   |     | 0       |       |
-|----------------------|------------|------|-----|---------|-------|
+
 
 INNODB_CMP_PER_INDEX
 
@@ -209,7 +209,7 @@ INNODB_CMP_PER_INDEX
 | compress_time   | int(11)      | NO   |     | 0       |       |
 | uncompress_ops  | int(11)      | NO   |     | 0       |       |
 | uncompress_time | int(11)      | NO   |     | 0       |       |
-|-----------------|--------------|------|-----|---------|-------|
+
 
 INNODB_CMP_PER_INDEX_RESET
 
@@ -223,7 +223,7 @@ INNODB_CMP_PER_INDEX_RESET
 | compress_time   | int(11)      | NO   |     | 0       |       |
 | uncompress_ops  | int(11)      | NO   |     | 0       |       |
 | uncompress_time | int(11)      | NO   |     | 0       |       |
-|-----------------|--------------|------|-----|---------|-------|
+
 
 INNODB_CMP_RESET
 
@@ -248,7 +248,7 @@ INNODB_CMP_RESET
 | uncompress_primary_time    | int(11) | NO   |     | 0       |       |
 | uncompress_secondary_ops   | int(11) | NO   |     | 0       |       |
 | uncompress_secondary_time  | int(11) | NO   |     | 0       |       |
-|----------------------------|---------|------|-----|---------|-------|
+
 
 INNODB_FILE_STATUS
 
@@ -266,14 +266,14 @@ INNODB_FILE_STATUS
 | WAIT:SECS      | double              | NO   |     | 0       |       |
 | WAIT:MSECS/R   | double              | NO   |     | 0       |       |
 | WAIT:MAX_MSECS | bigint(21) unsigned | NO   |     | 0       |       |
-|----------------|---------------------|------|-----|---------|-------|
+
 
 INNODB_FT_BEING_DELETED
 
 | Field  | Type                | Null | Key | Default | Extra |
 |--------|---------------------|------|-----|---------|-------|
 | DOC_ID | bigint(21) unsigned | NO   |     | 0       |       |
-|--------|---------------------|------|-----|---------|-------|
+
 
 INNODB_FT_CONFIG
 
@@ -281,21 +281,21 @@ INNODB_FT_CONFIG
 |-------|--------------|------|-----|---------|-------|
 | KEY   | varchar(193) | NO   |     |         |       |
 | VALUE | varchar(193) | NO   |     |         |       |
-|-------|--------------|------|-----|---------|-------|
+
 
 INNODB_FT_DEFAULT_STOPWORD
 
 | Field | Type        | Null | Key | Default | Extra |
 |-------|-------------|------|-----|---------|-------|
 | value | varchar(18) | NO   |     |         |       |
-|-------|-------------|------|-----|---------|-------|
+
 
 INNODB_FT_DELETED
 
 | Field  | Type                | Null | Key | Default | Extra |
 |--------|---------------------|------|-----|---------|-------|
 | DOC_ID | bigint(21) unsigned | NO   |     | 0       |       |
-|--------|---------------------|------|-----|---------|-------|
+
 
 INNODB_FT_INDEX_CACHE
 
@@ -307,7 +307,7 @@ INNODB_FT_INDEX_CACHE
 | DOC_COUNT    | bigint(21) unsigned | NO   |     | 0       |       |
 | DOC_ID       | bigint(21) unsigned | NO   |     | 0       |       |
 | POSITION     | bigint(21) unsigned | NO   |     | 0       |       |
-|--------------|---------------------|------|-----|---------|-------|
+
 
 INNODB_FT_INDEX_TABLE
 
@@ -319,7 +319,7 @@ INNODB_FT_INDEX_TABLE
 | DOC_COUNT    | bigint(21) unsigned | NO   |     | 0       |       |
 | DOC_ID       | bigint(21) unsigned | NO   |     | 0       |       |
 | POSITION     | bigint(21) unsigned | NO   |     | 0       |       |
-|--------------|---------------------|------|-----|---------|-------|
+
 
 INNODB_LOCKS
 
@@ -335,7 +335,7 @@ INNODB_LOCKS
 | lock_page   | bigint(21) unsigned | YES  |     | NULL    |       |
 | lock_rec    | bigint(21) unsigned | YES  |     | NULL    |       |
 | lock_data   | varchar(8192)       | YES  |     | NULL    |       |
-|-------------|---------------------|------|-----|---------|-------|
+
 
 INNODB_LOCK_WAITS
 
@@ -345,7 +345,7 @@ INNODB_LOCK_WAITS
 | requested_lock_id | varchar(81) | NO   |     |         |       |
 | blocking_trx_id   | varchar(18) | NO   |     |         |       |
 | blocking_lock_id  | varchar(81) | NO   |     |         |       |
-|-------------------|-------------|------|-----|---------|-------|
+
 
 INNODB_METRICS
 
@@ -368,7 +368,7 @@ INNODB_METRICS
 | STATUS          | varchar(193) | NO   |     |         |       |
 | TYPE            | varchar(193) | NO   |     |         |       |
 | COMMENT         | varchar(193) | NO   |     |         |       |
-|-----------------|--------------|------|-----|---------|-------|
+
 
 INNODB_SYS_COLUMNS
 
@@ -380,7 +380,7 @@ INNODB_SYS_COLUMNS
 | MTYPE    | int(11)             | NO   |     | 0       |       |
 | PRTYPE   | int(11)             | NO   |     | 0       |       |
 | LEN      | int(11)             | NO   |     | 0       |       |
-|----------|---------------------|------|-----|---------|-------|
+
 
 INNODB_SYS_DATAFILES
 
@@ -388,7 +388,7 @@ INNODB_SYS_DATAFILES
 |-------|------------------|------|-----|---------|-------|
 | SPACE | int(11) unsigned | NO   |     | 0       |       |
 | PATH  | varchar(4000)    | NO   |     |         |       |
-|-------|------------------|------|-----|---------|-------|
+
 
 INNODB_SYS_DOCSTORE_FIELDS
 
@@ -398,7 +398,7 @@ INNODB_SYS_DOCSTORE_FIELDS
 | POS           | int(11) unsigned    | NO   |     | 0       |       |
 | DOCUMENT_PATH | blob                | YES  |     | NULL    |       |
 | DOCUMENT_TYPE | int(11) unsigned    | NO   |     | 0       |       |
-|---------------|---------------------|------|-----|---------|-------|
+
 
 INNODB_SYS_FIELDS
 
@@ -407,7 +407,7 @@ INNODB_SYS_FIELDS
 | INDEX_ID | bigint(21) unsigned | NO   |     | 0       |       |
 | NAME     | varchar(193)        | NO   |     |         |       |
 | POS      | int(11) unsigned    | NO   |     | 0       |       |
-|----------|---------------------|------|-----|---------|-------|
+
 
 INNODB_SYS_FOREIGN
 
@@ -418,7 +418,7 @@ INNODB_SYS_FOREIGN
 | REF_NAME | varchar(193)     | NO   |     |         |       |
 | N_COLS   | int(11) unsigned | NO   |     | 0       |       |
 | TYPE     | int(11) unsigned | NO   |     | 0       |       |
-|----------|------------------|------|-----|---------|-------|
+
 
 INNODB_SYS_FOREIGN_COLS
 
@@ -428,7 +428,7 @@ INNODB_SYS_FOREIGN_COLS
 | FOR_COL_NAME | varchar(193)     | NO   |     |         |       |
 | REF_COL_NAME | varchar(193)     | NO   |     |         |       |
 | POS          | int(11) unsigned | NO   |     | 0       |       |
-|--------------|------------------|------|-----|---------|-------|
+
 
 INNODB_SYS_INDEXES
 
@@ -441,7 +441,7 @@ INNODB_SYS_INDEXES
 | N_FIELDS | int(11)             | NO   |     | 0       |       |
 | PAGE_NO  | int(11)             | NO   |     | 0       |       |
 | SPACE    | int(11)             | NO   |     | 0       |       |
-|----------|---------------------|------|-----|---------|-------|
+
 
 INNODB_SYS_TABLES
 
@@ -455,7 +455,7 @@ INNODB_SYS_TABLES
 | FILE_FORMAT   | varchar(10)         | YES  |     | NULL    |       |
 | ROW_FORMAT    | varchar(12)         | YES  |     | NULL    |       |
 | ZIP_PAGE_SIZE | int(11) unsigned    | NO   |     | 0       |       |
-|---------------|---------------------|------|-----|---------|-------|
+
 
 INNODB_SYS_TABLESPACES
 
@@ -468,7 +468,7 @@ INNODB_SYS_TABLESPACES
 | ROW_FORMAT    | varchar(22)      | YES  |     | NULL    |       |
 | PAGE_SIZE     | int(11) unsigned | NO   |     | 0       |       |
 | ZIP_PAGE_SIZE | int(11) unsigned | NO   |     | 0       |       |
-|---------------|------------------|------|-----|---------|-------|
+
 
 INNODB_SYS_TABLESTATS
 
@@ -483,7 +483,7 @@ INNODB_SYS_TABLESTATS
 | MODIFIED_COUNTER  | bigint(21) unsigned | NO   |     | 0       |       |
 | AUTOINC           | bigint(21) unsigned | NO   |     | 0       |       |
 | REF_COUNT         | int(11)             | NO   |     | 0       |       |
-|-------------------|---------------------|------|-----|---------|-------|
+
 
 INNODB_TRX
 
@@ -513,7 +513,7 @@ INNODB_TRX
 | trx_adaptive_hash_timeout  | bigint(21) unsigned | NO   |     | 0                   |       |
 | trx_is_read_only           | int(1)              | NO   |     | 0                   |       |
 | trx_autocommit_non_locking | int(1)              | NO   |     | 0                   |       |
-|----------------------------|---------------------|------|-----|---------------------|-------|
+
 
 
 
@@ -527,7 +527,7 @@ ROCKSDB_CF_OPTIONS
 | CF_NAME     | varchar(193) | NO   |     |         |       |
 | OPTION_TYPE | varchar(193) | NO   |     |         |       |
 | VALUE       | varchar(193) | NO   |     |         |       |
-|-------------|--------------|------|-----|---------|-------|
+
 
 ROCKSDB_CFSTATS
 
@@ -536,7 +536,7 @@ ROCKSDB_CFSTATS
 | CF_NAME   | varchar(193) | NO   |     |         |       |
 | STAT_TYPE | varchar(193) | NO   |     |         |       |
 | VALUE     | bigint(8)    | NO   |     | 0       |       |
-|-----------|--------------|------|-----|---------|-------|
+
 
 ROCKSDB_COMPACTION_STATS
 
@@ -546,7 +546,7 @@ ROCKSDB_COMPACTION_STATS
 | LEVEL   | varchar(513) | NO   |     |         |       |
 | TYPE    | varchar(513) | NO   |     |         |       |
 | VALUE   | double       | NO   |     | 0       |       |
-|---------|--------------|------|-----|---------|-------|
+
 
 ROCKSDB_DBSTATS
 
@@ -554,7 +554,7 @@ ROCKSDB_DBSTATS
 |-----------|--------------|------|-----|---------|-------|
 | STAT_TYPE | varchar(193) | NO   |     |         |       |
 | VALUE     | bigint(8)    | NO   |     | 0       |       |
-|-----------|--------------|------|-----|---------|-------|
+
 
 ROCKSDB_DDL
 
@@ -572,7 +572,7 @@ ROCKSDB_DDL
 | INDEX_FLAGS       | bigint(8)          | NO   |     | 0       |       |
 | CF                | varchar(193)       | NO   |     |         |       |
 | AUTO_INCREMENT    | bigint(8) unsigned | YES  |     | NULL    |       |
-|-------------------|--------------------|------|-----|---------|-------|
+
 
 ROCKSDB_DEADLOCK
 
@@ -586,7 +586,7 @@ ROCKSDB_DEADLOCK
 | INDEX_NAME     | varchar(193) | NO   |     |         |       |
 | TABLE_NAME     | varchar(193) | NO   |     |         |       |
 | ROLLED_BACK    | bigint(8)    | NO   |     | 0       |       |
-|----------------|--------------|------|-----|---------|-------|
+
 
 ROCKSDB_GLOBAL_INFO
 
@@ -595,7 +595,7 @@ ROCKSDB_GLOBAL_INFO
 | TYPE  | varchar(513) | NO   |     |         |       |
 | NAME  | varchar(513) | NO   |     |         |       |
 | VALUE | varchar(513) | NO   |     |         |       |
-|-------|--------------|------|-----|---------|-------|
+
 
 ROCKSDB_INDEX_FILE_MAP
 
@@ -611,7 +611,7 @@ ROCKSDB_INDEX_FILE_MAP
 | ENTRY_MERGES         | bigint(8)    | NO   |     | 0       |       |
 | ENTRY_OTHERS         | bigint(8)    | NO   |     | 0       |       |
 | DISTINCT_KEYS_PREFIX | varchar(400) | NO   |     |         |       |
-|----------------------|--------------|------|-----|---------|-------|
+
 
 ROCKSDB_LOCKS
 
@@ -621,7 +621,7 @@ ROCKSDB_LOCKS
 | TRANSACTION_ID   | int(4)       | NO   |     | 0       |       |
 | KEY              | varchar(513) | NO   |     |         |       |
 | MODE             | varchar(32)  | NO   |     |         |       |
-|------------------|--------------|------|-----|---------|-------|
+
 
 ROCKSDB_PERF_CONTEXT
 
@@ -632,7 +632,7 @@ ROCKSDB_PERF_CONTEXT
 | PARTITION_NAME | varchar(193) | YES  |     | NULL    |       |
 | STAT_TYPE      | varchar(193) | NO   |     |         |       |
 | VALUE          | bigint(8)    | NO   |     | 0       |       |
-|----------------|--------------|------|-----|---------|-------|
+
 
 ROCKSDB_PERF_CONTEXT_GLOBAL
 
@@ -640,7 +640,7 @@ ROCKSDB_PERF_CONTEXT_GLOBAL
 |-----------|--------------|------|-----|---------|-------|
 | STAT_TYPE | varchar(193) | NO   |     |         |       |
 | VALUE     | bigint(8)    | NO   |     | 0       |       |
-|-----------|--------------|------|-----|---------|-------|
+
 
 ROCKSDB_TF_OPTIONS
 
@@ -649,7 +649,7 @@ ROCKSDB_TF_OPTIONS
 | CF_NAME     | varchar(193) | NO   |     |         |       |
 | OPTION_NAME | varchar(193) | NO   |     |         |       |
 | VALUE       | varchar(193) | NO   |     |         |       |
-|-------------|--------------|------|-----|---------|-------|
+
 
 ROCKSDB_TRX
 
@@ -670,5 +670,5 @@ ROCKSDB_TRX
 | NUM_ONGOING_BULKLOAD     | int(4)       | NO   |     | 0       |       |
 | THREAD_ID                | int(8)       | NO   |     | 0       |       |
 | QUERY                    | varchar(193) | NO   |     |         |       |
-|--------------------------|--------------|------|-----|---------|-------|
+
 
