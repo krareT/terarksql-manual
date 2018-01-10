@@ -1,7 +1,7 @@
 
 ## 简介
 
-InnoDB 与 RocksDB schema 对比，涉及到存储引擎级别的表，
+InnoDB 与 RocksDB schema 对比，涉及到存储引擎级别的表（从 information_schema 库获取），
 
  - 只有2个表有重合名字（仅仅名字重合而已，字段基本不同） INNODB_LOCKS vs ROCKSDB_LOCKS, INNODB_TRX vs ROCKSDB_TRX;
  - 其他的都是自己独有的
