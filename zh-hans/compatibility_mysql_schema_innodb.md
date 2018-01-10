@@ -25,7 +25,7 @@
 | PAGE_STATE          | varchar(64)         | YES  |     | NULL    |       |
 | IO_FIX              | varchar(64)         | YES  |     | NULL    |       |
 | IS_OLD              | varchar(3)          | YES  |     | NULL    |       |
-| FREE_PAGE_CLOCK     | bigint(21) unsigned | NO   |     | 0       |       |
+| FREE_PAGE_CLOCK     | bigint(21) unsigned | NO   |     | 0       | NULL  |
 
 
 #### INNODB_BUFFER_PAGE_LRU
@@ -51,7 +51,7 @@
 | COMPRESSED          | varchar(3)          | YES  |     | NULL    |       |
 | IO_FIX              | varchar(64)         | YES  |     | NULL    |       |
 | IS_OLD              | varchar(3)          | YES  |     | NULL    |       |
-| FREE_PAGE_CLOCK     | bigint(21) unsigned | NO   |     | 0       |       |
+| FREE_PAGE_CLOCK     | bigint(21) unsigned | NO   |     | 0       | NULL  |
 
 
 #### INNODB_BUFFER_POOL_STATS
