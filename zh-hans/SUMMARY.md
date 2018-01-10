@@ -22,7 +22,9 @@
       * [配置无效导致异常](compatibility_mysql_conf.md)
       * [主从同步异常](compatibility_mysql_repl.md)
       * [其他异常](compatibility_mysql_others.md)
-      * [统计信息对比](compatibility_mysql_schema.md)
+    * [统计信息对比](compatibility_mysql_schema.md)
+      * [innodb 相关统计](compatibility_mysql_schema_innodb.md)
+      * [rocksdb 相关统计](compatibility_mysql_schema_rocksdb.md)
 - [主从同步测试](replication.md)
 - 技术背景
     * 系统架构
