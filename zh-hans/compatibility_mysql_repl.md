@@ -56,3 +56,17 @@ rpl.rpl_current_user
  ERROR HY000: String '0123456789012345678901234567890123456789012345678901234567890' is too long for host name (should be no longer than 60)
 ```
 
+3. Test makes sense only to run with MTS
+
+测试需要使用 Multi-Threaded Slave，待确认问题所在。
+
+```
+rpl.rpl_stm_mix_mts_show_relaylog_events
+rpl.rpl_parallel_worker_error
+rpl.rpl_mts_relay_log_post_crash_recovery
+rpl.rpl_mts_relay_log_recovery_on_error
+rpl.rpl_row_mts_show_relaylog_events
+rpl.rpl_mts_stop_slave
+```
+
+
