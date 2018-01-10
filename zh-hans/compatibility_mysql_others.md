@@ -163,3 +163,10 @@ sys_vars.legacy_user_name_pattern_basic
 federated.federated_plugin
 ```
 
+### Need bug25714 test program
+
+```
+federated.federated_bug_25714
+```
+
+
