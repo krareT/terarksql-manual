@@ -43,6 +43,17 @@ grant select on test.* to ssl_user2@localhost require cipher "ECDHE-RSA-AES256-G
 
 便能正确的进行测试。同样因为以上原因，结果会与预期不一致，但这不会对功能有影响。
 
+3. 其他
+
+```
+main.mysql_shutdown_logging
+```
+失败对应的消息是我们将该 case 归入本类的原因。具体原因待查，
+
+```
+mysqltest: At line 24: query 'connect  con2,localhost,ssl_user2,,,,,SSL' failed: 1045: Access denied for user 'ssl_user2'@'localhost' (using password: NO)
+```
+
 ### rpl suite 下的异常 case
 
 ```
