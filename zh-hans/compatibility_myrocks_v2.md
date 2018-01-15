@@ -12,13 +12,13 @@ MyRocks 针对自身特点提供了一系列的测试,这些测试共有五类�
 
 针对这几类测试，以下是 MySQL on TerarkDB 的运行结果如下，其中部分失败的原因，在详细说明中做了阐述：
 
-| suite | total | success | fail |
-| ----- |:-----:|:-----:|:-----:|
-| rocksdb | 212   | 198 | 14 |
-| rocksdb_stress | 2 | 2 | 0 |
-| rocksdb_sys_vars | 110 | 108 | 2 |
-| rocksdb_hotbackup | 6 | 4 | 2|
-| rocksdb_rpl | 12 | 11 | 1 |
+| suite             | total | success | fail |
+| ----------------- |:-----:|:-----:|:-----:|
+| rocksdb           |  212  |  198  |   14  |
+| rocksdb_stress    |   2   |   2   |    0  |
+| rocksdb_sys_vars  |  110  |  108  |    2  |
+| rocksdb_hotbackup |   6   |   4   |    2  |
+| rocksdb_rpl       |   12  |   11  |    1  |
 
 ## 详细说明
 
@@ -38,6 +38,28 @@ select * from information_schema.ROCKSDB_CF_OPTIONS where OPTION_TYPE='TABLE_FAC
 | __system__ | TABLE_FACTORY_NAME | TerarkZipTable |
 | default    | TABLE_FACTORY_NAME | TerarkZipTable |
 +------------+--------------------+----------------+
+```
+
+MyRocks 官方在最新的 realse [prod201704](https://github.com/facebook/mysql-5.6/releases/tag/prod201704) 中在表 ```INFORMATION_SCHEMA.ROCKSDB_CF_OPTIONS``` 添加了若干变量，但测试程序未及时更新，导致与测试程序预期结果不符合。
+
+添加内容类似如下：
+```
+SELECT * FROM INFORMATION_SCHEMA.ROCKSDB_CF_OPTIONS;
+ CF_NAME        OPTION_TYPE     VALUE
++default        COMPARATOR      #
++default        MERGE_OPERATOR  #
++default        COMPACTION_FILTER       #
++default        COMPACTION_FILTER_FACTORY       #
++default        WRITE_BUFFER_SIZE       #
++default        MAX_WRITE_BUFFER_NUMBER #
++default        MIN_WRITE_BUFFER_NUMBER_TO_MERGE        #
++default        NUM_LEVELS      #
++default        LEVEL0_FILE_NUM_COMPACTION_TRIGGER      #
++default        LEVEL0_SLOWDOWN_WRITES_TRIGGER  #
++default        LEVEL0_STOP_WRITES_TRIGGER      #
++default        MAX_MEM_COMPACTION_LEVEL        #
++default        TARGET_FILE_SIZE_BASE   #
+...
 ```
 
 #### 1.2 rocksdb.mysqldump2
@@ -211,7 +233,20 @@ MySQL on TerarkDB 使用的索引算法与 MyRocks 不同，故 index_length 不
 
 #### 1.8 rocksdb.rocksdb
 
-MyRocks 对 universal compaction 支持不完善，在该模式下使用 MyRocks bulk load 模式时会发生死锁，MySQL on TerarkDB 不支持 MyRocks bulk load 模式，在使用中不能开启（`set rocksdb_bulk_load=1`）该模式。
+MySQL on TerarkDB 增加了一个后台线程用于定时 compact ```__system__``` column family，故统计信息中会多出这个线程的信息，这与预期结果不一致。错误信息如下：
+
+```
+--- /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/suite/rocksdb/r/rocksdb.result        2018-01-02 14:11:45.000000000 +0300
++++ /oldssd2/tempvar/1/log/rocksdb.reject       2018-01-10 16:09:18.590916677 +0300
+@@ -956,6 +956,7 @@
+ rocksdb_store_row_debug_checksums      OFF
+ rocksdb_strict_collation_check OFF
+ rocksdb_strict_collation_exceptions
++rocksdb_system_cf_background_flush_interval    120
+ rocksdb_table_cache_numshardbits       6
+ rocksdb_table_stats_sampling_pct       10
+ rocksdb_tmpdir
+```
 
 #### 1.9 rocksdb.compact_deletes
 
@@ -246,7 +281,7 @@ singledelete 相关统计数据与 compact 次数相关，而 MySQL on TerarkDB 
 mysqltest: At line 27: query 'SET rocksdb_bulk_load=0' succeeded - should have failed with errno 2013...
 ```
 
-同 1.8，MySQL on TerarkDB 不支持 MyRocks bulk load 模式。
+MyRocks 对 universal compaction 支持不完善，在该模式下使用 MyRocks bulk load 模式时会发生死锁，MySQL on TerarkDB 不支持 MyRocks bulk load 模式，在使用中不能开启（set rocksdb_bulk_load=1）该模式。
 
 #### 1.12 rocksdb.compression_zstd
 
@@ -255,6 +290,79 @@ MySQL on TerarkDB 不使用 zstd 压缩算法。
 #### 1.13 rocksdb.bulk_load_rev_data，rocksdb.bulk_load_rev_cf_and_data
 
 MySQL on TerarkDB 默认设置 `TerarkZipTable_target_file_size_base` 为系统内存的一半，但是 MyRocks 会使用该值的 3 倍来申请内存而引发  `bad_alloc` 异常。将其设置为较小的数值即可通过。
+
+#### 1.14 rocksdb.native_procedure
+
+错误信息如下：
+```
+mysqltest: In included file "./include/native_procedure.inc": 
+included from ./include/native_procedure.inc at line 38:
+At line 37: Can't initialize replace from 'replace_result $NP_EXAMPLE_LIB NP_EXAMPLE_LIB'
+```
+
+官方原版 MyRocks 也不能通过，且 MySQL on TerarkDB 错误信息与原版 MyRocks 一致。
+
+#### 1.15 rocksdb.ttl_primary, rocksdb.ttl_secondary, rocksdb.ttl_primary_read_filtering
+
+错误信息类似如下：
+```
+--- /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/suite/rocksdb/r/ttl_secondary.result  2018-01-02 14:11:45.000000000 +0300
++++ /oldssd2/tempvar/4/log/ttl_secondary.reject 2018-01-05 16:05:01.726197575 +0300
+@@ -533,7 +533,7 @@
+ set global rocksdb_compact_cf='default';
+ select variable_value-@c from information_schema.global_status where variable_name='rocksdb_rows_expired';
+ variable_value-@c
+-6
++12
+```
+
+ttl 相关，官方原版 MyRocks 也不能通过，且 MySQL on TerarkDB 错误信息与原版 MyRocks 一致。
+
+#### 1.16 rocksdb.rocksdb_cf_options
+
+MySQL on TerarkDB 为针对自身特点，使用了不同于原版 MyRocks 的默认 cf options，故与测试预期结果不符合。其错误信息如下：
+
+```
+--- /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/suite/rocksdb/r/rocksdb_cf_options.result     2017-06-08 06:26:45.000000000 +0300
++++ /oldssd2/tempvar/1/log/rocksdb_cf_options.reject    2018-01-10 16:12:53.374043657 +0300
+@@ -17,21 +17,21 @@
+ 'MAX_BYTES_FOR_LEVEL_MULTIPLIER')
+ order by cf_name, option_type;
+ cf_name        option_type     value
+-cf1    MAX_BYTES_FOR_LEVEL_MULTIPLIER  10.000000
+-cf1    TARGET_FILE_SIZE_BASE   1048576
+-cf1    WRITE_BUFFER_SIZE       12582912
+-cf2    MAX_BYTES_FOR_LEVEL_MULTIPLIER  10.000000
+-cf2    TARGET_FILE_SIZE_BASE   1048576
+-cf2    WRITE_BUFFER_SIZE       12582912
+-default        MAX_BYTES_FOR_LEVEL_MULTIPLIER  10.000000
+-default        TARGET_FILE_SIZE_BASE   1048576
+-default        WRITE_BUFFER_SIZE       12582912
+-z      MAX_BYTES_FOR_LEVEL_MULTIPLIER  10.000000
+-z      TARGET_FILE_SIZE_BASE   1048576
+-z      WRITE_BUFFER_SIZE       12582912
+-__system__     MAX_BYTES_FOR_LEVEL_MULTIPLIER  10.000000
+-__system__     TARGET_FILE_SIZE_BASE   1048576
+-__system__     WRITE_BUFFER_SIZE       12582912
++cf1    MAX_BYTES_FOR_LEVEL_MULTIPLIER  2.000000
++cf1    TARGET_FILE_SIZE_BASE   2147483648
++cf1    WRITE_BUFFER_SIZE       1073741824
++cf2    MAX_BYTES_FOR_LEVEL_MULTIPLIER  2.000000
++cf2    TARGET_FILE_SIZE_BASE   2147483648
++cf2    WRITE_BUFFER_SIZE       1073741824
++default        MAX_BYTES_FOR_LEVEL_MULTIPLIER  2.000000
++default        TARGET_FILE_SIZE_BASE   2147483648
++default        WRITE_BUFFER_SIZE       1073741824
++z      MAX_BYTES_FOR_LEVEL_MULTIPLIER  2.000000
++z      TARGET_FILE_SIZE_BASE   2147483648
++z      WRITE_BUFFER_SIZE       1073741824
++__system__     MAX_BYTES_FOR_LEVEL_MULTIPLIER  2.000000
++__system__     TARGET_FILE_SIZE_BASE   2147483648
++__system__     WRITE_BUFFER_SIZE       1073741824
+```
+
+#### 1.17 rocksdb.bulk_load_unsorted, rocksdb.bulk_load_unsorted_rev
+
 
 
 ### 2. rocksdb_sys_vars
@@ -328,6 +436,7 @@ TerarkDB 不需要 Bloom Filter，但 RocksDB 原版需要 Bloom Filter，这些
 
 1. rocksdb.bloomfilter2
 2. rocksdb.bloomfilter
+3. rocksdb.prefix_extractor_override
 
 
 
