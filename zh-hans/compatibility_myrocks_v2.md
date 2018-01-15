@@ -302,23 +302,7 @@ At line 37: Can't initialize replace from 'replace_result $NP_EXAMPLE_LIB NP_EXA
 
 官方原版 MyRocks 也不能通过，且 MySQL on TerarkDB 错误信息与原版 MyRocks 一致。
 
-#### 1.15 rocksdb.ttl_primary, rocksdb.ttl_secondary, rocksdb.ttl_primary_read_filtering
-
-错误信息类似如下：
-```
---- /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/suite/rocksdb/r/ttl_secondary.result  2018-01-02 14:11:45.000000000 +0300
-+++ /oldssd2/tempvar/4/log/ttl_secondary.reject 2018-01-05 16:05:01.726197575 +0300
-@@ -533,7 +533,7 @@
- set global rocksdb_compact_cf='default';
- select variable_value-@c from information_schema.global_status where variable_name='rocksdb_rows_expired';
- variable_value-@c
--6
-+12
-```
-
-ttl 相关，官方原版 MyRocks 也不能通过，且 MySQL on TerarkDB 错误信息与原版 MyRocks 一致。
-
-#### 1.16 rocksdb.rocksdb_cf_options
+#### 1.15 rocksdb.rocksdb_cf_options
 
 MySQL on TerarkDB 为针对自身特点，使用了不同于原版 MyRocks 的默认 cf options，故与测试预期结果不符合。其错误信息如下：
 
@@ -361,7 +345,7 @@ MySQL on TerarkDB 为针对自身特点，使用了不同于原版 MyRocks 的�
 +__system__     WRITE_BUFFER_SIZE       1073741824
 ```
 
-#### 1.17 rocksdb.bulk_load_unsorted, rocksdb.bulk_load_unsorted_rev
+#### 1.16 rocksdb.bulk_load_unsorted, rocksdb.bulk_load_unsorted_rev
 
 
 
