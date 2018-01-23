@@ -5,7 +5,7 @@
 
 插入表结构及配置参见附注。
 
-共 120G 数据，插入耗时 3.5 小时。初次插完空间占用为 57G，经过 compaction 后大小为 35G，插入过程中需要总空间 > 60G。
+共 120G 数据，插入耗时 3.5 小时。初次插完空间占用为 57G，经过 compaction 后大小为 35G，插入过程中需要总空间 ~ 64G。
 
 
 ### 查询阶段
@@ -81,3 +81,37 @@ CREATE TABLE lineitem  (
              KEY 		(L_SUPPKEY, L_PARTKEY)
 );
 ```
+
+MyRocks + Terark 的 my.cnf 配置
+
+```
+
+```
+
+Terark 的环境变量设置
+
+```
+TerarkZipTable_localTempDir=$PWD/terark-temp \
+TerarkZipTable_keyPrefixLen=4 \
+TerarkZipTable_offsetArrayBlockUnits=128 \
+TerarkZipTable_extendedConfigFile=$PWD/license \
+TerarkUseDivSufSort=1 \
+TerarkZipTable_max_background_compactions=5 \
+TerarkZipTable_max_subcompactions=1 \
+TerarkZipTable_min_merge_width=3 \
+TerarkZipTable_max_merge_width=7 \
+TerarkZipTable_level0_file_num_compaction_trigger=4 \
+TerarkZipTable_softZipWorkingMemLimit=2G \
+TerarkZipTable_hardZipWorkingMemLimit=4G \
+TerarkZipTable_write_buffer_size=1G \
+TerarkZipTable_target_file_size_base=2G \
+TerarkZipTable_target_file_size_multiplier=1 \
+TerarkZipTable_indexCacheRatio=0 \
+TerarkZipTable_warmUpIndexOnOpen=false \
+TerarkZipTable_sampleRatio=0.015 \
+TerarkZipTable_disableFewZero=true \
+TerarkZipTable_enable_partial_remove=true \
+Terark_enableChecksumVerify=0 \
+```
+
+
