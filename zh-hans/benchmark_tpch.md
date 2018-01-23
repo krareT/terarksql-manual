@@ -8,7 +8,7 @@
 
 我们将创建 100 张表，向每张表插入相同的 1.2G 数据，共计 120G 原始数据。表的结构参见附注。
 
-## MyRocks + Terark
+## MyRocks on Terark
 
 ### 插入阶段
 
@@ -30,7 +30,7 @@
 
 注：TerarkDB 使用 mmap，所以这里使用了 cgroup 的方式进行内存限制。
 
-## MyRocks + InnoDB
+## MyRocks on InnoDB
 
 ### 插入阶段
 
