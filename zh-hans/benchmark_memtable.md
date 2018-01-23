@@ -1,7 +1,11 @@
 
 
+## 测试简介
+
 rocksdb 原生 memtable（基于 skiplist）在数据大量插入时，因为其随机性而导致高度的不可预期性，在我们的测试里成为了性能瓶颈之一。
-是故我们基于 trbtree 实现了自己的 memtbale，以提高 MyRocks on Terark 的插入性能。本测试即为 skiplist 和 trbtree 性能对比报告。
+是故我们基于 trbtree 实现了自己的 memtable，以提高 MyRocks on Terark 的插入性能。本测试即为 skiplist 和 trbtree 性能对比报告。
+
+## 测试结果
 
 使用的数据是由 tpch 程序产生的 lineitem 数据，共 100K(10万) 条，总字节数 59MB，平均每条约 600 字节，单条数据格式如下：
 
