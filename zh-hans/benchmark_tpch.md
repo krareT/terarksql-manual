@@ -39,7 +39,7 @@
 
 ### 查询阶段
 
-使用测试程序 [MyRocks](https://github.com/Terark/MyRocksTest), 使用 32个 线程，buffer_cache 设置为 96G，
+使用测试程序 [MyRocks](https://github.com/Terark/MyRocksTest), 使用 32个 线程，
 
 | 内存限制*  |Buffer<br/>Pool|  QPS   | CPU 占用  | TPS(iostat) | kB_read(iostat) |
 |----------:|---:|-------:|---------:|------------:|----------------:|
