@@ -85,7 +85,7 @@ CREATE TABLE lineitem  (
 );
 ```
 
-MyRocks + Terark 的 my.cnf 配置
+MyRocks on Terark 的 my.cnf 配置
 
 ```
 rocksdb
@@ -138,7 +138,7 @@ TerarkZipTable_enable_partial_remove=true \
 Terark_enableChecksumVerify=0 \
 ```
 
-MyRocks + InnoDB 的 my.cnf 配置
+MyRocks on InnoDB 的 my.cnf 配置
 
 ```
 character-set-server=utf8
