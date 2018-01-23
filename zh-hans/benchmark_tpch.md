@@ -17,7 +17,7 @@
 
 ### 查询阶段
 
-使用测试程序 [MyRocks](https://github.com/Terark/MyRocksTest), 32 线程，
+使用测试程序 [MyRocks](https://github.com/Terark/MyRocksTest)，32 线程，
 
 
 | 内存限制*   |  QPS   | CPU 占用  | TPS(iostat) | kB_read(iostat) |
@@ -43,7 +43,7 @@
 
 | 内存限制*  |Buffer<br/>Pool|  QPS   | CPU 占用  | TPS(iostat) | kB_read(iostat) |
 |----------:|---:|-------:|---------:|------------:|----------------:|
-| 不限制     |96G | 47,000 |  900%    |             |                 |
+| 不限制     |96G | 47,000 |  900%   |             |                 |
 | 96G       |48G | 28,000 |  470%    |  14,995     |  473,572        |
 | 32G       |16G | 19,000 |  400%    |  18,326     |  450,656        |
 | 16G       | 8G | 14,500 |  350%    |  19,076     |  438,828        |
