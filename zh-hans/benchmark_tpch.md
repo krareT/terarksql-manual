@@ -143,6 +143,25 @@ Terark_enableChecksumVerify=0 \
 MyRocks + InnoDB 的 my.cnf 配置
 
 ```
+character-set-server=utf8
+collation-server=utf8_bin
+
+user = mysql
+bind-address = 0.0.0.0
+port = 3336
+
+back_log = 600
+max_connections = 6000
+
+innodb_buffer_pool_size = 48G
+
+
+binlog-format=statement
+secure_file_priv=""
+
+server-id = 1
+log_slave_updates = 1
+replicate-ignore-db = mysql
 ```
 
 
