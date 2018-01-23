@@ -1,11 +1,18 @@
 
+
+本测试使用的数据是由 tpch 程序产生的，单条数据格式如下：
+
+```
+1|16605260|822776|1|17|19795.31|0.04|0.02|N|O|1996-03-13|1996-02-12|1996-03-22|DELIVER IN PERSON|TRUCK|fluffily ironic pinto beans sleep daringly pending instructions. fluffily permanent foxes mold along the furiously express ideas. ironic pinto beans cajole fluffily unusual theodolites. carefully regular theodolites across the pending pinto beans haggle even, ironic deposits. quickly special packages above the furiously regular deposits wake carefully pending requests. carefully regular courts above the pending, even accounts haggle blithely even |
+```
+
+我们将创建 100 张表，向每张表插入相同的 1.2G 数据，共计 120G 原始数据。表的结构参见附注。
+
 ## MyRocks + Terark
 
 ### 插入阶段
 
-插入表结构及配置参见附注。
-
-共 120G 数据，插入耗时 3.5 小时。初次插完空间占用为 57G，经过 compaction 后大小为 35G，插入过程中需要总空间 ~ 64G。
+插入耗时 3.5 小时。初次插完空间占用为 57G，经过 compaction 后大小为 35G，插入过程中需要总空间 ~ 64G。
 
 
 ### 查询阶段
@@ -27,9 +34,7 @@
 
 ### 插入阶段
 
-插入表结构及配置参见附注。
-
-共 120G 数据，插入 21 小时共插入 90% 左右的数据，大小 210G 左右。期间 kill -9 后重启，耗时1小时10分钟；（注：没有设置 ```buffer_pool_size``` 也即使用的是默认配置）
+插入 21 小时共插入 90% 左右的数据，大小 210G 左右。期间 kill -9 后重启，耗时1小时10分钟；（注：没有设置 ```buffer_pool_size``` 也即使用的是默认配置）
 
 
 ### 查询阶段
