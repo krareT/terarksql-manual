@@ -14,7 +14,7 @@ MyRocks 针对自身特点提供了一系列的测试,这些测试共有五类�
 
 | suite             | total | success | fail |
 | ----------------- |:-----:|:-----:|:-----:|
-| rocksdb           |  212  |  198  |   14  |
+| rocksdb           |  242  |  214  |   28  |
 | rocksdb_stress    |   2   |   2   |    0  |
 | rocksdb_sys_vars  |  110  |  108  |    2  |
 | rocksdb_hotbackup |   6   |   4   |    2  |
@@ -194,7 +194,7 @@ id	select_type	table	partitions	type	possible_keys	key	key_len	ref	rows	Extra
 id	select_type	table	partitions	type	possible_keys	key	key_len	ref	rows	Extra
 1	SIMPLE	t2	custom_p2	ref	col3	col3	258	const	2	Using where
 ```
-其中 rows 为估计值，对功能不影响。
+其中 rows 为估计值，因使用的算法不同估算值也略有不同，对功能不会造成影响。
 
 #### 1.6 rocksdb.add_index_inplace
 
@@ -214,7 +214,7 @@ INDEX_LENGTH
 
 MySQL on TerarkDB 使用的索引算法与 MyRocks 不同，故 index_length 不同。
 
-#### 1.7 rocksdb.drop_table2
+#### 1.7 rocksdb.drop_table2, rocksdb.drop_table3， rocksdb.truncate_table3
 
 这一块背景比较复杂，MyRocks 在 drop table 时，会先后做两件事情：
 1. 把**只包含该 table(极其 index)** 的 sst 直接删除
@@ -287,9 +287,43 @@ MyRocks 对 universal compaction 支持不完善，在该模式下使用 MyRocks
 
 MySQL on TerarkDB 不使用 zstd 压缩算法。
 
-#### 1.13 rocksdb.bulk_load_rev_data，rocksdb.bulk_load_rev_cf_and_data
+#### 1.13 rocksdb.bulk_load_rev_data， rocksdb.bulk_load， rocksdb.bulk_load_rev_cf， rocksdb.bulk_load_rev_cf_and_data
 
-MySQL on TerarkDB 默认设置 `TerarkZipTable_target_file_size_base` 为系统内存的一半，但是 MyRocks 会使用该值的 3 倍来申请内存而引发  `bad_alloc` 异常。将其设置为较小的数值即可通过。
+相关语句：```SHOW TABLE STATUS WHERE name LIKE 't%';```
+
+预期结果：
+```
+SHOW TABLE STATUS WHERE name LIKE 't%';
+ Name   Engine  Version Row_format      Rows    Avg_row_length  Data_length     Max_data_length Index_length    Data_free       Auto_increment  Create_time     Update_time     Check_time      Collation       Checksum        Create_options  Comment
+t1     ROCKSDB 10      Fixed   5000000 #       #       #       #       0       NULL    NULL    NULL    NULL    latin1_bin      NULL
+ t2     ROCKSDB 10      Fixed   5000000 #       #       #       #       0       NULL    NULL    NULL    NULL    latin1_bin      NULL
+ t3     ROCKSDB 10      Fixed   5000000 #       #       #       #       0       NULL    NULL    NULL    NULL    latin1_bin      NULL    partitioned
+```
+
+测试结果：
+```
+SHOW TABLE STATUS WHERE name LIKE 't%';
+ Name   Engine  Version Row_format      Rows    Avg_row_length  Data_length     Max_data_length Index_length    Data_free       Auto_increment  Create_time     Update_time     Check_time      Collation       Checksum        Create_options  Comment
+t1     ROCKSDB 10      Fixed   4910123 #       #       #       #       0       NULL    NULL    NULL    NULL    latin1_bin      NULL
+ t2     ROCKSDB 10      Fixed   5000000 #       #       #       #       0       NULL    NULL    NULL    NULL    latin1_bin      NULL
+ t3     ROCKSDB 10      Fixed   5000000 #       #       #       #       0       NULL    NULL    NULL    NULL    latin1_bin      NULL    partitioned
+```
+
+测试输出如下：
+```
+--- /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/suite/rocksdb/r/bulk_load_rev_cf_and_data.result      2018-01-02 14:11:45.000000000 +0300
++++ /oldssd2/tempvar/3/log/bulk_load_rev_cf_and_data.reject     2018-01-23 12:13:48.943023180 +0300
+@@ -36,7 +36,7 @@
+ set rocksdb_bulk_load=0;
+ SHOW TABLE STATUS WHERE name LIKE 't%';
+ Name   Engine  Version Row_format      Rows    Avg_row_length  Data_length     Max_data_length Index_length    Data_free       Auto_increment  Create_time     Update_time     Check_time      Collation       Checksum        Create_options  Comment
+-t1     ROCKSDB 10      Fixed   5000000 #       #       #       #       0       NULL    NULL    NULL    NULL    latin1_bin      NULL
++t1     ROCKSDB 10      Fixed   4910123 #       #       #       #       0       NULL    NULL    NULL    NULL    latin1_bin      NULL
+ t2     ROCKSDB 10      Fixed   5000000 #       #       #       #       0       NULL    NULL    NULL    NULL    latin1_bin      NULL
+ t3     ROCKSDB 10      Fixed   5000000 #       #       #       #       0       NULL    NULL    NULL    NULL    latin1_bin      NULL    partitioned
+```
+
+rows 为估计值，同 1.5。
 
 #### 1.14 rocksdb.native_procedure
 
@@ -345,9 +379,95 @@ MySQL on TerarkDB 为针对自身特点，使用了不同于原版 MyRocks 的�
 +__system__     WRITE_BUFFER_SIZE       1073741824
 ```
 
-#### 1.16 rocksdb.bulk_load_unsorted, rocksdb.bulk_load_unsorted_rev
+#### 1.16 rocksdb.records_in_range
 
+相关语句：```explain extended select a, b from t1 where a < 750;```
 
+错误信息类似如下：
+
+```
+--- /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/suite/rocksdb/r/records_in_range.result       2017-06-08 06:26:45.000000000 +0300
++++ /oldssd2/tempvar/6/log/records_in_range.reject      2018-01-23 11:39:56.283711337 +0300
+@@ -56,7 +56,7 @@
+ Note   1003    /* select#1 */ select `test`.`t1`.`a` AS `a` from `test`.`t1` where (`test`.`t1`.`a` < 750)
+ explain extended select a, b from t1 where a < 750;
+ id     select_type     table   type    possible_keys   key     key_len ref     rows    filtered        Extra
+-1      SIMPLE  t1      ALL     ka      NULL    NULL    NULL    20000   75.00   Using where
++1      SIMPLE  t1      ALL     ka      NULL    NULL    NULL    19694   76.17   Using where
+ Warnings:
+ Note   1003    /* select#1 */ select `test`.`t1`.`a` AS `a`,`test`.`t1`.`b` AS `b` from `test`.`t1` where (`test`.`t1`.`a` < 750)
+ explain extended select a from t1 where a = 700;
+```
+
+其中有 rows 为预估值，同 1.5。
+
+#### 1.17 rocksdb.statistics
+
+相关语句：```SELECT table_name, table_rows 
+                  FROM information_schema.tables 
+                  WHERE table_schema = DATABASE() and table_name <> 't1';```
+
+错误信息如下：
+
+```
+--- /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/suite/rocksdb/r/statistics.result     2017-06-08 06:26:45.000000000 +0300
++++ /oldssd2/tempvar/4/log/statistics.reject    2018-01-23 11:42:12.405805520 +0300
+@@ -21,8 +21,8 @@
+ ) engine=rocksdb;
+ SELECT table_name, table_rows FROM information_schema.tables WHERE table_schema = DATABASE() and table_name <> 't1';
+ table_name     table_rows
+-t2     1000
+-t3     1000
++t2     4999
++t3     4999
+ SELECT CASE WHEN table_rows < 100000 then 'true' else 'false' end from information_schema.tables where table_name = 't1';
+ CASE WHEN table_rows < 100000 then 'true' else 'false' end
+ true
+```
+
+tables_rows 估计值，同 1.5。
+
+#### 1.17 rocksdb.issue255
+
+相关语句：```SHOW TABLE STATUS LIKE 't1';```
+
+错误信息类似如下：
+
+```
+--- /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/suite/rocksdb/r/issue255.result       2018-01-02 14:11:45.000000000 +0300
++++ /oldssd2/tempvar/5/log/issue255.reject      2018-01-23 11:50:13.060075980 +0300
+@@ -2,7 +2,7 @@
+ INSERT INTO t1 VALUES (5);
+ SHOW TABLE STATUS LIKE 't1';
+ Name   Engine  Version Row_format      Rows    Avg_row_length  Data_length     Max_data_length Index_length    Data_free       Auto_increment  Create_time     Update_time     Check_time      Collation       Checksum        Create_options  Comment
+-t1     ROCKSDB #       Fixed   1       #       #       #       #       #       6       NULL    NULL    NULL    latin1_swedish_ci       NULL
++t1     ROCKSDB #       Fixed   0       #       #       #       #       #       6       NULL    NULL    NULL    latin1_swedish_ci       NULL
+```
+
+rows 为估计值，同 1.5。
+
+#### 1.18 rocksdb.max_open_files
+
+相关语句：```SELECT FLOOR(@@global.open_files_limit / 2) = @@global.rocksdb_max_open_files;```
+
+预期结果：
+```
+FLOOR(@@global.open_files_limit / 2) = @@global.rocksdb_max_open_files
+1
+```
+
+测试结果：
+```
+FLOOR(@@global.open_files_limit / 2) = @@global.rocksdb_max_open_files
+0
+```
+为了避免 sst 被多次打开，MySQL on Terarkdb 需要将 rocksdb_max_open_files 设置为 -1，故与预期不一致。
+
+#### 1.19 rocksdb.check_ignore_unknown_options
+
+```
+Corruption: Bad table magic number: expected 9863518390377041911, found 1234605616436508552 in ./.rocksdb/000126.sst
+```
 
 ### 2. rocksdb_sys_vars
 #### 2.1 rocksdb_sys_vars.all_vars
@@ -418,8 +538,9 @@ MyRocks 变量 ROCKSDB_WRITE_SYNC 不存在，或改名，测试未及时更新�
 ### Bloom Filter 相关的测试
 TerarkDB 不需要 Bloom Filter，但 RocksDB 原版需要 Bloom Filter，这些测试不影响 TerarkDB 的功能。
 
-1. rocksdb.bloomfilter2
-2. rocksdb.bloomfilter
+1. rocksdb.bloomfilter
+2. rocksdb.bloomfilter2
+3. rocksdb.bloomfilter3
 3. rocksdb.prefix_extractor_override
 
 
