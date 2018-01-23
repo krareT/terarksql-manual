@@ -99,7 +99,6 @@ bind-address = 0.0.0.0
 port = 3307
 back_log = 600
 max_connections = 6000
-#binlog-format=ROW
 secure_file_priv=""
 rocksdb_commit_in_the_middle=ON
 rocksdb_bulk_load_size=1000
