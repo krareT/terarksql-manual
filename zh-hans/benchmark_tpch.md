@@ -150,4 +150,20 @@ log_slave_updates = 1
 replicate-ignore-db = mysql
 ```
 
-
+查看 MyRocks 各索引压缩率
+* 该压缩率未包含字典尺寸
+```
+# 若 INDEX_NAME 无法展示，请执行下面的查询
+# select * from information_schema.STATISTICS;
+select TABLE_SCHEMA,
+       TABLE_NAME,
+       INDEX_NAME,
+       sum(DATA_SIZE) as DATA_SIZE,
+       sum(FILE_SIZE) as FILE_SIZE,
+       sum(FILE_SIZE) / sum(DATA_SIZE) as ZIP_RATIO
+  from information_schema.ROCKSDB_DDL
+  left join information_schema.ROCKSDB_INDEX_FILE_MAP
+    on information_schema.ROCKSDB_DDL.COLUMN_FAMILY = information_schema.ROCKSDB_INDEX_FILE_MAP.COLUMN_FAMILY
+    and information_schema.ROCKSDB_DDL.INDEX_NUMBER = information_schema.ROCKSDB_INDEX_FILE_MAP.INDEX_NUMBER
+  group by TABLE_SCHEMA, TABLE_NAME, INDEX_NAME;
+```
