@@ -94,22 +94,17 @@ skip-innodb
 default-tmp-storage-engine=MyISAM
 character-set-server=utf8
 collation-server=utf8_bin
-
 user = wangfo
 bind-address = 0.0.0.0
 port = 3307
-
 back_log = 600
 max_connections = 6000
-
 #binlog-format=ROW
 secure_file_priv=""
 rocksdb_commit_in_the_middle=ON
 rocksdb_bulk_load_size=1000
-
 table_open_cache = 21397
 rocksdb_default_cf_options=memtable=rbtree
-
 ```
 
 Terark 的环境变量设置
@@ -143,20 +138,14 @@ MyRocks on InnoDB 的 my.cnf 配置
 ```
 character-set-server=utf8
 collation-server=utf8_bin
-
 user = mysql
 bind-address = 0.0.0.0
 port = 3336
-
 back_log = 600
 max_connections = 6000
-
 innodb_buffer_pool_size = 48G
-
-
 binlog-format=statement
 secure_file_priv=""
-
 server-id = 1
 log_slave_updates = 1
 replicate-ignore-db = mysql
