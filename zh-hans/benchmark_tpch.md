@@ -85,6 +85,27 @@ CREATE TABLE lineitem  (
 MyRocks + Terark 的 my.cnf 配置
 
 ```
+rocksdb
+default-storage-engine=rocksdb
+skip-innodb
+default-tmp-storage-engine=MyISAM
+character-set-server=utf8
+collation-server=utf8_bin
+
+user = wangfo
+bind-address = 0.0.0.0
+port = 3307
+
+back_log = 600
+max_connections = 6000
+
+#binlog-format=ROW
+secure_file_priv=""
+rocksdb_commit_in_the_middle=ON
+rocksdb_bulk_load_size=1000
+
+table_open_cache = 21397
+rocksdb_default_cf_options=memtable=rbtree
 
 ```
 
@@ -112,6 +133,11 @@ TerarkZipTable_sampleRatio=0.015 \
 TerarkZipTable_disableFewZero=true \
 TerarkZipTable_enable_partial_remove=true \
 Terark_enableChecksumVerify=0 \
+```
+
+MyRocks + InnoDB 的 my.cnf 配置
+
+```
 ```
 
 
