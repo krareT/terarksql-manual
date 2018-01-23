@@ -78,3 +78,12 @@ CREATE TABLE `lineitem1` (
   KEY `L_SHIPINSTRUCT` (`L_SHIPINSTRUCT`,`L_ORDERKEY`)
 ) ENGINE=ROCKSDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 ```
+
+其他相关配置，
+
+```
+rocksdb_bulk_load_size=10000
+TerarkZipTable_write_buffer_size=8G
+
+```
+
