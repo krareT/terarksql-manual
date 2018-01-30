@@ -18,7 +18,7 @@ MyRocks 针对自身特点提供了一系列的测试,这些测试共有五类�
 | rocksdb_stress    |   2   |   2   |    0  |
 | rocksdb_sys_vars  |  110  |  108  |    2  |
 | rocksdb_hotbackup |   6   |   4   |    2  |
-| rocksdb_rpl       |   12  |   11  |    1  |
+| rocksdb_rpl       |   15  |   15  |    0  |
 
 ## 详细说明
 
@@ -515,25 +515,14 @@ t1	ROCKSDB	10	Fixed	#	#	400	0	0	0	4	NULL	NULL	NULL	latin1_swedish_ci	NULL
 
 ### 3. rocksdb_hostbackup
 
-#### 3.1 rocksdb_hotbackup.slocket、rocksdb_hotbackup.gtid
+#### 3.1 rocksdb_hotbackup.slocket、rocksdb_hotbackup.gtid、rocksdb_hotbackup.xbstream
 
 错误信息：
 ```
 mysqltest: Could not open connection 'default' after 500 attempts: 2002 Can't connect to local MySQL server through socket '/newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/var/tmp/1/mysqld.2.sock' (2)
 ```
 
-测试中第二个实例不能启动，导致测试超时，原版 MyRocks 也不能通过。
-
-### 4. rocksdb_rpl
-
-#### 4.1 rocksdb_rpl.multiclient_2pc
-
-错误信息：
-```
-mysqltest: At line 39: query 'SET GLOBAL ROCKSDB_WRITE_SYNC = OFF' failed: 1193: Unknown system variable 'ROCKSDB_WRITE_SYNC'
-```
-
-MyRocks 变量 ROCKSDB_WRITE_SYNC 不存在，或改名，测试未及时更新，原版 MyRocks 也不能通过。
+测试中第二个实例不能启动，导致测试超时，测试程序有误，原版 MyRocks 也不能通过。
 
 ### Bloom Filter 相关的测试
 TerarkDB 不需要 Bloom Filter，但 RocksDB 原版需要 Bloom Filter，这些测试不影响 TerarkDB 的功能。
