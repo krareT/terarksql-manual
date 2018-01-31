@@ -37,4 +37,5 @@ rpl.rpl_sbm_previous_gtid_event 'row'    [ skipped ]  Doesn't support --binlog-f
 rpl.rpl_sbm_previous_gtid_event 'stmt'   w2 [ skipped ]  Test requires GTID_MODE=ON.
 ```
 
+[UPDATED]
 
