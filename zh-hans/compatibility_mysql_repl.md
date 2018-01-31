@@ -27,6 +27,7 @@ rpl.rpl_mts_relay_log_post_crash_recovery
 rpl.rpl_mts_relay_log_recovery_on_error
 rpl.rpl_row_mts_show_relaylog_events
 rpl.rpl_mts_stop_slave
+rpl.rpl_row_loaddata_concurrent
 ```
 
 错误原因
