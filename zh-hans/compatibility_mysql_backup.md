@@ -13,7 +13,7 @@ xtrabackup.xb_partitioned_table
 xtrabackup.xb_compressed_table
 ```
 
-脚本里
+这里考虑脚本有问题，修改脚本
 
 ```
 MYSQL_INNOBACKUPEX 在被使用时仍然为空，修改测试脚本 xb_run.sh，
