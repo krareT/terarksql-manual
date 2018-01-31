@@ -13,8 +13,12 @@ xtrabackup.xb_partitioned_table
 xtrabackup.xb_compressed_table
 ```
 
-异常原因
+脚本里
 
-```suite/xtrabackup/include/xb_run.sh: line 21: --defaults-file=/newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/var/my.cnf: No such file or directory```
+```
+MYSQL_INNOBACKUPEX 在被使用时仍然为空，修改测试脚本 xb_run.sh，
+增加： MYSQL_INNOBACKUPEX=xtrabackup
+替换：$ibbackup_opt $backup_dir 为 "--backup="$backup_dir
 
-可以看到对应位置的文件是存在的 ？
+```
+脚本正常运行，但是报错在 ssl 相关，可参看"安全性异常"里的介绍。
