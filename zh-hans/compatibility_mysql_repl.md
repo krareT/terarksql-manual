@@ -35,7 +35,7 @@ rpl.rpl_sbm_previous_gtid_event 'stmt'   w2 [ skipped ]  Test requires GTID_MODE
 
 2. Test makes sense only to run with MTS
 
-测试需要使用 Multi-Threaded Slave，待确认问题所在。
+测试需要使用 Multi-Threaded Slave。
 
 ```
 rpl.rpl_stm_mix_mts_show_relaylog_events
