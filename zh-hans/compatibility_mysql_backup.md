@@ -13,4 +13,6 @@ xtrabackup.xb_partitioned_table
 xtrabackup.xb_compressed_table
 ```
 
-异常原因是“找不到可执行文件 MYSQL_INNOBACKUPEX”，待解决。
+异常原因
+
+```suite/xtrabackup/include/xb_run.sh: line 21: --defaults-file=/newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/var/my.cnf: No such file or directory```
