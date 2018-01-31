@@ -16,3 +16,5 @@ xtrabackup.xb_compressed_table
 异常原因
 
 ```suite/xtrabackup/include/xb_run.sh: line 21: --defaults-file=/newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/var/my.cnf: No such file or directory```
+
+可以看到对应位置的文件是存在的 ？
