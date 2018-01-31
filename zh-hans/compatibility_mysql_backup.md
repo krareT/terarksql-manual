@@ -22,3 +22,17 @@ MYSQL_INNOBACKUPEX 在被使用时仍然为空，修改测试脚本 xb_run.sh，
 
 ```
 脚本正常运行，但是报错在 ssl 相关，可参看"安全性异常"里的介绍。
+
+```
+ssl-verify-server-cert            FALSE
+ssl-ca                            (No default value)
+ssl-capath                        (No default value)
+ssl-cert                          (No default value)
+ssl-cipher                        (No default value)
+ssl-key                           (No default value)
+ssl-crl                           (No default value)
+ssl-crlpath                       (No default value)
+tls-version                       TLSv1,TLSv1.1,TLSv1.2
+server-public-key-path            (No default value)
+```
+
