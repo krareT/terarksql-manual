@@ -1,16 +1,6 @@
 
 以下列出的 case 是测试程序本身即有问题，
 
-### rpl suite 下的异常 case
-
-测试需要 binlog-format 为 row，但是设置为 row 后又显示不支持 row 格式，疑为测试 bug。
-Test requires: 'have_binlog_format_row'
-
-```
-rpl.rpl_row_loaddata_concurrent
-```
-
-
 ### engines/rr_trx suite 下的异常 case
 
 ```
