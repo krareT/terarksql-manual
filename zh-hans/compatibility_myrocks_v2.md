@@ -40,7 +40,7 @@ select * from information_schema.ROCKSDB_CF_OPTIONS where OPTION_TYPE='TABLE_FAC
 +------------+--------------------+----------------+
 ```
 
-MyRocks 官方在最新的 realse [prod201704](https://github.com/facebook/mysql-5.6/releases/tag/prod201704) 中在表 ```INFORMATION_SCHEMA.ROCKSDB_CF_OPTIONS``` 添加了若干变量，但测试程序未及时更新，导致与测试程序预期结果不符合。
+MyRocks 官方在最新的 release [prod201704](https://github.com/facebook/mysql-5.6/releases/tag/prod201704) 中在表 ```INFORMATION_SCHEMA.ROCKSDB_CF_OPTIONS``` 添加了若干变量，但测试程序未及时更新，导致与测试程序预期结果不符合。
 
 添加内容类似如下：
 ```
