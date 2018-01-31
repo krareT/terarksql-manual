@@ -7,24 +7,12 @@ binlog.binlog_gtid_mysqlbinlog_row
 binlog.binlog_gtid_mysqlbinlog_row_myisam
 ```
 
-共 3 个，按其失败的原因可以分为以下几类:
-
-1. 测试中测试程序失去连接
-
-在测试中，测试程序失去连接，不能连接到数据库。失去连接的原因待确定。
+错误原因
 
 ```
-binlog.binlog_gtid_mysqlbinlog_row_innodb
-binlog.binlog_gtid_mysqlbinlog_row_myisam
-```
-
-
-2. 开启 GTID MODE 后 binlog 格式不一致
-
-开启 GTID MODE 后 binlog 格式不一致，具体原因待确认。
-
-```
-binlog.binlog_gtid_mysqlbinlog_row
+binlog.binlog_gtid_mysqlbinlog_row 'mix' [ skipped ]  Doesn't support --binlog-format='mixed'
+binlog.binlog_gtid_mysqlbinlog_row 'stmt' [ skipped ]  Doesn't support --binlog-format='statement'
+binlog.binlog_gtid_mysqlbinlog_row 'row' w1 [ skipped ]  Test requires GTID_MODE=ON.
 ```
 
 
