@@ -495,23 +495,52 @@ ROCKSDB_SYSTEM_CF_BACKGROUND_FLUSH_INTERVAL
 
 因 MySQL on TerarkDB 有更多的背景线程用于 flush `__system__` cloumn famliy 以及时删除 WAL log 文件，故输出结果与预期不一致。
 
-#### 2.2 rocksdb_sys_vars.rocksdb_flush_memtable_on_analyze_basic
+#### 2.2 rocksdb_sys_vars.rocksdb_max_background_compactions_basic
 
-相关语句：```SHOW TABLE STATUS LIKE 't1';```
+错误信息如下：
 
-预期结果：
 ```
-Name	Engine	Version	Row_format	Rows	Avg_row_length	Data_length	Max_data_length	Index_length	Data_free	Auto_increment	Create_time	Update_time	Check_time	Collation	Checksum	Create_options	Comment
-t1	ROCKSDB	10	Fixed	#	#	24	0	0	0	4	NULL	NULL	NULL	latin1_swedish_ci	NULL
-```
-
-测试结果：
-```
-Name	Engine	Version	Row_format	Rows	Avg_row_length	Data_length	Max_data_length	Index_length	Data_free	Auto_increment	Create_time	Update_time	Check_time	Collation	Checksum	Create_options	Comment
-t1	ROCKSDB	10	Fixed	#	#	400	0	0	0	4	NULL	NULL	NULL	latin1_swedish_ci	NULL
+mysqltest: In included file "./suite/sys_vars/inc/rocksdb_sys_var.inc":
+included from ./suite/sys_vars/inc/rocksdb_sys_var.inc at line 10:
+At line 9: query 'SET @start_global_value = @@global.$sys_var' failed: 1193: Unknown system variable 'ROCKSDB_MAX_BACKGROUND_COMPACTIONS'
 ```
 
-其中 Rows 为估计值，MySQL on TerarkDB 压缩算法与 MyRocks 不同，故结果不一致，不影响功能。
+MyRocks 版本更新，参数 ```ROCKSDB_MAX_BACKGROUND_COMPACTIONS``` 被移除，但测试程序未及时更新，导致测试失败。
+
+类似错误导致的测试还有如下：
+
+| 测试 | 被移除参数 |
+|:----:|:--------:|
+| rocksdb_sys_vars.rocksdb_max_background_compactions_basic | ROCKSDB_MAX_BACKGROUND_COMPACTIONS |
+| rocksdb_sys_vars.rocksdb_max_background_flushes_basic     | ROCKSDB_MAX_BACKGROUND_FLUSHES     |
+| rocksdb_sys_vars.rocksdb_background_sync_basic            | ROCKSDB_BACKGROUND_SYNC            |
+| rocksdb_sys_vars.rocksdb_base_background_compactions_basic| ROCKSDB_BASE_BACKGROUND_COMPACTIONS|
+| rocksdb_sys_vars.rocksdb_flush_memtable_on_analyze_basic  | rocksdb_flush_memtable_on_analyze  |
+| rocksdb_sys_vars.rocksdb_use_direct_writes_basic          | ROCKSDB_USE_DIRECT_WRITES          |
+
+#### 2.3 rocksdb_sys_vars.rocksdb_update_cf_options_basic
+
+错误信息如下：
+
+```
+--- /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/suite/rocksdb_sys_vars/r/rocksdb_update_cf_options_basic.result       2017-06-08 06:26:45.000000000 +0300
++++ /oldssd2/tempvar/1/log/rocksdb_update_cf_options_basic.reject       2018-01-05 19:56:00.905260769 +0300
+@@ -38,10 +38,10 @@
+ NULL
+ SELECT * FROM ROCKSDB_CF_OPTIONS WHERE CF_NAME='default' AND OPTION_TYPE='WRITE_BUFFER_SIZE';
+ CF_NAME        OPTION_TYPE     VALUE
+-default        WRITE_BUFFER_SIZE       67108864
++default        WRITE_BUFFER_SIZE       6330063232
+ SELECT * FROM ROCKSDB_CF_OPTIONS WHERE CF_NAME='default' AND OPTION_TYPE='TARGET_FILE_SIZE_BASE';
+ CF_NAME        OPTION_TYPE     VALUE
+-default        TARGET_FILE_SIZE_BASE   67108864
++default        TARGET_FILE_SIZE_BASE   101281011712
+ SET @@global.rocksdb_update_cf_options = 'default={write_buffer_size=8m;target_file_size_base=2m};';
+ SELECT @@global.rocksdb_update_cf_options;
+ @@global.rocksdb_update_cf_options
+```
+
+因 MySQL on TerarkDB 默认设置的 ```WRITE_BUFFER_SIZE```，```TARGET_FILE_SIZE_BASE``` 与 MyRocks 默认值不一致，故导致测试失败。
 
 ### 3. rocksdb_hostbackup
 
