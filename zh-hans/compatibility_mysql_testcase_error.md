@@ -53,4 +53,15 @@ rpl.rpl_sbm_previous_gtid_event 'row'    [ skipped ]  Doesn't support --binlog-f
 rpl.rpl_sbm_previous_gtid_event 'stmt'   w2 [ skipped ]  Test requires GTID_MODE=ON.
 ```
 
+#### Test requires: 'lowercase2'
+
+测试程序设置的```lower_case_table_name2=2```未能起作用。
+
+```
+parts.partition_mgm_lc2_archive
+parts.partition_mgm_lc2_memory
+parts.partition_mgm_lc2_myisam
+parts.partition_mgm_lc2_innodb
+```
+
 （DONE）
