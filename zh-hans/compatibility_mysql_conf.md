@@ -45,17 +45,6 @@ rpl_recovery.rpl_gtid_crash_safe_idempotent 'row' w1 [ skipped ]  Test requires:
 
 ```
 
-#### Test requires: 'lowercase2'
-
-测试需要数据库设置 lowercase2，但未能找到正确的设置方法，待确认。
-
-```
-parts.partition_mgm_lc2_archive
-parts.partition_mgm_lc2_memory
-parts.partition_mgm_lc2_myisam
-parts.partition_mgm_lc2_innodb
-```
-
 #### CAST() in partitioning function is currently not supported.
 
 partitioning function 的 CAST 函数当前版本不支持。
@@ -91,7 +80,7 @@ funcs_1.processlist_val_ps
 
 #### This test needs on slave side: InnoDB disabled, default engine: MyISAM
 
-测试需要从库默认使用 MyISAM 引擎，并禁用 InnoDB 引擎，设置方法待查。
+测试需要从库默认使用 MyISAM 引擎，并禁用 InnoDB 引擎。
 
 ```
 rpl.rpl_ddl
