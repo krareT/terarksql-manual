@@ -10,9 +10,12 @@ binlog.binlog_gtid_mysqlbinlog_row_myisam
 错误原因
 
 ```
-binlog.binlog_gtid_mysqlbinlog_row 'mix' [ skipped ]  Doesn't support --binlog-format='mixed'
-binlog.binlog_gtid_mysqlbinlog_row 'stmt' [ skipped ]  Doesn't support --binlog-format='statement'
-binlog.binlog_gtid_mysqlbinlog_row 'row' w1 [ skipped ]  Test requires GTID_MODE=ON.
+-###   @3=-128 (128) /* TINYINT meta=0 nullable=1 is_null=0 */
+-###   @4=0 /* TINYINT meta=0 nullable=1 is_null=0 */
+-###   @5=0 /* TINYINT meta=0 nullable=1 is_null=0 */
++###   @3=-128 /* TINYINT meta=0 nullable=1 is_null=0 */
++###   @4=0 /* TINYINT UNSIGNED meta=0 nullable=1 is_null=0 */
++###   @5=0 /* TINYINT UNSIGNED meta=0 nullable=1 is_null=0 */
 ```
 
 
