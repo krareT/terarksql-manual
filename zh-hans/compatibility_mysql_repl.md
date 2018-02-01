@@ -20,7 +20,6 @@ binlog.binlog_gtid_mysqlbinlog_row 'row' w1 [ skipped ]  Test requires GTID_MODE
 
 ```
 rpl.rpl_sbm_previous_gtid_event
-rpl.rpl_current_user
 rpl.rpl_stm_mix_mts_show_relaylog_events
 rpl.rpl_parallel_worker_error
 rpl.rpl_mts_relay_log_post_crash_recovery
