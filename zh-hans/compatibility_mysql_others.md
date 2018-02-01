@@ -2,7 +2,7 @@
 
 ### 统计信息不一致
 
-我们在 MyRocks 的 information_schema 数据库中添加了一个 ROCKSDB_TF_OPTIONS，以及一个用于 flush `__system__` column family 的线程，这导致了统计与预期不一致。
+我们在 MyRocks 的 ```information_schema``` 数据库中添加了一个 ```ROCKSDB_TF_OPTIONS```，以及一个用于 flush `__system__` column family 的线程，这导致了统计与预期不一致。
 
 ```
 main.mysqld--help-notwin-profiling
