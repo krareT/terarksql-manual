@@ -1,5 +1,5 @@
 
-以下 case 均需要相关设置，但因为暂时没有找到合适设置方法从而导致被跳过，
+以下 case 的测试，测试程序都未能成功设置对应参数
 
 ```
 main.bug46261                            w1 [ skipped ]  Example plugin requires the environment variable \$EXAMPLE_PLUGIN to be set (normally done by mtr)
