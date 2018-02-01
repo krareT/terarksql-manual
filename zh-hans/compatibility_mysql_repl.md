@@ -38,5 +38,26 @@ rpl.rpl_sbm_previous_gtid_event 'row'    [ skipped ]  Doesn't support --binlog-f
 rpl.rpl_sbm_previous_gtid_event 'stmt'   w2 [ skipped ]  Test requires GTID_MODE=ON.
 ```
 
-[UPDATED]
+### rpl.rpl_current_user
+
+修改测试脚本后可以通过，修改方案
+
+```
+1. include/default_mysqld.cnf 后面增加参数
+
+gtid-mode=on
+log-slave-updates=on
+enforce-gtid-consistency=on
+binlog_checksum=CRC32
+
+2. suite/rpl/r/rpl_current_user.result 如下修改
+
+-- GRANT CREATE USER ON *.* TO '012345678901234567890123456789012'@'fakehost';
+-- ERROR HY000: String '012345678901234567890123456789012' is too long for user name (should be no longer than 32)
+++ GRANT CREATE USER ON *.* TO 'abcdefghij1234567890abcdefghij1234567890abcdefghij1234567890abcdefghij1234567890a'@'fakehost';
+++ ERROR HY000: String 'abcdefghij1234567890abcdefghij1234567890abcdefghij1234567890abcdefghij' is too long for user name (should be no longer than 80)
+
+```
+
+(UPDATED)
 
