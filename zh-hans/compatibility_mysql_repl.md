@@ -10,6 +10,13 @@ binlog.binlog_gtid_mysqlbinlog_row_myisam
 错误原因
 
 ```
+-#010909  4:46:40 server id 1  end_log_pos # CRC32 #    Write_rows: table id # flags: STMT_END_F
++#010909  4:46:40 server id 1  end_log_pos #    Write_rows: table id # flags: STMT_END_F
+```
+
+如果在 default_mysqld.cnf 里增加 ```binlog_checksum=CRC32``` 则上述问题消失，但是会出现下述错误
+
+```
 -###   @3=-128 (128) /* TINYINT meta=0 nullable=1 is_null=0 */
 -###   @4=0 /* TINYINT meta=0 nullable=1 is_null=0 */
 -###   @5=0 /* TINYINT meta=0 nullable=1 is_null=0 */
