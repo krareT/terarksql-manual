@@ -9,71 +9,11 @@ main.mysqld--help-notwin-profiling
 main.mysqlshow
 ```
 
-main.mysqld--help-notwin-profiling：
-```
-@@ -1298,6 +1298,9 @@
-  --rocksdb-strict-collation-exceptions=name 
-  List of tables (using regex) that are excluded from the
-  case sensitive collation enforcement
-+ --rocksdb-system-cf-background-flush-interval=# 
-+ interval(seconds) of background flush column family
-+ '__system__' for RocksDB . 0 to disable
-  --rocksdb-table-cache-numshardbits=# 
-  DBOptions::table_cache_numshardbits for RocksDB
-  --rocksdb-table-stats-sampling-pct=# 
-@@ -1305,6 +1308,10 @@
-  statistics about table properties. Specify either 0 to
-  sample everything or percentage [1..100]. By default 10%
-  of entries are sampled.
-+ --rocksdb-tf-options[=name] 
-+ Enable or disable ROCKSDB_TF_OPTIONS plugin. Possible
-+ values are ON, OFF, FORCE (don't start if the plugin
-+ fails to load).
-  --rocksdb-tmpdir[=name] 
-  Directory for temporary files during DDL operations.
-  --rocksdb-trace-sst-api 
-@@ -2048,8 +2055,10 @@
- rocksdb-store-row-debug-checksums FALSE
- rocksdb-strict-collation-check TRUE
- rocksdb-strict-collation-exceptions (No default value)
-+rocksdb-system-cf-background-flush-interval 120
- rocksdb-table-cache-numshardbits 6
- rocksdb-table-stats-sampling-pct 10
-+rocksdb-tf-options ON
- rocksdb-tmpdir (No default value)
- rocksdb-trace-sst-api FALSE
- rocksdb-trx ON
-```
-
-main.mysqlshow：
-```
---- /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/r/mysqlshow.result	2017-11-01 06:42:45.000000000 +0300
-+++ /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/var/log/mysqlshow.reject	2017-12-07 15:14:16.721734704 +0300
-@@ -138,6 +138,7 @@
- | ROCKSDB_LOCKS                         |
- | ROCKSDB_PERF_CONTEXT                  |
- | ROCKSDB_PERF_CONTEXT_GLOBAL           |
-+| ROCKSDB_TF_OPTIONS                    |
- | ROCKSDB_TRX                           |
- | ROUTINES                              |
- | SCHEMATA                              |
-@@ -220,6 +221,7 @@
- | ROCKSDB_LOCKS                         |
- | ROCKSDB_PERF_CONTEXT                  |
- | ROCKSDB_PERF_CONTEXT_GLOBAL           |
-+| ROCKSDB_TF_OPTIONS                    |
- | ROCKSDB_TRX                           |
- | ROUTINES                              |
- | SCHEMATA                              |
-```
-
 ### 测试未产生任何输出
 
 ```
 perfschema_stress.setup
 ```
-
-原因待确认。
 
 ### 测试需要运行在 windows 平台上
 
