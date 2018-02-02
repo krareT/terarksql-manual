@@ -29,22 +29,7 @@
 
 ## 查询测试
 
-查询测试进行了主键等值查询、次级索引等值查询、次级索引范围查询、混合查询。
-
-等值查询：
-  - ```select * from ? where L_ORDERKEY = ? and L_PARTKEY = ?;```
-  
-次级索引等值查询：
-  - ```select * from ? where L_PARTKEY = ? limit 1;```
-  - ```select * from ? where L_SUPPKEY = ? limit 1;```
-  
-次级索引范围查询：
-  - ```select * from ? where L_PARTKEY < ? limit 1;```
-  - ```select * from ? where L_PARTKEY >= ? limit 1;```
-  - ```select * from ? where L_SUPPKEY > ? limit 1;```
-  - ```select * from ? where L_SUPPKEY <= ? limit 1;```
-  
-并分别在 
+查询测试进行了主键等值查询、次级索引等值查询、次级索引范围查询、混合查询（各查询示例见附注），并分别在 
 
 - 192G（不限制，都能将数据库放入内存）；
 - 40G（TerarkDB 能把全部数据放到内存中，InnoDB 不能把全部数据放到内存中）；
@@ -83,6 +68,20 @@
 - 内存12G时：此场景内存太小，PreparedStatement 占用的内存不可忽略，挤占缓存，可能导致性能下降
 
 ## 附注
+
+等值查询：
+  - ```select * from ? where L_ORDERKEY = ? and L_PARTKEY = ?;```
+  
+次级索引等值查询：
+  - ```select * from ? where L_PARTKEY = ? limit 1;```
+  - ```select * from ? where L_SUPPKEY = ? limit 1;```
+  
+次级索引范围查询：
+  - ```select * from ? where L_PARTKEY < ? limit 1;```
+  - ```select * from ? where L_PARTKEY >= ? limit 1;```
+  - ```select * from ? where L_SUPPKEY > ? limit 1;```
+  - ```select * from ? where L_SUPPKEY <= ? limit 1;```
+  
 
 10 索引的表结构如下，从 lineitem1 到 lineitem100 共 100 张表，
 
