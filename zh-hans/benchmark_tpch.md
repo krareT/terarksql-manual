@@ -8,51 +8,56 @@
 
 我们将创建 100 张表，将这 1.2G 的数据插入每张表，相当于 200M(2亿)条，120GB 的原始数据。表的结构参见附注。
 
-## MyRocks on Terark
+测试程序使用 [MyRocks](https://github.com/Terark/MyRocksTest)。
 
-### 插入阶段
+## 压缩率
 
-插入时通过 cgroup 限制可用内存为 8G，以验证应用在少量内存的环境下依然可以有效工作。插入耗时 3.5 小时。初次插完空间占用为 57G，经过 compaction 后大小为 35G，插入过程中需要总空间 ~ 64G。
+|      | 原始数据 | 数据库大小 | 压缩比 |
+|:----:|:-------:|:---------:|:------:|
+| MySQL on TerarkDB | 120 GB | 35 GB  | 3.4 |
+| MySQL（未开压缩）  | 120 GB | 210 GB | 0.6 |
+| MySQL（打开压缩）  | 120 GB | 76 GB  | 1.6 |
 
+## 插入测试
 
-### 查询阶段
+插入测试进行了顺序插入和随机插入两种。顺序插入测试使用 **4** 个线程，**每条 insert 语句 100 个 value**；随机插入测试使用 **32** 个线程，**每条 insert 语句 1 个 value**。因索引数量对 innodb 的插入速度影响较大，这里也分别对 **10 个索引**和 **4 个索引**的情况进行了测试。
 
-使用测试程序 [MyRocks](https://github.com/Terark/MyRocksTest)，32 线程，
+|                   | 顺序插入（10 索引）| 随机插入（10 索引）| 顺序插入（4 索引）| 随机插入（4 索引）|
+|:-----------------:|:----------------:|:-----------------:|:----------------:|:---------------:|
+| MySQL on TerarkDB | 25k | 13k  | 37k | 14.5k |
+| MySQL             | 11k | 5.4k | 30k | 9.2k  |
 
+## 查询测试
 
-| 内存限制*   |  QPS   | CPU 占用  | TPS(iostat) | kB_read(iostat) |
-|----------:|-------:|---------:|------------:|----------------:|
-| 不限内存   | 97,000 | 2400%    |  517        |  2,068          |
-| 限制为 32G | 95,000 | 2400%    |  349        |  1,396          |
-| 为 24G    | 78,000 | 2000%    |  17,000     |  68,104         |
-| 为 16G    | 47,000 | 1400%    |  44,405     |  177,620        |
-| 为 8G     | 28,000 | 900%     |  48,000     |  195,016        |
+查询测试进行了主键等值查询、索引等值查询、索引范围查询、混合查询。并分别在 192G（不限制，都能将数据库放入内存）、40G（terarkdb 能把全部数据放到内存中，innodb 不能把全部数据放到内存中）、12G（terarkdb 和 innodb 都不能把全部数据放到内存中，且原始数据和内存比为 10 ：1） 内存下进行。
 
-注*：TerarkDB 使用 mmap，所以这里使用了 cgroup 的方式进行内存限制。
+### 不使用 prepared statement
 
-## MyRocks on InnoDB
+| 内存 | 数据库 | 主键等值查询 |	索引等值查询 |	索引范围查询 |	混合查询 |
+|:----:|:-----:|:-----------:|:-----------:|:-----------:|:-------:|
+| 192G | MySQL on TerarkDB | 114k |	93k |	95k |	99k |
+| 192G |        MySQL      | 117k |	55k |	96k |	80k |
+| 40G  | MySQL on TerarkDB | 114k |	93k |	95k |	99k |
+| 40G  |        MySQL      | 42k |	18.6k |	7.9k |	15k |
+| 12G  | MySQL on TerarkDB | 91k |	17.2k |	31k  |	24k |
+| 12G  |        MySQL      | 38k |	11.6k |	3.3k |	6.8k |
 
-### 插入阶段
+### 使用 prepared statement
 
-buffer_pool_size 的不同配置
+| 内存 | 数据库 | 主键等值查询 |	索引等值查询 |	索引范围查询 |	混合查询 |
+|:----:|:-----:|:-----------:|:-----------:|:-----------:|:-------:|
+| 192G | MySQL on TerarkDB | 118k |	98k |	99k |	104k |
+| 192G |        MySQL      | 128k |	58k |	102k |	85k |
+| 40G  | MySQL on TerarkDB | 118k |	98k |	99k |	104k |
+| 40G  |        MySQL      | 48k |	19.0k	| 8.0k |	15.3k |
+| 12G  | MySQL on TerarkDB | 92k |	15.5k |	26k  |	19.2k |
+| 12G  |        MySQL      | 39k |	11.8k |	3.3k |	6.6k  |
 
-- 使用默认配置，即默认 128M。插入 21 小时共插入 90% 左右的数据，大小 210G 左右；
-- 设置为 48G，插入 12 小时共插入 64% 左右的数据，大小为 124G 左右；
+对测试结果解读如下：
 
-
-### 查询阶段
-
-使用测试程序 [MyRocks](https://github.com/Terark/MyRocksTest)，使用 32个 线程，
-
-| 内存限制*  |Buffer<br/>Pool|  QPS   | CPU 占用  | TPS(iostat) | kB_read(iostat) |
-|----------:|---:|-------:|---------:|------------:|----------------:|
-| 不限制     |96G | 47,000 |     900%|             |                 |
-| 96G       |48G | 28,000 |      470%|  14,995     |  473,572        |
-| 32G       |16G | 19,000 |      400%|  18,326     |  450,656        |
-| 16G       | 8G | 14,500 |      350%|  19,076     |  438,828        |
-|  8G       | 4G | 14,000 |      400%|  22,051     |  422,212        |
- 
-注* : 系统总计内存 188G，在不限内存的情况下，也不足以装下所有数据(210G)。限制内存时，因为 innodb 使用 pread/aio 读取数据，而 cgroup 无法限制操作系统 filesystem cache，所以通过操作系统启动参数进行内存限制。
+- 内存192G时：Innodb 主键可以全部放入 buffer pool。Terark 的数据在访问时候解压，故部分查询性能比 Innodb 略低
+- 内存40G时：Terark 仍然有4G空闲内存，故与192G相比没有变化
+- 内存12G时：此场景内存太小，PreparedStatement 占用的内存不可忽略，挤占缓存，可能导致性能下降
 
 ## 附注
 
@@ -88,7 +93,7 @@ CREATE TABLE lineitem  (
 );
 ```
 
-MyRocks on Terark 的 my.cnf 配置
+MySQL on Terark 的 my.cnf 配置
 
 ```
 rocksdb
@@ -97,7 +102,7 @@ skip-innodb
 default-tmp-storage-engine=MyISAM
 character-set-server=utf8
 collation-server=utf8_bin
-user = wangfo
+user = mysql
 bind-address = 0.0.0.0
 port = 3307
 back_log = 600
@@ -135,7 +140,7 @@ TerarkZipTable_enable_partial_remove=true \
 Terark_enableChecksumVerify=0 \
 ```
 
-MyRocks on InnoDB 的 my.cnf 配置
+MySQL 的 my.cnf 配置
 
 ```
 character-set-server=utf8
@@ -146,11 +151,7 @@ port = 3336
 back_log = 600
 max_connections = 6000
 innodb_buffer_pool_size = 48G
-binlog-format=statement
 secure_file_priv=""
-server-id = 1
-log_slave_updates = 1
-replicate-ignore-db = mysql
 ```
 
 查看 MyRocks 各索引压缩率
