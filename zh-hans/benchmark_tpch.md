@@ -8,7 +8,7 @@
 
 我们将创建 100 张表，将这 1.2G 的数据插入每张表，相当于 200M(2亿)条，120GB 的原始数据。表的结构参见附注。
 
-测试程序使用 [MyRocks](https://github.com/Terark/MyRocksTest)。
+测试程序使用 [MyRocksTest](https://github.com/Terark/MyRocksTest)。
 
 ## 压缩率
 
