@@ -29,7 +29,9 @@
 
 ## 查询测试
 
-查询测试进行了主键等值查询、索引等值查询、索引范围查询、混合查询。并分别在 192G（不限制，都能将数据库放入内存）、40G（terarkdb 能把全部数据放到内存中，innodb 不能把全部数据放到内存中）、12G（terarkdb 和 innodb 都不能把全部数据放到内存中，且原始数据和内存比为 10 ：1） 内存下进行。
+查询测试进行了主键等值查询、索引等值查询、索引范围查询、混合查询。并分别在 192G（不限制，都能将数据库放入内存）、40G（terarkdb 能把全部数据放到内存中，innodb 不能把全部数据放到内存中）、12G（terarkdb 和 innodb 都不能把全部数据放到内存中，且原始数据和内存比为 10 ：1） 内存下进行。查询测试均使用 **80** 个线程。
+
+注：MySQL 的 innodb_buffer_pool_size 在不同内存下分别设置为可用内存的 70%
 
 ### 不使用 prepared statement
 
@@ -61,7 +63,7 @@
 
 ## 附注
 
-建表如下，从 lineitem1 到 lineitem100 共 100 张表，
+10 索引的表结构如下，从 lineitem1 到 lineitem100 共 100 张表，
 
 ```
 CREATE TABLE lineitem  (
@@ -93,6 +95,32 @@ CREATE TABLE lineitem  (
 );
 ```
 
+4 索引的表结构如下：
+```
+CREATE TABLE lineitem  (
+             L_ORDERKEY    	BIGINT NOT NULL,
+             L_PARTKEY     	BIGINT NOT NULL,
+             L_SUPPKEY     	INTEGER NOT NULL,
+             L_LINENUMBER  	INTEGER NOT NULL,
+             L_QUANTITY    	DECIMAL(15,2) NOT NULL,
+             L_EXTENDEDPRICE    DECIMAL(15,2) NOT NULL,
+             L_DISCOUNT    	DECIMAL(15,2) NOT NULL,
+             L_TAX         	DECIMAL(15,2) NOT NULL,
+             L_RETURNFLAG  	CHAR(1) NOT NULL,
+             L_LINESTATUS  	CHAR(1) NOT NULL,
+             L_SHIPDATE    	DATE NOT NULL,
+             L_COMMITDATE  	DATE NOT NULL,
+             L_RECEIPTDATE 	DATE NOT NULL,
+             L_SHIPINSTRUCT 	 CHAR(25) NOT NULL,
+             L_SHIPMODE     	 CHAR(10) NOT NULL,
+             L_COMMENT      	 VARCHAR(512) NOT NULL,
+             PRIMARY KEY        (L_ORDERKEY, L_PARTKEY),
+             KEY 		(L_SHIPDATE, L_ORDERKEY),
+             KEY 		(L_ORDERKEY, L_SUPPKEY),
+             KEY 		(L_COMMITDATE, L_PARTKEY)
+);
+```
+
 MySQL on Terark 的 my.cnf 配置
 
 ```
@@ -111,7 +139,8 @@ secure_file_priv=""
 rocksdb_commit_in_the_middle=ON
 rocksdb_bulk_load_size=1000
 table_open_cache = 21397
-rocksdb_default_cf_options=memtable=rbtree
+rocksdb_allow_concurrent_memtable_write=1
+rocksdb_bulk_load_index_type=skiplist
 ```
 
 Terark 的环境变量设置
@@ -152,6 +181,14 @@ back_log = 600
 max_connections = 6000
 innodb_buffer_pool_size = 48G
 secure_file_priv=""
+thread_cache_size = 300
+innodb_log_buffer_size = 512M
+innodb_flush_log_at_trx_commit = 1
+innodb_thread_concurrency = 0
+innodb_io_capacity = 20000
+innodb_buffer_pool_instances = 16
+innodb_doublewrite = 0
+innodb_adaptive_hash_index = 0
 ```
 
 查看 MyRocks 各索引压缩率
