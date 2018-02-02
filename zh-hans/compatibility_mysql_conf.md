@@ -17,7 +17,6 @@ main.lowercase_fs_on                     w1 [ skipped ]  Test requires: 'case_in
 main.innodb_recovery_with_upper_case_names w3 [ skipped ]  Test requires: 'case_insensitive_file_system'
 main.lowercase_table4                    w2 [ skipped ]  Test requires: 'case_insensitive_file_system'
 main.jemalloc                            w1 [ skipped ]  Test requires jemalloc
-main.mysqld--help-notwin                 w1 [ skipped ]  Test requires: 'have_noprofiling'
 main.not_partition                       w1 [ skipped ]  Test requires: 'true'
 main.system_mysql_db_fix40123            w3 [ skipped ]  Test need MYSQL_FIX_PRIVILEGE_TABLES
 main.system_mysql_db_fix50030            w3 [ skipped ]  Test needs MYSQL_FIX_PRIVILEGE_TABLES
