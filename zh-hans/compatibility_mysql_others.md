@@ -6,7 +6,16 @@
 
 ```
 main.mysqld--help-notwin-profiling
+main.mysqld--help-notwin
 main.mysqlshow
+```
+
+注，需要修改
+
+```
+main.mysqld--help-notwin 对应的文件 have_noprofiling.inc
+-- --require r/have_noprofiling.require
+++ let have_profiling=no
 ```
 
 ### 测试未产生任何输出
