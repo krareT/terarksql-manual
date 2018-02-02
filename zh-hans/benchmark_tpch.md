@@ -24,8 +24,8 @@
 
 |                   | 顺序插入（10 索引）| 随机插入（10 索引）| 顺序插入（4 索引）| 随机插入（4 索引）|
 |:-----------------:|:----------------:|:-----------------:|:----------------:|:---------------:|
-| MySQL on TerarkDB | 25k | 13k  | 37k | 14.5k |
-| MySQL             | 11k | 5.4k | 30k | 9.2k  |
+| TerarkDB | 25k | 13k  | 37k | 14.5k |
+|  InnoDB  | 11k | 5.4k | 30k | 9.2k  |
 
 ## 查询测试
 
@@ -37,27 +37,27 @@
 
 | 内存 | 数据库 | 主键等值查询 |	索引等值查询 |	索引范围查询 |	混合查询 |
 |:----:|:-----:|:-----------:|:-----------:|:-----------:|:-------:|
-| 192G | MySQL on TerarkDB | 114k |	93k |	95k |	99k |
-| 192G |        MySQL      | 117k |	55k |	96k |	80k |
-| 40G  | MySQL on TerarkDB | 114k |	93k |	95k |	99k |
-| 40G  |        MySQL      | 42k |	18.6k |	7.9k |	15k |
-| 12G  | MySQL on TerarkDB | 91k |	17.2k |	31k  |	24k |
-| 12G  |        MySQL      | 38k |	11.6k |	3.3k |	6.8k |
+| 192G | TerarkDB | 114k |	93k |	95k |	99k |
+| 192G |  InnoDB  | 117k |	55k |	96k |	80k |
+| 40G  | TerarkDB | 114k |	93k |	95k |	99k |
+| 40G  |  InnoDB  | 42k |	18.6k |	7.9k |	15k |
+| 12G  | TerarkDB | 91k |	17.2k |	31k  |	24k |
+| 12G  |  InnoDB  | 38k |	11.6k |	3.3k |	6.8k |
 
 ### 使用 prepared statement
 
 | 内存 | 数据库 | 主键等值查询 |	索引等值查询 |	索引范围查询 |	混合查询 |
 |:----:|:-----:|:-----------:|:-----------:|:-----------:|:-------:|
-| 192G | MySQL on TerarkDB | 118k |	98k |	99k |	104k |
-| 192G |        MySQL      | 128k |	58k |	102k |	85k |
-| 40G  | MySQL on TerarkDB | 118k |	98k |	99k |	104k |
-| 40G  |        MySQL      | 48k |	19.0k	| 8.0k |	15.3k |
-| 12G  | MySQL on TerarkDB | 92k |	15.5k |	26k  |	19.2k |
-| 12G  |        MySQL      | 39k |	11.8k |	3.3k |	6.6k  |
+| 192G | TerarkDB | 118k |	98k |	99k |	104k |
+| 192G |  InnoDB  | 128k |	58k |	102k |	85k |
+| 40G  | TerarkDB | 118k |	98k |	99k |	104k |
+| 40G  |  InnoDB  | 48k |	19.0k	| 8.0k |	15.3k |
+| 12G  | TerarkDB | 92k |	15.5k |	26k  |	19.2k |
+| 12G  |  InnoDB  | 39k |	11.8k |	3.3k |	6.6k  |
 
 对测试结果解读如下：
 
-- 内存192G时：Innodb 主键可以全部放入 buffer pool。Terark 的数据在访问时候解压，故部分查询性能比 Innodb 略低
+- 内存192G时：InnoDB 主键可以全部放入 buffer pool。Terark 的数据在访问时候解压，故部分查询性能比 InnoDB 略低
 - 内存40G时：Terark 仍然有4G空闲内存，故与192G相比没有变化
 - 内存12G时：此场景内存太小，PreparedStatement 占用的内存不可忽略，挤占缓存，可能导致性能下降
 
@@ -114,10 +114,10 @@ CREATE TABLE lineitem  (
              L_SHIPINSTRUCT 	 CHAR(25) NOT NULL,
              L_SHIPMODE     	 CHAR(10) NOT NULL,
              L_COMMENT      	 VARCHAR(512) NOT NULL,
-             PRIMARY KEY        (L_ORDERKEY, L_PARTKEY),
-             KEY 		(L_SHIPDATE, L_ORDERKEY),
-             KEY 		(L_ORDERKEY, L_SUPPKEY),
-             KEY 		(L_COMMITDATE, L_PARTKEY)
+             PRIMARY KEY (`L_ORDERKEY`,`L_PARTKEY`),
+             KEY `L_ORDER` (`L_ORDERKEY`),
+             KEY `PART` (`L_PARTKEY`),
+             KEY `SUPP` (`L_SUPPKEY`)
 );
 ```
 
