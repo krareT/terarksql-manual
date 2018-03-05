@@ -1,7 +1,7 @@
 ## 简介
 sysbench 是一个模块化的、跨平台、多线程基准测试工具,主要用于评估测试各种不同系统参数下的数据库负载情况。本测试使用 sysbench 分别向官方原版 MySQL 和 MySQL on TerarkDB 导入 **450,000,000** 条数据，测试在不同内存下两者的读写性能。
 
-测试程序使用 [sysbench 1.1.0](https://github.com/Terark/sysbench)
+测试程序使用 [sysbench 1.1.0](https://github.com/Terark/sysbench)，我们在原版 sysbench 的基础上添加了一个次级主键范围查询。
 
 ## 测试平台
 
@@ -10,7 +10,7 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具,主要�
 - SSD: INTEL SSDSC2BP48 0420 IOPS 89000
 - 操作系统: CentOS 7
 
-测试中使用的官方原版 MySQL 版本为 Ver 5.6.35 for linux-glibc2.5 on x86_64，后记为 innodb（MySQL on TerarkDB 记为 terarkdb）。
+测试中使用的官方原版 MySQL 版本为 Ver 5.6.35 for linux-glibc2.5 on x86_64，后记为 InnoDB（[MySQL on TerarkDB](http://terark.com/docs/mysql-on-terarkdb-manual/zh-hans/installation.html) 记为 TerarkDB）。
 
 ## 导入
 
@@ -20,8 +20,8 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具,主要�
 
 |      | 数据库大小 |
 |:----:|:---------:|
-| innodb   | 101 G |
-| terarkdb | 51 G  |
+| InnoDB   | 101 G |
+| TerarkDB | 51 G  |
 
 导入数据所使用的 sysbench 命令如下：
 
@@ -41,7 +41,7 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 所有的读写测试均使用 **32** 个线程，每次测试前先 warm up **30 秒**，每次测试持续 **15 分钟**。
 
-|     |     | terarkdb | terarkdb | terarkdb | innodb | innodb | innodb |
+|     |     | TerarkDB | TerarkDB | TerarkDB | InnoDB | InnoDB | InnoDB |
 |:---:|:---|:--------:|:--------:|:--------:|:------:|:------:|:------:|
 |      |                            | qps     | tps      | rps     | qps     | tps       | rps       |
 | 192G | point_select               | 123,615 | 1,236.15 | 123,615 | 178,282 | 1,782.82  | 178,282   |
@@ -127,7 +127,7 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 #### 4. secondary_random_limit100
 
-次级主键范围查询，每个 transaction 包含 100 个次级主键范围查询 query。
+次级主键范围查询，该查询为我们新添加的测试，用来测试次级主键的随机读性能。每个 transaction 包含 100 个次级主键范围查询 query。
 
 - 示例 SQL：
 ```
