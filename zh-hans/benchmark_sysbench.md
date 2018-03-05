@@ -121,7 +121,8 @@ select id, k, c, pad from sbtest1 where k in (k1, k2, k3, ..., k100);
 sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
          --mysql-user=root --mysql-db=sysbench --mysql-host=127.0.0.1 \
          --threads=32 --warmup-time=30 --tables=1 --table-size=450000000 \
-         --rand-type=uniform --skip_trx=on --random_points=100 /path/to/share/sysbench/select_random_points.lua run
+         --rand-type=uniform --skip_trx=on \
+         --random_points=100 /path/to/share/sysbench/select_random_points.lua run
 ```
 
 #### 4. secondary_random_limit100
