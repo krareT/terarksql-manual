@@ -57,6 +57,52 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 | 8G   | secondary_random_points100 | 841     | 841.00   | 84,100  | 172     | 171.63    | 17,163    |
 | 8G   | secondary_random_limit100  | 925     | 9.25     | 92,500  | 251     | 2.51      | 25,100    |
 
+<table>
+    <tr>
+             <th></th><th></th><th colspan="3">TerarkDB</th><th colspan="3">InnoDB</th>
+    </tr>
+    <tr>
+             <td></td> <td></td> <td>qps</td> <td>tps</td> <td>rps</td> <td>qps</td> <td>tps</td> <td>rps</td>
+    </tr>
+    <tr>
+             <td rowspan="4">192G</td> <td>point_select</td> <td>123,615</td> <td>1,236.15</td> <td>123,615</td>
+             <td>178,282</td> <td>1,782.82</td> <td>178,282</td>
+    </tr>
+    <tr>
+             <td>point_select90_update10</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+    </tr>
+    <tr>
+             <td>secondary_random_points100</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+    </tr>
+    <tr>
+             <td>secondary_random_limit100</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+    </tr>
+    <tr>
+             <td rowspan="4">32G</td><td>point_select</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+    </tr>
+    <tr>
+             <td>point_select90_update10</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+    </tr>
+    <tr>
+             <td>secondary_random_points100</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+    </tr>
+    <tr>
+             <td>secondary_random_limit100</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+    </tr>
+    <tr>
+             <td rowspan="4">8G</td> <td>point_select</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+    </tr>
+    <tr>
+             <td>point_select90_update10</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+    </tr>
+    <tr>
+             <td>secondary_random_points100</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+    </tr>
+    <tr>
+             <td>secondary_random_limit100</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+    </tr>
+</table>
+
 注2：
 
 上表中 qps 表示 queries per second， tps 表示 transactions per second， rps 表示 rows per second。
