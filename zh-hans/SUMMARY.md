@@ -9,7 +9,7 @@
     * [my.cnf](my_cnf.md)
 - [性能测试报告](benchmarks.md)
     * [Amazon Movie Reviews 测试](amazon_movie_reviews_benchmark.md)
-    * [MySQL Sysbench 测试](sysbench.md)
+    * [MySQL Sysbench 测试](benchmark_sysbench.md)
     * [MyRocks Tpch 测试](benchmark_tpch.md)
     * [MyRocks memtable 对比测试](benchmark_memtable.md)
     * [在机械硬盘上的表现](hdd_benchmark.md)
