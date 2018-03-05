@@ -47,7 +47,7 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 | 192G | point_select               | 123,615 | 1,236.15 | 123,615 | 178,282 | 1,782.82  | 178,282   |
 | 192G | point_select90_update10    | 101,410 | 1,014.10 | 101,410 | 50,695  | 506.95    | 50,695    |
 | 192G | secondary_random_points100 | 5,143   | 5,143.00 | 514,300 | 14,278  | 14,278.79 | 1,427,800 |
-| 192G | secondary_random_limit100  | 9,139   | 91.41    | 913,900 | 21,164  | 211.64    | 2,116,400 |
+| 192G | secondary_random_limit100  | 9,139   | 91.39    | 913,900 | 21,164  | 211.64    | 2,116,400 |
 | 32G  | point_select               | 89,998  | 899.98   | 89,998  | 22,301  | 223.01    | 22,301    |
 | 32G  | point_select90_update10    | 46,122  | 461.22   | 46,122  | 12,445  | 124.45    | 12,445    |  
 | 32G  | secondary_random_points100 | 1,309   | 1,309.22 | 130922  | 228     | 227.68    | 22,768    |
@@ -126,7 +126,7 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 #### 4. secondary_random_limit100
 
-次级主键范围查询，每个 transaction 包含一个次级主键范围查询 query。
+次级主键范围查询，每个 transaction 包含 100 个次级主键范围查询 query。
 
 - 示例 SQL：
 ```
