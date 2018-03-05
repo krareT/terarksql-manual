@@ -26,7 +26,11 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具,主要�
 插入所使用的 sysbench 命令如下：
 
 ```
-sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 --mysql-user=root --mysql-db=sysbench --mysql-host=127.0.0.1 --threads=32 --tables=1 --mysql_storage_engine=innodb --table-size=450000000 --rand-type=uniform --create_secondary=on /path/to/share/sysbench/oltp_insert.lua prepare
+sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
+         --mysql-user=root --mysql-db=sysbench --mysql-host=127.0.0.1 \
+         --threads=32 --tables=1 --mysql_storage_engine=innodb \
+         --table-size=450000000 --rand-type=uniform --create_secondary=on \
+         /path/to/share/sysbench/oltp_insert.lua prepare
 ```
 
 注1：插入时一定要指定 **--rand-type** 为 **uniform**，其默认值 special 为热点分布，导入的数据不能体现数据库真实的随机读写性能。
@@ -70,7 +74,14 @@ select c from sbtest1 where id = ID;
 
 - sysbench 命令
 ```
-sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 --mysql-user=root --mysql-db=sysbench --mysql-host=127.0.0.1 --threads=32 --warmup-time=30 --distinct_ranges=0 --sum_ranges=0 --index_updates=0 --range_size=100 --delete_inserts=0 --tables=1 --mysql_storage_engine=rocksdb --non_index_updates=0 --table-size=450000000 --simple_ranges=0 --order_ranges=0 --range_selects=off --point_selects=100 --rand-type=uniform --skip_trx=on /path/to/share/sysbench/oltp_read_only.lua run
+sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
+         --mysql-user=root --mysql-db=sysbench --mysql-host=127.0.0.1 \
+         --threads=32 --warmup-time=30 --distinct_ranges=0 \
+         --sum_ranges=0 --index_updates=0 --range_size=100 \
+         --delete_inserts=0 --tables=1 --mysql_storage_engine=rocksdb \
+         --non_index_updates=0 --table-size=450000000 --simple_ranges=0 \
+         --order_ranges=0 --range_selects=off --point_selects=100 \
+         --rand-type=uniform --skip_trx=on /path/to/share/sysbench/oltp_read_only.lua run
 ```
 
 #### 2. point_select90_update10
@@ -86,7 +97,14 @@ update sbtest1 set c = C where id = ID;
 
 - sysbench 命令
 ```
-sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 --mysql-user=root --mysql-db=sysbench --mysql-host=127.0.0.1 --threads=32 --warmup-time=30 --distinct_ranges=0 --sum_ranges=0 --index_updates=0 --range_size=100 --delete_inserts=0 --tables=1 --mysql_storage_engine=rocksdb --non_index_updates=10 --table-size=450000000 --simple_ranges=0 --order_ranges=0 --range_selects=off --point_selects=90 --rand-type=uniform --skip_trx=on /path/to/share/sysbench/oltp_read_write.lua run
+sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
+         --mysql-user=root --mysql-db=sysbench --mysql-host=127.0.0.1 \
+         --threads=32 --warmup-time=30 --distinct_ranges=0 \
+         --sum_ranges=0 --index_updates=0 --range_size=100 \
+         --delete_inserts=0 --tables=1 --mysql_storage_engine=rocksdb \
+         --non_index_updates=10 --table-size=450000000 --simple_ranges=0 \
+         --order_ranges=0 --range_selects=off --point_selects=90 \
+         --rand-type=uniform --skip_trx=on /path/to/share/sysbench/oltp_read_write.lua run
 ```
 
 #### 3. secondary_random_points100
@@ -100,7 +118,10 @@ select id, k, c, pad from sbtest1 where k in (k1, k2, k3, ..., k100);
 
 - sysbench 命令
 ```
-sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 --mysql-user=root --mysql-db=sysbench --mysql-host=127.0.0.1 --threads=32 --warmup-time=30 --tables=1 --table-size=450000000 --rand-type=uniform --skip_trx=on --random_points=100 /path/to/share/sysbench/select_random_points.lua run
+sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
+         --mysql-user=root --mysql-db=sysbench --mysql-host=127.0.0.1 \
+         --threads=32 --warmup-time=30 --tables=1 --table-size=450000000 \
+         --rand-type=uniform --skip_trx=on --random_points=100 /path/to/share/sysbench/select_random_points.lua run
 ```
 
 #### 4. secondary_random_limit100
@@ -114,5 +135,12 @@ select c from sbtest1 where k >= K limit 100;
 
 - sysbench 命令
 ```
-sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 --mysql-user=root --mysql-db=sysbench --mysql-host=127.0.0.1 --threads=32 --warmup-time=30 --distinct_ranges=0 --sum_ranges=0 --index_updates=0 --range_size=100 --delete_inserts=0 --tables=1 --mysql_storage_engine=rocksdb --non_index_updates=0 --table-size=450000000 --simple_ranges=100 --order_ranges=0 --range_selects=on --point_selects=0 --rand-type=uniform --skip_trx=on /path/to/share/sysbench/oltp_read_only.lua run
+sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
+         --mysql-user=root --mysql-db=sysbench --mysql-host=127.0.0.1 \
+         --threads=32 --warmup-time=30 --distinct_ranges=0 \
+         --sum_ranges=0 --index_updates=0 --range_size=100 \
+         --delete_inserts=0 --tables=1 --mysql_storage_engine=rocksdb \
+         --non_index_updates=0 --table-size=450000000 --simple_ranges=100 \
+         --order_ranges=0 --range_selects=on --point_selects=0 \
+         --rand-type=uniform --skip_trx=on /path/to/share/sysbench/oltp_read_only.lua run
 ```
