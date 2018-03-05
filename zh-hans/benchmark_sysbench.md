@@ -23,7 +23,7 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具,主要�
 | innodb   | 101 G |
 | terarkdb | 51 G  |
 
-插入所使用的 sysbench 命令如下：
+导入数据所使用的 sysbench 命令如下：
 
 ```
 sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
