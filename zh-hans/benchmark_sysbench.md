@@ -1,7 +1,7 @@
 ## 简介
 sysbench 是一个模块化的、跨平台、多线程基准测试工具,主要用于评估测试各种不同系统参数下的数据库负载情况。本测试使用 sysbench 分别向官方原版 MySQL 和 MySQL on TerarkDB 导入 **450,000,000** 条数据，测试在不同内存下两者的读写性能。
 
-测试程序使用 [sysbench 1.1.0](https://github.com/akopytov/sysbench)
+测试程序使用 [sysbench 1.1.0](https://github.com/Terark/sysbench)
 
 ## 测试平台
 
@@ -79,7 +79,7 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
          --threads=32 --warmup-time=30 --distinct_ranges=0 \
          --sum_ranges=0 --index_updates=0 --range_size=100 \
          --delete_inserts=0 --tables=1 --mysql_storage_engine=rocksdb \
-         --non_index_updates=0 --table-size=450000000 --simple_ranges=0 \
+         --non_index_updates=0 --table-size=450000000 --simple_ranges=0 --secondary_ranges=0\
          --order_ranges=0 --range_selects=off --point_selects=100 \
          --rand-type=uniform --skip_trx=on /path/to/share/sysbench/oltp_read_only.lua run
 ```
@@ -102,7 +102,7 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
          --threads=32 --warmup-time=30 --distinct_ranges=0 \
          --sum_ranges=0 --index_updates=0 --range_size=100 \
          --delete_inserts=0 --tables=1 --mysql_storage_engine=rocksdb \
-         --non_index_updates=10 --table-size=450000000 --simple_ranges=0 \
+         --non_index_updates=10 --table-size=450000000 --simple_ranges=0 --secondary_ranges=0\
          --order_ranges=0 --range_selects=off --point_selects=90 \
          --rand-type=uniform --skip_trx=on /path/to/share/sysbench/oltp_read_write.lua run
 ```
@@ -141,7 +141,7 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
          --threads=32 --warmup-time=30 --distinct_ranges=0 \
          --sum_ranges=0 --index_updates=0 --range_size=100 \
          --delete_inserts=0 --tables=1 --mysql_storage_engine=rocksdb \
-         --non_index_updates=0 --table-size=450000000 --simple_ranges=100 \
+         --non_index_updates=0 --table-size=450000000 --simple_ranges=0 --secondary_ranges=100 \
          --order_ranges=0 --range_selects=on --point_selects=0 \
          --rand-type=uniform --skip_trx=on /path/to/share/sysbench/oltp_read_only.lua run
 ```
