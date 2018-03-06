@@ -10,7 +10,7 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具,主要�
 - SSD: INTEL SSDSC2BP48 0420 IOPS 89000
 - 操作系统: CentOS 7
 
-测试中使用的官方原版 MySQL 版本为 Ver 5.6.35 for linux-glibc2.5 on x86_64，后记为 InnoDB（[MySQL on TerarkDB](http://terark.com/docs/mysql-on-terarkdb-manual/zh-hans/installation.html) 记为 TerarkDB）。
+测试中使用的官方原版 MySQL 版本为 Ver 5.6.35 for linux-glibc2.5 on x86_64，下文简称为 InnoDB（[MySQL on TerarkDB](http://terark.com/docs/mysql-on-terarkdb-manual/zh-hans/installation.html) 简称为 TerarkDB）。
 
 ## 导入
 
