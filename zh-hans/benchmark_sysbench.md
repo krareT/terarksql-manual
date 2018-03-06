@@ -37,7 +37,7 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 ## 读写测试
 
-读写测试进行了主键等值查询（point_select），读写混合查询（point_select90_update10），次级索引等值查询（secondary_random_points100），次级索引范围查询（secondary_random_limit100）四种测试，并分别在 188G、32G、8G 内存下进行。不同的内存限制使用内存挤占工具实现，内存挤占工具挤占一定数量的内存（不可换出）确保数据库所能使用的内存为以上指定值。
+读写测试进行了主键等值查询（point_select），读写混合查询（point_select90_update10），次级索引等值查询（secondary_random_points100），次级索引范围查询（secondary_random_limit100）四种测试，并分别在 192G、32G、8G 内存下进行。不同的内存限制使用内存挤占工具实现，内存挤占工具挤占一定数量的内存（不可换出）确保数据库所能使用的内存为以上指定值。
 
 所有的读写测试均使用 **32** 个线程，每次测试前先 warm up **30 秒**，每次测试持续 **15 分钟**。
 
@@ -49,7 +49,7 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
              <td></td> <td></td> <td>qps</td> <td>tps</td> <td>rps</td> <td>qps</td> <td>tps</td> <td>rps</td>
     </tr>
     <tr>
-             <td rowspan="4">188G</td> <td>point_select</td> <td>123,615</td> <td>1,236.15</td> <td>123,615</td>
+             <td rowspan="4">192G</td> <td>point_select</td> <td>123,615</td> <td>1,236.15</td> <td>123,615</td>
              <td>178,282</td> <td>1,782.82</td> <td>178,282</td>
     </tr>
     <tr>
