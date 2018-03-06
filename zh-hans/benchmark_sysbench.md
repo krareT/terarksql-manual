@@ -49,7 +49,7 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
              <td></td> <td></td> <td>qps</td> <td>tps</td> <td>rps</td> <td>qps</td> <td>tps</td> <td>rps</td>
     </tr>
     <tr>
-             <td rowspan="4">192G</td> <td>point_select</td> <td>123,615</td> <td>1,236.15</td> <td>123,615</td>
+             <td rowspan="4">188G</td> <td>point_select</td> <td>123,615</td> <td>1,236.15</td> <td>123,615</td>
              <td>178,282</td> <td>1,782.82</td> <td>178,282</td>
     </tr>
     <tr>
