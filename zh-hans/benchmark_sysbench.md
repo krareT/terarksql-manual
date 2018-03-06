@@ -98,11 +98,11 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
     </tr>
 </table>
 
-注2：
+**注2：**
 
 上表中 qps 表示 queries per second，tps 表示 transactions per second，rps 表示 rows per second。
 
-注3：
+**注3：**
 
 #### 1. point_select
 
