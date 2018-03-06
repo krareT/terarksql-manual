@@ -45,7 +45,7 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
     <tr>
              <th></th><th></th><th colspan="3">TerarkDB</th><th colspan="3">InnoDB</th>
     </tr>
-    <tr>
+    <tr align="center">
              <td></td> <td></td> <td>qps</td> <td>tps</td> <td>rps</td> <td>qps</td> <td>tps</td> <td>rps</td>
     </tr>
     <tr>
