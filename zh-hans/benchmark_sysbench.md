@@ -152,7 +152,7 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 #### 3. secondary_random_points100
 
-次级主键等值查询，测试程序随机生产 100 个 key，然后使用 where in 语法随机读取这 100 个 key 对应的 100 行数据。
+次级索引等值查询，测试程序随机生产 100 个 key，然后使用 where in 语法随机读取这 100 个 key 对应的 100 行数据。
 
 测试的每个 transaction 包含一个 Query，每个 Query 对次级索引进行 100 次随机搜索，每次都需要进行回表操作（先从次级键拿到主键，再用主键取数据），从而每个 transaction 需要对存储引擎进行 200 次随机访问。
 
@@ -174,7 +174,7 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 次级索引范围查询，该查询为我们新添加的测试，用来测试主索引的随机读性能: 次级 Key 是随机生成的，次级 Key 按大小顺序映射到主键，得到的主键序列就是随机顺序，所以，这样的访问，就是次级 Key 的顺序访问再加主键的随机访问。
 
-测试的每个 transaction 包含 100 个次级主键范围查询 query，每个 query 会访问 100 行数据，从而每个 transaction 会访问 10,000 行数据。
+测试的每个 transaction 包含 100 个次级索引范围查询 query，每个 query 会访问 100 行数据，从而每个 transaction 会访问 10,000 行数据。
 
 - 示例 SQL：
 ```
