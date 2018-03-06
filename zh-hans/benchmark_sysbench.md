@@ -154,7 +154,7 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 次级主键等值查询，测试程序随机生产 100 个 key，然后使用 where in 语法随机读取这 100 个 key 对应的 100 行数据。
 
-测试的每个 transaction 包含一个含有 100 个值的 where 次级主键等值查询 query，从而每个 transaction 会访问 100 行数据。
+测试的每个 transaction 包含一个 Query，每个 Query 对次级索引进行 100 次随机搜索，每次都需要进行回表操作（先从次级键拿到主键，再用主键取数据），从而每个 transaction 至少对存储引擎进行 200 次随机访问。
 
 - 示例 SQL：
 ```
