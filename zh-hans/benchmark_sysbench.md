@@ -41,22 +41,6 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 所有的读写测试均使用 **32** 个线程，每次测试前先 warm up **30 秒**，每次测试持续 **15 分钟**。
 
-|     |     | TerarkDB | TerarkDB | TerarkDB | InnoDB | InnoDB | InnoDB |
-|:---:|:---|:--------:|:--------:|:--------:|:------:|:------:|:------:|
-|      |                            | qps     | tps      | rps     | qps     | tps       | rps       |
-| 192G | point_select               | 123,615 | 1,236.15 | 123,615 | 178,282 | 1,782.82  | 178,282   |
-| 192G | point_select90_update10    | 101,410 | 1,014.10 | 101,410 | 50,695  | 506.95    | 50,695    |
-| 192G | secondary_random_points100 | 5,143   | 5,143.00 | 514,300 | 14,278  | 14,278.79 | 1,427,800 |
-| 192G | secondary_random_limit100  | 9,139   | 91.39    | 913,900 | 21,164  | 211.64    | 2,116,400 |
-| 32G  | point_select               | 89,998  | 899.98   | 89,998  | 22,301  | 223.01    | 22,301    |
-| 32G  | point_select90_update10    | 46,122  | 461.22   | 46,122  | 12,445  | 124.45    | 12,445    |  
-| 32G  | secondary_random_points100 | 1,309   | 1,309.22 | 130922  | 228     | 227.68    | 22,768    |
-| 32G  | secondary_random_limit100  | 1,743   | 17.43    | 174,300 | 232     | 2.32      | 23,200    |
-| 8G   | point_select               | 68,864  | 688.64   | 68,864  | 23,829  | 238.29    | 23,829    |
-| 8G   | point_select90_update10    | 29,916  | 299.16   | 29,916  | 12,787  | 127.87    | 17,787    |
-| 8G   | secondary_random_points100 | 841     | 841.00   | 84,100  | 172     | 171.63    | 17,163    |
-| 8G   | secondary_random_limit100  | 925     | 9.25     | 92,500  | 251     | 2.51      | 25,100    |
-
 <table>
     <tr>
              <th></th><th></th><th colspan="3">TerarkDB</th><th colspan="3">InnoDB</th>
@@ -69,37 +53,48 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
              <td>178,282</td> <td>1,782.82</td> <td>178,282</td>
     </tr>
     <tr>
-             <td>point_select90_update10</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+             <td>point_select90_update10</td> <td>101,410</td> <td>1,014.10</td> <td>101,410</td>
+             <td>50,695</td> <td>506.95</td> <td>50,695</td>
     </tr>
     <tr>
-             <td>secondary_random_points100</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+             <td>secondary_random_points100</td> <td>5,143</td> <td>5,143.00</td> <td>514,300</td>
+             <td>14,278</td> <td>14,278.79</td> <td>1,427,800</td>
     </tr>
     <tr>
-             <td>secondary_random_limit100</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+             <td>secondary_random_limit100</td> <td>9,139</td> <td>91.39</td> <td>913,900</td>
+             <td>21,164</td> <td>211.64</td> <td>2,116,400</td>
     </tr>
     <tr>
-             <td rowspan="4">32G</td><td>point_select</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+             <td rowspan="4">32G</td><td>point_select</td> <td>89,998</td> <td>899.98</td> <td>89,998</td>
+             <td>22,301</td> <td>223.01</td> <td>22,301</td>
     </tr>
     <tr>
-             <td>point_select90_update10</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+             <td>point_select90_update10</td> <td>46,122</td> <td>461.22</td> <td>46,122</td>
+             <td>12,445</td> <td>124.45</td> <td>12,445</td>
     </tr>
     <tr>
-             <td>secondary_random_points100</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+             <td>secondary_random_points100</td> <td>1,309</td> <td>1,309.22</td> <td>130922</td>
+             <td>228</td> <td>227.68</td> <td>22,768</td>
     </tr>
     <tr>
-             <td>secondary_random_limit100</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+             <td>secondary_random_limit100</td> <td>1,743</td> <td>17.43</td> <td>174,300</td>
+             <td>232</td> <td>2.32</td> <td>23,200</td>
     </tr>
     <tr>
-             <td rowspan="4">8G</td> <td>point_select</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+             <td rowspan="4">8G</td> <td>point_select</td> <td>68,864</td> <td>688.64</td> <td>68,864</td>
+             <td>23,829</td> <td>238.29</td> <td>23,829</td>
     </tr>
     <tr>
-             <td>point_select90_update10</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+             <td>point_select90_update10</td> <td>29,916</td> <td>299.16</td> <td>29,916</td>
+             <td>12,787</td> <td>127.87</td> <td>17,787</td>
     </tr>
     <tr>
-             <td>secondary_random_points100</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+             <td>secondary_random_points100</td> <td>841</td> <td>841.00</td> <td>84,100</td>
+             <td>172</td> <td>171.63</td> <td>17,163</td>
     </tr>
     <tr>
-             <td>secondary_random_limit100</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
+             <td>secondary_random_limit100</td> <td>925</td> <td>9.25</td> <td>92,500</td>
+             <td>251</td> <td>2.51</td> <td>25,100</td>
     </tr>
 </table>
 
