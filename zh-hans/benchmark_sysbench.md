@@ -73,7 +73,7 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
              <td>12,445</td> <td>124.45</td> <td>12,445</td>
     </tr>
     <tr align="right">
-             <td align="left">secondary_random_points100</td> <td>1,309</td> <td>1,309.22</td> <td>130922</td>
+             <td align="left">secondary_random_points100</td> <td>1,309</td> <td>1,309.22</td> <td>130,922</td>
              <td>228</td> <td>227.68</td> <td>22,768</td>
     </tr>
     <tr align="right">
