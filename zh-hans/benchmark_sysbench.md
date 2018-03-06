@@ -48,51 +48,51 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
     <tr align="center">
              <td></td> <td></td> <td>qps</td> <td>tps</td> <td>rps</td> <td>qps</td> <td>tps</td> <td>rps</td>
     </tr>
-    <tr>
+    <tr align="right">
              <td rowspan="4">192G</td> <td>point_select</td> <td>123,615</td> <td>1,236.15</td> <td>123,615</td>
              <td>178,282</td> <td>1,782.82</td> <td>178,282</td>
     </tr>
-    <tr>
+    <tr align="right">
              <td>point_select90_update10</td> <td>101,410</td> <td>1,014.10</td> <td>101,410</td>
              <td>50,695</td> <td>506.95</td> <td>50,695</td>
     </tr>
-    <tr>
+    <tr align="right">
              <td>secondary_random_points100</td> <td>5,143</td> <td>5,143.00</td> <td>514,300</td>
              <td>14,278</td> <td>14,278.79</td> <td>1,427,800</td>
     </tr>
-    <tr>
+    <tr align="right">
              <td>secondary_random_limit100</td> <td>9,139</td> <td>91.39</td> <td>913,900</td>
              <td>21,164</td> <td>211.64</td> <td>2,116,400</td>
     </tr>
-    <tr>
+    <tr align="right">
              <td rowspan="4">32G</td><td>point_select</td> <td>89,998</td> <td>899.98</td> <td>89,998</td>
              <td>22,301</td> <td>223.01</td> <td>22,301</td>
     </tr>
-    <tr>
+    <tr align="right">
              <td>point_select90_update10</td> <td>46,122</td> <td>461.22</td> <td>46,122</td>
              <td>12,445</td> <td>124.45</td> <td>12,445</td>
     </tr>
-    <tr>
+    <tr align="right">
              <td>secondary_random_points100</td> <td>1,309</td> <td>1,309.22</td> <td>130922</td>
              <td>228</td> <td>227.68</td> <td>22,768</td>
     </tr>
-    <tr>
+    <tr align="right">
              <td>secondary_random_limit100</td> <td>1,743</td> <td>17.43</td> <td>174,300</td>
              <td>232</td> <td>2.32</td> <td>23,200</td>
     </tr>
-    <tr>
+    <tr align="right">
              <td rowspan="4">8G</td> <td>point_select</td> <td>68,864</td> <td>688.64</td> <td>68,864</td>
              <td>23,829</td> <td>238.29</td> <td>23,829</td>
     </tr>
-    <tr>
+    <tr align="right">
              <td>point_select90_update10</td> <td>29,916</td> <td>299.16</td> <td>29,916</td>
              <td>12,787</td> <td>127.87</td> <td>17,787</td>
     </tr>
-    <tr>
+    <tr align="right">
              <td>secondary_random_points100</td> <td>841</td> <td>841.00</td> <td>84,100</td>
              <td>172</td> <td>171.63</td> <td>17,163</td>
     </tr>
-    <tr>
+    <tr align="right">
              <td>secondary_random_limit100</td> <td>925</td> <td>9.25</td> <td>92,500</td>
              <td>251</td> <td>2.51</td> <td>25,100</td>
     </tr>
