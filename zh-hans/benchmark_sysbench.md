@@ -108,7 +108,7 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 #### 1. point_select
 
-主键等值查询，测试程序每次随机生成一个 ID 值，然后查询主键与之相等的记录。每个 transaction 里包含 100 个主键等值查询 query，故每个 transaction 会访问 100 行数据。
+主键等值查询，测试程序每次随机生成一个 ID 值，然后查询主键与之相等的记录。测试的每个 transaction 里包含 100 个主键等值查询 query，故每个 transaction 会访问 100 行数据。
 
 - 示例 SQL：
 ```
@@ -129,7 +129,7 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 #### 2. point_select90_update10
 
-读写混合测试，除上述主键等值查询外，还会随机生成一个 ID，然后更新主键与该 ID 相等的记录的 c 值。每个 transaction 包含 90 个主键等值查询 query，和 10 个非主键更新 query，故每个 transaction 会访问 100 行数据，并更新 10 行数据。
+读写混合测试，除上述主键等值查询外，还会随机生成一个 ID，然后更新主键与该 ID 相等的记录的 c 值。测试的每个 transaction 包含 90 个主键等值查询 query，和 10 个非主键更新 query，故每个 transaction 会访问 100 行数据，并更新 10 行数据。
 
 - 示例 SQL：
 ```
@@ -154,7 +154,7 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 次级主键等值查询，测试程序随机生产 100 个 key，然后使用 where in 语法随机读取这 100 个 key 对应的 100 行数据。
 
-每个 transaction 包含一个含有 100 个值的 where 次级主键等值查询 query，从而每个 transaction 会访问 100 行数据。
+测试的每个 transaction 包含一个含有 100 个值的 where 次级主键等值查询 query，从而每个 transaction 会访问 100 行数据。
 
 - 示例 SQL：
 ```
