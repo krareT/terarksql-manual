@@ -33,7 +33,7 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
          /path/to/share/sysbench/oltp_insert.lua prepare
 ```
 
-注1：插入时一定要指定 **--rand-type** 为 **uniform**，其默认值 special 为热点分布，导入的数据不能体现数据库真实的随机读写性能。
+注1：插入时一定要指定 **--rand-type** 为 **uniform**，因为其默认值 special 为热点分布，导入的数据不能体现数据库真实的随机读写性能。
 
 ## 读写测试
 
