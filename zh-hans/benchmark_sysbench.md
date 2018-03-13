@@ -39,9 +39,15 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 **注1**：插入时一定要指定 **--rand-type** 为 **uniform**，因为其默认值 special 为热点分布，导入的数据不能体现数据库真实的随机读写性能。
 
-## 读写测试
+## 测试结果
 
-读写测试进行了主键等值查询（point_select），读写混合查询（point_select90_update10），次级索引等值查询（secondary_random_points100），次级索引范围查询（secondary_random_limit100）四种测试，并分别在 192G、32G、8G 内存下进行。不同的内存限制使用内存挤占工具实现，内存挤占工具挤占一定数量的内存（不可换出）确保数据库所能使用的内存为以上指定值。
+我们运行了四种读写测试：
+* 主键等值查询（point_select）
+* 读写混合查询（point_select90_update10）
+* 次级索引等值查询（secondary_random_points100）
+* 次级索引范围查询（secondary_random_limit100）
+
+这四种测试分别在 192G、32G、8G 的内存限制下运行，不同的内存限制使用内存挤占工具实现，内存挤占工具挤占一定数量的内存（不可换出）确保数据库所能使用的内存为以上指定值。
 
 每次测试中 InnoDB 的 **innodb_buffer_pool_size** 总是设置为可用内存的 **70%**，TerarkDB 的 **softZipWorkingMemLimit** 和 **hardZipWorkingMemLimit** 分别设置为可用内存的 **1/8** 和 **1/4**.
 
