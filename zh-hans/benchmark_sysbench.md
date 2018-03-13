@@ -112,7 +112,7 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 **注2：**
 
-上表中 **Q**PS 表示 **Q**ueries Per Second，**T**PS 表示 **T**ransactions Per Second，RPS 表示 **R**ows Per Second。
+上表中 **Q**PS 表示 **Q**ueries Per Second，**T**PS 表示 **T**ransactions Per Second，**R**PS 表示 **R**ows Per Second。
 
 ### 测试类型说明
 
