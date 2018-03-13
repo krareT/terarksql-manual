@@ -49,10 +49,10 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 <table>
     <tr>
-             <th rowspan=2>测试类型</th><th colspan="3">TerarkDB</th><th colspan="3">InnoDB</th>
+             <th rowspan="2">内存</th><th rowspan="2">测试类型</th><th colspan="3">TerarkDB</th><th colspan="3">InnoDB</th>
     </tr>
     <tr align="center">
-             <td></td> <td></td> <td>qps</td> <td>tps</td> <td>rps</td> <td>qps</td> <td>tps</td> <td>rps</td>
+             <td>qps</td> <td>tps</td> <td>rps</td> <td>qps</td> <td>tps</td> <td>rps</td>
     </tr>
     <tr align="right">
              <td rowspan="4">192G</td> <td align="left">point_select</td> <td>123,615</td> <td>1,236.15</td> <td>123,615</td>
