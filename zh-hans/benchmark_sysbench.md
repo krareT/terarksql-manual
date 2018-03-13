@@ -58,7 +58,7 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
              <th rowspan="2">内存</th><th rowspan="2">测试类型</th><th colspan="3">TerarkDB</th><th colspan="3">InnoDB</th>
     </tr>
     <tr align="center">
-             <td>qps</td> <td>tps</td> <td>rps</td> <td>qps</td> <td>tps</td> <td>rps</td>
+             <td>QPS</td> <td>TPS</td> <td>RPS</td> <td>QPS</td> <td>TPS</td> <td>RPS</td>
     </tr>
     <tr align="right">
              <td rowspan="4">192G</td> <td align="left">point_select</td> <td>123,615</td> <td>1,236.15</td> <td>123,615</td>
@@ -112,7 +112,7 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 **注2：**
 
-上表中 qps 表示 queries per second，tps 表示 transactions per second，rps 表示 rows per second。
+上表中 **Q**PS 表示 **Q**ueries Per Second，**T**PS 表示 **T**ransactions Per Second，RPS 表示 **R**ows Per Second。
 
 ### 测试类型说明
 
