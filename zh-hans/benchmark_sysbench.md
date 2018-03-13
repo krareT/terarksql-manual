@@ -41,7 +41,7 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 ## 测试结果
 
-我们运行了四种读写测试：
+我们运行了四种测试：
 * 主键等值查询（point_select）
 * 读写混合查询（point_select90_update10）
 * 次级索引等值查询（secondary_random_points100）
