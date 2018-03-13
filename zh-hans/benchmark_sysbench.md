@@ -116,11 +116,11 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 将上表中的 **RPS** 数据做成更直观的图表，如下：
 
-![rps_192g](../image/benchmark_sysbench/rps_192g.png)
+![rps_192g](../images/benchmark_sysbench/rps_192g.png)
 
-![rps_32g](../image/benchmark_sysbench/rps_32g.png)
+![rps_32g](../images/benchmark_sysbench/rps_32g.png)
 
-![rps_8g](../image/benchmark_sysbench/rps_8g.png)
+![rps_8g](../images/benchmark_sysbench/rps_8g.png)
 
 ### 测试类型说明
 
