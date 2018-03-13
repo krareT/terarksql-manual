@@ -49,7 +49,7 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 <table>
     <tr>
-             <th></th><th></th><th colspan="3">TerarkDB</th><th colspan="3">InnoDB</th>
+             <th rowspan=2>测试类型</th><th colspan="3">TerarkDB</th><th colspan="3">InnoDB</th>
     </tr>
     <tr align="center">
              <td></td> <td></td> <td>qps</td> <td>tps</td> <td>rps</td> <td>qps</td> <td>tps</td> <td>rps</td>
