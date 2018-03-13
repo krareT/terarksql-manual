@@ -116,7 +116,6 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 将上表中的 **RPS** 数据做成更直观的图表，如下：
 
-
 ![rps_192g](../images/benchmark_sysbench/rps_192g.svg)
 
 192G 内存对 TerarkDB 和 InnoDB 都**够用**，TerarkDB 的性能低于 InnoDB，主要是因为 MyRocks 适配层带来的性能损失（相比引擎层损失了 **10** 倍以上的性能）。
