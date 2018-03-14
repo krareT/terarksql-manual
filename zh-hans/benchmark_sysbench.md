@@ -21,13 +21,28 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具,主要�
 测试中使用 sysbench 导入了 **450,000,000** 条数据，平均每条数据约 196 字节，总大小为 82G。数据均为 **uniform** 分布。
 
 导入完后各数据库大小如下：
+<table>
+<tr>
+  <th></th>
+  <th>数据条数</th>
+  <th>单条尺寸</th>
+  <th>原始数据</th>
+  <th>数据库尺寸</th>
+</tr>
+<tr>
+  <td>InnoDB 无压缩</td>
+  <td align="center" rowspan="2">450,000,000</td>
+  <td align="center" rowspan="2">196 字节</td>
+  <td align="center" rowspan="2">82 G</td>
+  <td align="right">101 G</td>
+</tr>
+<tr>
+  <td>TerarkDB</td>
+  <td align="right">51 G</td>
+</tr>
+</table>
 
-|      | 原始数据 | 数据库大小 |
-|-----:|--------:|----------:|
-| InnoDB   | 82 G | 101 G |
-| TerarkDB | 82 G | 51 G  |
-
-**注1**：sysbench 导入的数据为**纯随机**数据，对于 TerarkDB 来说并不友好，这会导致 TerarkDB 的压缩率**远低于**预期。
+**注1**：sysbench 导入的数据是**自动生成**的，不是真实数据，TerarkDB 对这种**假数据**的压缩率，远低于对**真数据**的压缩率。
 
 导入数据所使用的 sysbench 命令如下：
 
