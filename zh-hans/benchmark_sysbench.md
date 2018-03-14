@@ -31,10 +31,14 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具,主要�
 </tr>
 <tr>
   <td>InnoDB 无压缩</td>
-  <td align="center" rowspan="2">450,000,000</td>
-  <td align="center" rowspan="2">196 字节</td>
-  <td align="center" rowspan="2">82 G</td>
+  <td align="center" rowspan="3">450,000,000</td>
+  <td align="center" rowspan="3">196 字节</td>
+  <td align="center" rowspan="3">82 G</td>
   <td align="right">101 G</td>
+</tr>
+<tr>
+  <td>InnoDB 有压缩</td>
+  <td align="right">待测试</td>
 </tr>
 <tr>
   <td>TerarkDB</td>
