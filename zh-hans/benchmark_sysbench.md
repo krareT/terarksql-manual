@@ -118,15 +118,19 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 ![rps_192g](../images/benchmark_sysbench/rps_192g.svg)
 
-192G 内存对 TerarkDB 和 InnoDB 都**够用**，TerarkDB 的性能低于 InnoDB，主要是因为 MyRocks 适配层带来的性能损失（相比引擎层损失了 **10** 倍以上的性能）。
+192G 内存对 TerarkDB 和 InnoDB 都**够用**，实际上，TerarkDB 只使用了大约 52G，InnoDB 则耗尽了所有内存（进程内存 + 系统缓存）。
+
+TerarkDB 的**只读**性能低于 InnoDB，主要是因为 MyRocks 适配层带来的性能损失（相比引擎层损失了 **10** 倍以上的性能）。
+
+TerarkDB 的**读写混合**性能高于 InnoDB，是因为 TerarkDB 通过 RocksDB 使用了 LSM Tree，**随机写**性能从根上就远优于 InnoDB 的 BTree。
 
 ![rps_32g](../images/benchmark_sysbench/rps_32g.svg)
 
-32G 内存，TerarkDB **够用**，但 InnoDB **不够用**，TerarkDB 尽管有 MyRocks 适配层带来的性能损失，但 InnoDB 因为内存不够受限于 IO 瓶颈 ，从而 TerarkDB 的性能远高于 InnoDB。
+32G 内存，TerarkDB **不太够用**，但 InnoDB **很不够用**，TerarkDB 尽管有 MyRocks 适配层带来的性能损失，但 InnoDB 因为内存不够受限于 IO 瓶颈 ，从而 TerarkDB 的性能远高于 InnoDB。
 
 ![rps_8g](../images/benchmark_sysbench/rps_8g.svg)
 
-32G 内存对 TerarkDB 和 InnoDB 都**不够用**，TerarkDB 的 IO 也成为瓶颈，但 InnoDB 的内存缺口更大，从而 TerarkDB 的性能仍远高于 InnoDB。
+8G 内存对 TerarkDB 和 InnoDB 都**很不够用**，TerarkDB 的 IO 也成为瓶颈，但 InnoDB 的内存缺口更大，从而 TerarkDB 的性能仍远高于 InnoDB。
 
 ### 测试类型说明
 
