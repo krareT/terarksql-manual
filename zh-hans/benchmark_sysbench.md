@@ -16,11 +16,13 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具,主要�
 
 测试中使用的官方原版 MySQL 版本为 Ver 5.6.35 for linux-glibc2.5 on x86_64，下文简称为 InnoDB（[MySQL on TerarkDB](http://terark.com/docs/mysql-on-terarkdb-manual/zh-hans/installation.html) 简称为 TerarkDB）。
 
-## 导入
+下文 G, GB 指 2<sup>30</sup>，而非 10<sup>9</sup>。
 
-测试中使用 sysbench 导入了 **450,000,000** 条数据，平均每条数据约 196 字节，总大小为 82G。数据均为 **uniform** 分布。
+## 数据导入
 
-导入完后各数据库大小如下：
+测试中使用 sysbench 导入了 **450,000,000** 条数据，平均每条数据约 196 字节，总大小为 82.1G；另外，有个 Secondary Index，也要占用空间，因为辅助**索引列**和主键**索引列**都是 int32，所以逻辑上，对于每条数据，辅助索引的空间占用是 8 字节，从而辅助索引的逻辑空间占用就是 `8*45e7 = 3.4G`。所以，数据源的等效尺寸就是 `(196+8)*45e7 = 85.5G`。
+
+数据库尺寸大小比较如下：
 <table>
 <tr>
   <th></th>
@@ -29,13 +31,15 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具,主要�
   <th>数据条数</th>
   <th>单条尺寸</th>
   <th>总尺寸</th>
+  <th>索引+数据</td>
 </tr>
 <tr>
   <td>InnoDB 无压缩</td>
   <td align="right">101 G</td>
   <td align="center" rowspan="3">450,000,000</td>
   <td align="center" rowspan="3">196 字节</td>
-  <td align="center" rowspan="3">82 G</td>
+  <td align="center" rowspan="3">82.1 G</td>
+  <td align="center" rowspan="3">85.5 G</td>
 </tr>
 <tr>
   <td>InnoDB 有压缩</td>
