@@ -7,6 +7,8 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具,主要�
 
 测试程序使用 [terark/sysbench 1.0.1](https://github.com/Terark/sysbench)，我们在原版 sysbench 的基础上添加了一个次级索引范围查询测试。
 
+测试的数据库有：[MySQL on TerarkDB](http://terark.com/docs/mysql-on-terarkdb-manual/zh-hans/installation.html) （下简称为 TerarkDB），不开启压缩的官方原版 MySQL（下简称 InnoDB 无压缩）以及开启压缩的官方原版 MySQL（下简称 InnoDB 有压缩）。
+
 ## 测试平台
 
 - CPU: Intel(R) Xeon(R) CPU E5-2630 v3 @ 2.40GHz x2 （共16核32线程）
@@ -14,7 +16,7 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具,主要�
 - SSD: INTEL SSDSC2BP48 0420 IOPS 89000
 - 操作系统: CentOS 7
 
-测试中使用的官方原版 MySQL 版本为 Ver 5.6.35 for linux-glibc2.5 on x86_64，下文简称为 InnoDB（[MySQL on TerarkDB](http://terark.com/docs/mysql-on-terarkdb-manual/zh-hans/installation.html) 简称为 TerarkDB）。
+测试中使用的官方原版 MySQL 版本为 Ver 5.6.35 for linux-glibc2.5 on x86_64。
 
 下文 G, GB 指 2<sup>30</sup>，而非 10<sup>9</sup>。
 
