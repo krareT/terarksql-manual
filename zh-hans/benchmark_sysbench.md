@@ -81,58 +81,70 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 <table>
     <tr>
-             <th rowspan="2">内存</th><th rowspan="2">测试类型</th><th colspan="3">TerarkDB</th><th colspan="3">InnoDB</th>
+             <th rowspan="2">内存</th><th rowspan="2">测试类型</th><th colspan="3">TerarkDB</th><th colspan="3">InnoDB 无压缩</th><th colspan="3">InnoDB 有压缩</th>
     </tr>
     <tr align="center">
-             <td>QPS</td> <td>TPS</td> <td>RPS</td> <td>QPS</td> <td>TPS</td> <td>RPS</td>
+             <td>QPS</td> <td>TPS</td> <td>RPS</td> <td>QPS</td> <td>TPS</td> <td>RPS</td> <td>QPS</td> <td>TPS</td> <td>RPS</td>
     </tr>
     <tr align="right">
              <td rowspan="4">192G</td> <td align="left">point_select</td> <td>123,615</td> <td>1,236.15</td> <td>123,615</td>
              <td>178,282</td> <td>1,782.82</td> <td>178,282</td>
+             <td>158,869</td> <td>1,588.69</td> <td>158,869</td>
     </tr>
     <tr align="right">
              <td align="left">point_select90_update10</td> <td>101,410</td> <td>1,014.10</td> <td>101,410</td>
              <td>50,695</td> <td>506.95</td> <td>50,695</td>
+             <td>6,555</td> <td>65.55</td> <td>6,555</td>
     </tr>
     <tr align="right">
              <td align="left">secondary_random_points100</td> <td>5,143</td> <td>5,143.00</td> <td>514,300</td>
              <td>14,278</td> <td>14,278.79</td> <td>1,427,800</td>
+             <td>2,556</td> <td>2,556.01</td> <td>255,601</td>
     </tr>
     <tr align="right">
              <td align="left">secondary_random_limit100</td> <td>9,139</td> <td>91.39</td> <td>913,900</td>
              <td>21,164</td> <td>211.64</td> <td>2,116,400</td>
+             <td>2,749</td> <td>27.49</td> <td>274,900</td>
     </tr>
     <tr align="right">
              <td rowspan="4">32G</td><td align="left">point_select</td> <td>89,998</td> <td>899.98</td> <td>89,998</td>
              <td>22,301</td> <td>223.01</td> <td>22,301</td>
+             <td>38,328</td> <td>383.28</td> <td>38,328</td>
     </tr>
     <tr align="right">
              <td align="left">point_select90_update10</td> <td>46,122</td> <td>461.22</td> <td>46,122</td>
              <td>12,445</td> <td>124.45</td> <td>12,445</td>
+             <td>2,896</td> <td>28.96</td> <td>2,896</td>
     </tr>
     <tr align="right">
              <td align="left">secondary_random_points100</td> <td>1,309</td> <td>1,309.22</td> <td>130,922</td>
              <td>228</td> <td>227.68</td> <td>22,768</td>
+             <td>269</td> <td>269.14</td> <td>26,914</td>
     </tr>
     <tr align="right">
              <td align="left">secondary_random_limit100</td> <td>1,743</td> <td>17.43</td> <td>174,300</td>
              <td>232</td> <td>2.32</td> <td>23,200</td>
+             <td>398</td> <td>3.98</td> <td>39,800</td>
     </tr>
     <tr align="right">
              <td rowspan="4">8G</td> <td align="left">point_select</td> <td>68,864</td> <td>688.64</td> <td>68,864</td>
              <td>23,829</td> <td>238.29</td> <td>23,829</td>
+             <td>29,016</td> <td>290.16</td> <td>29,016</td>
     </tr>
     <tr align="right">
              <td align="left">point_select90_update10</td> <td>29,916</td> <td>299.16</td> <td>29,916</td>
              <td>12,787</td> <td>127.87</td> <td>17,787</td>
+             <td>2,103</td> <td>21.03</td> <td>2,103</td>
     </tr>
     <tr align="right">
              <td align="left">secondary_random_points100</td> <td>841</td> <td>841.00</td> <td>84,100</td>
              <td>172</td> <td>171.63</td> <td>17,163</td>
+             <td>69</td> <td>69.77</td> <td>6,977</td>
     </tr>
     <tr align="right">
              <td align="left">secondary_random_limit100</td> <td>925</td> <td>9.25</td> <td>92,500</td>
              <td>251</td> <td>2.51</td> <td>25,100</td>
+             <td>311</td> <td>3.11</td> <td>31,100</td>
     </tr>
 </table>
 
