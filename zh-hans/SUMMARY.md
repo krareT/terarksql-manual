@@ -16,7 +16,7 @@
 - [常见测试方法](benchmark_tools.md)
     * [使用 YCSB 进行测试](benchmark_tool_ycsb.md)
 - [兼容性](compatibility.md)
-    * [对比 MyRocks 的兼容性](compatibility_myrocks.md)
+    * [对比 MyRocks 的兼容性](compatibility_myrocks_v2.md)
     * [对比 MySQL 的兼容性](compatibility_mysql.md)
       * [安全性异常](compatibility_mysql_security.md)
       * [备份异常](compatibility_mysql_backup.md)
