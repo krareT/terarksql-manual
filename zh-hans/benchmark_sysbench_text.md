@@ -256,14 +256,32 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 数据源示例：
 ```
+'AccessibleComputing'	'#REDIRECT [[Computer accessibility]]\n\n{{Redr|move|from CamelCase|up}}'
+'Liberty_Hall_(Lamoni,_Iowa)'	'{{WikiProject National Register of Historic Places|class=Stub|importance=Low}}\n{{WikiProject Iowa|class=Stub|importance=Low}}\n{{reqphoto|in=Decatur County, Iowa}}'
 ```
 
 ### 附录2：
 
 TerarkDB 表结构：
 ```
+ CREATE TABLE `sbtest1` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `k` int(11) NOT NULL DEFAULT '0',
+  `c` varchar(512) COLLATE latin1_bin NOT NULL DEFAULT '',
+  `pad` mediumtext COLLATE latin1_bin NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `k_1` (`k`)
+) ENGINE=ROCKSDB;
 ```
 
 InnoDB 表结构：
 ```
+CREATE TABLE `sbtest1` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `k` int(11) NOT NULL DEFAULT '0',
+  `c` varchar(512) NOT NULL DEFAULT '',
+  `pad` mediumtext,
+  PRIMARY KEY (`id`),
+  KEY `k_1` (`k`)
+) ENGINE=InnoDB ROW_FORMAT=COMPRESSED;
 ```
