@@ -1,13 +1,13 @@
 ## 简介
-sysbench 是一个模块化的、跨平台、多线程基准测试工具,主要用于评估测试各种不同系统参数下的数据库负载情况。本测试使用 sysbench 分别向官方原版 MySQL 和 MySQL on TerarkDB 导入 **450,000,000** 条数据，测试在不同内存下两者的读写性能。
+sysbench 是一个模块化的、跨平台、多线程基准测试工具,主要用于评估测试各种不同系统参数下的数据库负载情况。本测试使用修改版的 sysbench 分别向官方原版 MySQL 和 MySQL on TerarkDB 导入 **38,508,221** 条 [wikipedia](https://dumps.wikimedia.org/backup-index.html) 文章数据，并测试在不同内存下两者的读写性能。
 
 非常值得注意的是，sysbench 测试中默认的数据分布是 `special`，表示热点非常集中的数据，从而**测试结果主要体现的是缓存的性能**。这就是为什么大家经常发现 sysbench 测试出来性能很高，一到生产环境，性能就跪了。
 
 好在 sysbench 也有对其它数据分布的支持，例如 `uniform`，即`均匀分布`，其测试结果主要体现的是`随机访问`的性能。本文中所有的测试均使用 `uniform` 分布。
 
-测试程序使用 [terark/sysbench 1.0.1](https://github.com/Terark/sysbench)，我们在原版 sysbench 的基础上添加了一个次级索引范围查询测试。
+测试程序使用 [terark/sysbench 1.0.1](https://github.com/Terark/sysbench)，我们在原版 sysbench 的基础上添加了读取文本文件作为数据源的功能，以及一个次级索引范围查询测试。
 
-测试的数据库有：[MySQL on TerarkDB](http://terark.com/docs/mysql-on-terarkdb-manual/zh-hans/installation.html) （下简称 TerarkDB），不开启压缩的官方原版 MySQL（下简称 InnoDB 无压缩）以及开启压缩的官方原版 MySQL（下简称 InnoDB 有压缩）。
+测试的数据库有：[MySQL on TerarkDB](http://terark.com/docs/mysql-on-terarkdb-manual/zh-hans/installation.html) （下简称 TerarkDB），官方原版 MySQL（下简称 InnoDB），MySQL 开启压缩。
 
 ## 测试平台
 
@@ -22,7 +22,9 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具,主要�
 
 ## 数据导入
 
-测试中使用 sysbench 导入了 **450,000,000** 条数据，平均每条数据约 196 字节，总大小为 82.1G；另外，有个 Secondary Index，也要占用空间，因为辅助**索引列**和主键**索引列**都是 int32，所以逻辑上，对于每条数据，辅助索引的空间占用是 8 字节，从而辅助索引的逻辑空间占用就是 `8*45e7 = 3.4G`。所以，数据源的等效尺寸就是 `(196+8)*45e7 = 85.5G`。
+我们使用 [wikipedia](https://dumps.wikimedia.org/backup-index.html) dump 出来的文章数据，并提取出其中的文章标题和文章内容作为数据源（数据示例可见**附录1**），这些数据共有 **38,508,221** 条，总大小为 94.8G，平均每条约 2.6KB。
+
+每张表中还有一个自增主键以及一个 Secondary Index，也要占用空间，因为辅助**索引列**和主键**索引列**都是 int32，所以数据源的大小为 `94.8G+16*38,508,221=95.4G`。另外，对于每条数据，辅助索引的空间占用也是 8 字节，从而辅助索引的逻辑空间占用就是 `8*38,508,221 = 0.29G`。所以，数据源的等效尺寸就是 `95.7G`。
 
 数据导入后，数据库尺寸大小比较如下：
 <table>
@@ -36,20 +38,16 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具,主要�
   <th>索引+数据</td>
 </tr>
 <tr>
-  <td>InnoDB 无压缩</td>
-  <td align="right">101 G</td>
-  <td align="center" rowspan="3">450,000,000</td>
-  <td align="center" rowspan="3">196 字节</td>
-  <td align="center" rowspan="3">82.1 G</td>
-  <td align="center" rowspan="3">85.5 G</td>
+  <td>InnoDB</td>
+  <td align="right">55.4 G</td>
+  <td align="center" rowspan="2">450,000,000</td>
+  <td align="center" rowspan="2">2.6 KB</td>
+  <td align="center" rowspan="2">95.4 G</td>
+  <td align="center" rowspan="2">95.7 G</td>
 </tr>
 <tr>
-  <td>InnoDB 有压缩</td>
-  <td align="right">56 G</td>
-</tr>
-<tr>
-  <td>TerarkDB</td>
-  <td align="right">51 G</td>
+  <td>TerarkDB</td>
+  <td align="right">20.7 G</td>
 </tr>
 </table>
 
