@@ -7,7 +7,7 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具,主要�
 
 测试程序使用 [terark/sysbench 1.0.1](https://github.com/Terark/sysbench)，我们在原版 sysbench 的基础上添加了读取文本文件作为数据源的功能，以及一个次级索引范围查询测试。
 
-测试的数据库有：[MySQL on TerarkDB](http://terark.com/docs/mysql-on-terarkdb-manual/zh-hans/installation.html) （下简称 TerarkDB），官方原版 MySQL（下简称 InnoDB），MySQL 开启压缩。
+测试的数据库有：[MySQL on TerarkDB](http://terark.com/docs/mysql-on-terarkdb-manual/zh-hans/installation.html) （下简称 TerarkDB），官方原版 MySQL（下简称 InnoDB）。MySQL 开启压缩。
 
 ## 测试平台
 
@@ -51,8 +51,6 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具,主要�
 </tr>
 </table>
 
-**注1**：sysbench 导入的数据是**自动生成**的，不是真实数据，TerarkDB 对这种**假数据**的压缩率，远低于对**真数据**的压缩率。
-
 导入数据所使用的 sysbench 命令如下：
 
 ```
@@ -60,10 +58,11 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
          --mysql-user=root --mysql-db=sysbench --mysql-host=127.0.0.1 \
          --threads=32 --tables=1 --mysql_storage_engine=innodb \
          --table-size=450000000 --rand-type=uniform --create_secondary=on \
+         --use-file=on --filename=/path/to/wikipedia-article.txt
          /path/to/share/sysbench/oltp_insert.lua prepare
 ```
 
-**注2**：插入时一定要指定 **--rand-type** 为 **uniform**，因为其默认值 special 为热点分布，导入的数据不能体现数据库真实的随机读写性能。
+**注1**：插入时一定要指定 **--rand-type** 为 **uniform**，因为其默认值 special 为热点分布，导入的数据不能体现数据库真实的随机读写性能。
 
 ## 测试结果
 
@@ -73,86 +72,68 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 * 次级索引等值查询（secondary_random_points100）
 * 次级索引范围查询（secondary_random_limit100）
 
-这四种测试分别在 192G、32G、8G 的内存限制下运行，不同的内存限制使用内存挤占工具实现，内存挤占工具挤占一定数量的内存（不可换出）确保数据库所能使用的内存为以上指定值。
+这四种测试分别在 192G、32G、24G、8G 的内存限制下运行，不同的内存限制使用内存挤占工具实现，内存挤占工具挤占一定数量的内存（不可换出）确保数据库所能使用的内存为以上指定值。
 
 每次测试中 InnoDB 的 **innodb_buffer_pool_size** 总是设置为可用内存的 **70%**，TerarkDB 的 **softZipWorkingMemLimit** 和 **hardZipWorkingMemLimit** 分别设置为可用内存的 **1/8** 和 **1/4**.
 
 所有的测试均使用 **32** 个线程，每次测试前先 warm up **30 秒**，每次测试持续 **15 分钟**。
 
+下表中仅记录各测试结果的 **RPS**（**R**ows Per Second）。
 <table>
     <tr>
-             <th rowspan="2">内存</th><th rowspan="2">测试类型</th><th colspan="3">TerarkDB</th><th colspan="3">InnoDB 无压缩</th><th colspan="3">InnoDB 有压缩</th>
-    </tr>
-    <tr align="center">
-             <td>QPS</td> <td>TPS</td> <td>RPS</td> <td>QPS</td> <td>TPS</td> <td>RPS</td> <td>QPS</td> <td>TPS</td> <td>RPS</td>
+             <th>内存</th><th>测试类型</th><th>TerarkDB</th><th colspan="3">InnoDB</th>
     </tr>
     <tr align="right">
-             <td rowspan="4">192G</td> <td align="left">point_select</td> <td>123,615</td> <td>1,236.15</td> <td>123,615</td>
-             <td>178,282</td> <td>1,782.82</td> <td>178,282</td>
-             <td>158,869</td> <td>1,588.69</td> <td>158,869</td>
+             <td rowspan="4">192G</td> <td align="left">point_select</td> <td>151,250</td> <td>269,841</td>
     </tr>
     <tr align="right">
-             <td align="left">point_select90_update10</td> <td>101,410</td> <td>1,014.10</td> <td>101,410</td>
-             <td>50,695</td> <td>506.95</td> <td>50,695</td>
-             <td>6,555</td> <td>65.55</td> <td>6,555</td>
+             <td align="left">point_select90_update10</td> <td>90,764</td> <td>21,387</td>
     </tr>
     <tr align="right">
-             <td align="left">secondary_random_points100</td> <td>5,143</td> <td>5,143.00</td> <td>514,300</td>
-             <td>14,278</td> <td>14,278.79</td> <td>1,427,800</td>
-             <td>2,556</td> <td>2,556.01</td> <td>255,601</td>
+             <td align="left">secondary_random_points100</td> <td>484,432</td> <td>712,815</td>
     </tr>
     <tr align="right">
-             <td align="left">secondary_random_limit100</td> <td>9,139</td> <td>91.39</td> <td>913,900</td>
-             <td>21,164</td> <td>211.64</td> <td>2,116,400</td>
-             <td>2,749</td> <td>27.49</td> <td>274,900</td>
+             <td align="left">secondary_random_limit100</td> <td>791,500</td> <td>2,284,200</td>
+   </tr>
+    <tr align="right">
+             <td rowspan="4">32G</td><td align="left">point_select</td> <td>151,730</td> <td>95,090</td>
     </tr>
     <tr align="right">
-             <td rowspan="4">32G</td><td align="left">point_select</td> <td>89,998</td> <td>899.98</td> <td>89,998</td>
-             <td>22,301</td> <td>223.01</td> <td>22,301</td>
-             <td>38,328</td> <td>383.28</td> <td>38,328</td>
+             <td align="left">point_select90_update10</td> <td>68,299</td> <td>8,098</td>
     </tr>
     <tr align="right">
-             <td align="left">point_select90_update10</td> <td>46,122</td> <td>461.22</td> <td>46,122</td>
-             <td>12,445</td> <td>124.45</td> <td>12,445</td>
-             <td>2,896</td> <td>28.96</td> <td>2,896</td>
+             <td align="left">secondary_random_points100</td> <td>473,500</td> <td>107,348</td>
     </tr>
     <tr align="right">
-             <td align="left">secondary_random_points100</td> <td>1,309</td> <td>1,309.22</td> <td>130,922</td>
-             <td>228</td> <td>227.68</td> <td>22,768</td>
-             <td>269</td> <td>269.14</td> <td>26,914</td>
+             <td align="left">secondary_random_limit100</td> <td>782,300</td> <td>152,804</td>
     </tr>
     <tr align="right">
-             <td align="left">secondary_random_limit100</td> <td>1,743</td> <td>17.43</td> <td>174,300</td>
-             <td>232</td> <td>2.32</td> <td>23,200</td>
-             <td>398</td> <td>3.98</td> <td>39,800</td>
+             <td rowspan="4">24G</td> <td align="left">point_select</td> <td>151,844</td> <td>80,775</td>
     </tr>
     <tr align="right">
-             <td rowspan="4">8G</td> <td align="left">point_select</td> <td>68,864</td> <td>688.64</td> <td>68,864</td>
-             <td>23,829</td> <td>238.29</td> <td>23,829</td>
-             <td>29,016</td> <td>290.16</td> <td>29,016</td>
+             <td align="left">point_select90_update10</td> <td>54,843</td> <td>6,411</td>
     </tr>
     <tr align="right">
-             <td align="left">point_select90_update10</td> <td>29,916</td> <td>299.16</td> <td>29,916</td>
-             <td>12,787</td> <td>127.87</td> <td>17,787</td>
-             <td>2,103</td> <td>21.03</td> <td>2,103</td>
+             <td align="left">secondary_random_points100</td> <td>476,500</td> <td>87,863</td>
     </tr>
     <tr align="right">
-             <td align="left">secondary_random_points100</td> <td>841</td> <td>841.00</td> <td>84,100</td>
-             <td>172</td> <td>171.63</td> <td>17,163</td>
-             <td>69</td> <td>69.77</td> <td>6,977</td>
+             <td align="left">secondary_random_limit100</td> <td>784,500</td> <td>123,700</td>
+    </tr>
+  <tr align="right">
+             <td rowspan="4">8G</td> <td align="left">point_select</td> <td>96,688</td> <td>57,570</td>
     </tr>
     <tr align="right">
-             <td align="left">secondary_random_limit100</td> <td>925</td> <td>9.25</td> <td>92,500</td>
-             <td>251</td> <td>2.51</td> <td>25,100</td>
-             <td>311</td> <td>3.11</td> <td>31,100</td>
+             <td align="left">point_select90_update10</td> <td>28,673</td> <td>5,477</td>
+    </tr>
+    <tr align="right">
+             <td align="left">secondary_random_points100</td> <td>112,237</td> <td>51,651</td>
+    </tr>
+    <tr align="right">
+             <td align="left">secondary_random_limit100</td> <td>143,800</td> <td>72,800</td>
     </tr>
 </table>
 
-**注3：**
-
-上表中 **Q**PS 表示 **Q**ueries Per Second，**T**PS 表示 **T**ransactions Per Second，**R**PS 表示 **R**ows Per Second。
-
-将上表中的 **RPS** 数据做成更直观的图表，如下：
+将上表中的数据做成更直观的图表，如下：
 <hr/>
 
 ![rps_192g](../images/benchmark_sysbench/text_rps_192g.svg)
