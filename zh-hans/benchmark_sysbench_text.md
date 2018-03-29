@@ -40,7 +40,7 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具,主要�
 <tr>
   <td>InnoDB</td>
   <td align="right">55.4 G</td>
-  <td align="center" rowspan="2">450,000,000</td>
+  <td align="center" rowspan="2">38,508,221</td>
   <td align="center" rowspan="2">2.6 KB</td>
   <td align="center" rowspan="2">95.4 G</td>
   <td align="center" rowspan="2">95.7 G</td>
