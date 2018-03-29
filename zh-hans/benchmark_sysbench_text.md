@@ -24,7 +24,7 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具,主要�
 
 我们使用 [wikipedia](https://dumps.wikimedia.org/backup-index.html) dump 出来的文章数据，并提取出其中的文章标题和文章内容作为数据源（数据示例可见**附录1**），这些数据共有 **38,508,221** 条，总大小为 94.8G，平均每条约 2.6KB。
 
-每张表中还有一个自增主键以及一个 Secondary Index，也要占用空间，因为辅助**索引列**和主键**索引列**都是 int32，所以数据源的大小为 `94.8G+16*38,508,221=95.4G`。另外，对于每条数据，辅助索引的空间占用也是 8 字节，从而辅助索引的逻辑空间占用就是 `8*38,508,221 = 0.29G`。所以，数据源的等效尺寸就是 `95.7G`。
+每张表（表结构可见**附录2**）中还有一个自增主键以及一个 Secondary Index，也要占用空间，因为辅助**索引列**和主键**索引列**都是 int32，所以数据源的大小为 `94.8G+16*38,508,221=95.4G`。另外，对于每条数据，辅助索引的空间占用也是 8 字节，从而辅助索引的逻辑空间占用就是 `8*38,508,221 = 0.29G`。所以，数据源的等效尺寸就是 `95.7G`。
 
 数据导入后，数据库尺寸大小比较如下：
 <table>
@@ -138,7 +138,7 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 ![rps_192g](../images/benchmark_sysbench/text_rps_192g.svg)
 
-192G 内存对 TerarkDB 和 InnoDB 都**够用**，实际上，TerarkDB 只使用了大约 52G，InnoDB 则耗尽了所有内存（进程内存 + 系统缓存）。
+192G 内存对 TerarkDB 和 InnoDB 都**够用**，实际上，TerarkDB 只使用了大约 21G，InnoDB 则使用了 134G 内存（进程内存 + 系统缓存）。
 
 TerarkDB 的**只读**性能低于 InnoDB，主要是因为 MyRocks 适配层带来的性能损失（相比引擎层损失了 **10** 倍以上的性能）。
 
@@ -148,11 +148,13 @@ TerarkDB 的**读写混合**性能高于 InnoDB，是因为 TerarkDB 通过 Rock
 
 ![rps_32g](../images/benchmark_sysbench/text_rps_32g.svg)
 
-32G 内存，TerarkDB **不太够用**，但 InnoDB **很不够用**，TerarkDB 尽管有 MyRocks 适配层带来的性能损失，但 InnoDB 因为内存不够受限于 IO 瓶颈 ，从而 TerarkDB 的性能远高于 InnoDB。
+32G 内存，TerarkDB **够用**，但 InnoDB **不够用**，TerarkDB 尽管有 MyRocks 适配层带来的性能损失，但 InnoDB 因为内存不够受限于 IO 瓶颈 ，从而 TerarkDB 的性能远高于 InnoDB。
 
 <hr/>
 
 ![rps_24g](../images/benchmark_sysbench/text_rps_24g.svg)
+
+24G 内存，TerarkDB 仍然**够用**，但 InnoDB **很不够用**，InnoDB 性能进一步下降，而 TerarkDB 性能基本不受影响，高压缩率带来的优势由此可见。
 
 <hr/>
 
@@ -179,14 +181,14 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
          --threads=32 --warmup-time=30 --distinct_ranges=0 \
          --sum_ranges=0 --index_updates=0 --range_size=100 \
          --delete_inserts=0 --tables=1 --mysql_storage_engine=rocksdb \
-         --non_index_updates=0 --table-size=450000000 --simple_ranges=0 --secondary_ranges=0\
+         --non_index_updates=0 --table-size=38508221 --simple_ranges=0 --secondary_ranges=0\
          --order_ranges=0 --range_selects=off --point_selects=100 \
          --rand-type=uniform --skip_trx=on /path/to/share/sysbench/oltp_read_only.lua run
 ```
 
 #### 2. point_select90_update10
 
-读写混合测试，除上述主键等值查询外，还会随机生成一个 ID，然后更新主键与该 ID 相等的记录的 c 值。测试的每个 transaction 包含 90 个主键等值查询 query，和 10 个非主键更新 query，故每个 transaction 会访问 100 行数据，并更新 10 行数据。
+读写混合测试，除上述主键等值查询外，还会随机生成一个 ID，然后更新主键与该 ID 相等的记录的 c 值为一个随机的 119 字节长的随机字符串。测试的每个 transaction 包含 90 个主键等值查询 query，和 10 个非主键更新 query，故每个 transaction 会访问 100 行数据，并更新 10 行数据。
 
 - 示例 SQL：
 ```
@@ -202,7 +204,7 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
          --threads=32 --warmup-time=30 --distinct_ranges=0 \
          --sum_ranges=0 --index_updates=0 --range_size=100 \
          --delete_inserts=0 --tables=1 --mysql_storage_engine=rocksdb \
-         --non_index_updates=10 --table-size=450000000 --simple_ranges=0 --secondary_ranges=0\
+         --non_index_updates=10 --table-size=38508221 --simple_ranges=0 --secondary_ranges=0\
          --order_ranges=0 --range_selects=off --point_selects=90 \
          --rand-type=uniform --skip_trx=on /path/to/share/sysbench/oltp_read_write.lua run
 ```
@@ -222,7 +224,7 @@ select id, k, c, pad from sbtest1 where k in (k1, k2, k3, ..., k100);
 ```
 sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
          --mysql-user=root --mysql-db=sysbench --mysql-host=127.0.0.1 \
-         --threads=32 --warmup-time=30 --tables=1 --table-size=450000000 \
+         --threads=32 --warmup-time=30 --tables=1 --table-size=38508221 \
          --rand-type=uniform --skip_trx=on \
          --random_points=100 /path/to/share/sysbench/select_random_points.lua run
 ```
@@ -245,7 +247,23 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
          --threads=32 --warmup-time=30 --distinct_ranges=0 \
          --sum_ranges=0 --index_updates=0 --range_size=100 \
          --delete_inserts=0 --tables=1 --mysql_storage_engine=rocksdb \
-         --non_index_updates=0 --table-size=450000000 --simple_ranges=0 --secondary_ranges=100 \
+         --non_index_updates=0 --table-size=38508221 --simple_ranges=0 --secondary_ranges=100 \
          --order_ranges=0 --range_selects=on --point_selects=0 \
          --rand-type=uniform --skip_trx=on /path/to/share/sysbench/oltp_read_only.lua run
+```
+
+### 附录1：
+
+数据源示例：
+```
+```
+
+### 附录2：
+
+TerarkDB 表结构：
+```
+```
+
+InnoDB 表结构：
+```
 ```
