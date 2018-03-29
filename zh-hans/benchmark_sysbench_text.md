@@ -24,7 +24,7 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具，主�
 
 我们使用 [wikipedia](https://dumps.wikimedia.org/backup-index.html) dump 出来的文章数据，并提取出其中的文章标题和文章内容作为数据源（数据示例可见**附录1**），这些数据共有 **38,508,221** 条，总大小为 94.8G，平均每条约 2.6KB。
 
-每张表（表结构可见**附录2**）中还有一个自增主键以及一个 Secondary Index，也要占用空间，因为辅助**索引列**和主键**索引列**都是 int32，所以数据源的大小为 `94.8G+16*38,508,221=95.4G`。另外，对于每条数据，辅助索引的空间占用也是 8 字节，从而辅助索引的逻辑空间占用就是 `8*38,508,221=0.29G`。所以，数据源的等效尺寸就是 `95.7G`。
+每张表（表结构可见**附录2**）中还有一个自增主键以及一个 Secondary Index，也会占用空间，因为辅助**索引列**和主键**索引列**都是 int32，所以数据源的大小为 `94.8G+16*38,508,221=95.4G`。另外，对于每条数据，辅助索引的空间占用也是 8 字节，从而辅助索引的逻辑空间占用就是 `8*38,508,221=0.29G`。所以，数据源的等效尺寸为 `95.7G`。
 
 数据导入后，数据库尺寸大小比较如下：
 <table>
@@ -58,15 +58,15 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
          --mysql-user=root --mysql-db=sysbench --mysql-host=127.0.0.1 \
          --threads=32 --tables=1 --mysql_storage_engine=innodb \
          --table-size=450000000 --rand-type=uniform --create_secondary=on \
-         --use-file=on --filename=/path/to/wikipedia-article.txt
-         /path/to/share/sysbench/oltp_insert.lua prepare
+         --use-file=on --filename=/path/to/wikipedia-article.txt \
+         /path/to/share/sysbench/oltp_insert.lua prepare
 ```
 
-**注1**：插入时一定要指定 **--rand-type** 为 **uniform**，因为其默认值 special 为热点分布，导入的数据不能体现数据库真实的随机读写性能。
+**注1**：插入时一定要指定 **--rand-type** 为 **uniform**，因为其默认值 special 为热点分布，导致导入的辅助索引以及查询时的值分布为热点分布，从而不能准确测出随机读写性能。
 
 ## 测试结果
 
-我们运行了四种测试：
+我们进行了四种测试：
 * 主键等值查询（point_select）
 * 读写混合查询（point_select90_update10）
 * 次级索引等值查询（secondary_random_points100）
