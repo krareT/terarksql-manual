@@ -21,16 +21,18 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具，主�
 下文 G, GB 指 2<sup>30</sup>，而非 10<sup>9</sup>。
 
 ## 数据导入
+sysbench 原版只能导入**自动生成**的数据，这样的数据无法体现压缩算法的优劣，所以我们修改了 sysbench 源码，以支持**导入指定文件**中的数据。
 
-我们使用 [wikipedia](https://dumps.wikimedia.org/backup-index.html) dump 出来的文章数据，并提取出其中的文章标题和文章内容作为数据源（数据示例可见**附录1**），这些数据共有 **38,508,221** 条，总大小为 94.8G，平均每条约 2.6KB。
+我们使用 [wikipedia](https://dumps.wikimedia.org/backup-index.html) dump 出来的文章数据，并提取出其中的文章**标题**和文章**内容**作为数据源（数据示例可见**附录1**），这些数据共有 **38,508,221** 条，总大小为 **94.8GB**，平均每条约 **2.6KB**。
 
-每张表（表结构可见**附录2**）中还有一个自增主键以及一个 Secondary Index，也会占用空间，因为辅助**索引列**和主键**索引列**都是 int32，所以数据源的大小为 `94.8G+16*38,508,221=95.4G`。另外，对于每条数据，辅助索引的空间占用也是 8 字节，从而辅助索引的逻辑空间占用就是 `8*38,508,221=0.29G`。所以，数据源的等效尺寸为 `95.7G`。
+每张表（表结构可见**附录2**）中还有一个自增主键以及一个 Secondary Index，也会占用空间，因为**辅助索引列**和**主键索引列**都是 int32，所以数据源的大小为 `94.8G+8*38,508,221=95.1G`。另外，对于每条数据，辅助索引的空间占用也是 8 字节，从而辅助索引的逻辑空间占用就是 `8*38,508,221=0.29G`。所以，数据源的等效尺寸为 `95.4G`。
 
 数据导入后，数据库尺寸大小比较如下：
 <table>
 <tr>
   <th></th>
   <th>数据库尺寸</th>
+  <th>压缩率</th>
   <th rowspan="4"></th>
   <th>数据条数</th>
   <th>单条尺寸</th>
@@ -38,16 +40,18 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具，主�
   <th>索引+数据</td>
 </tr>
 <tr>
-  <td>InnoDB</td>
+  <td align="right">InnoDB</td>
   <td align="right">55.4 G</td>
+  <td align="right">58.1% 或 1.72倍</td>
   <td align="center" rowspan="2">38,508,221</td>
   <td align="center" rowspan="2">2.6 KB</td>
-  <td align="center" rowspan="2">95.4 G</td>
-  <td align="center" rowspan="2">95.7 G</td>
+  <td align="center" rowspan="2">95.1 G</td>
+  <td align="center" rowspan="2">95.4 G</td>
 </tr>
 <tr>
-  <td>TerarkDB</td>
+  <td align="right">TerarkDB</td>
   <td align="right">20.7 G</td>
+  <td align="right">21.7% 或 4.61倍</td>
 </tr>
 </table>
 
