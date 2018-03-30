@@ -30,8 +30,7 @@ sysbench 原版只能导入**自动生成**的数据，这样的数据无法体�
 数据导入后，数据库尺寸大小比较如下：
 <table>
 <tr>
-  <th></th>
-  <th>数据库尺寸</th>
+  <th colspan="2" align="right">数据库尺寸</th>
   <th>压缩率</th>
   <th rowspan="4"></th>
   <th>数据条数</th>
