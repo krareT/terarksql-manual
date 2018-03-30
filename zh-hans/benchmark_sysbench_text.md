@@ -263,7 +263,7 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 'Liberty_Hall_(Lamoni,_Iowa)'	'{{WikiProject National Register of Historic Places|class=Stub|importance=Low}}\n{{WikiProject Iowa|class=Stub|importance=Low}}\n{{reqphoto|in=Decatur County, Iowa}}'
 ```
 
-更多数据[实例](wikipedia-article-sample.txt)
+更多数据[示例](wikipedia-article-sample.txt)
 
 ### 附录2：
 
