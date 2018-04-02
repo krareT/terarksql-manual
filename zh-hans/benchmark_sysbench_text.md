@@ -59,7 +59,7 @@ sysbench 原版只能导入**自动生成**的数据，这样的数据无法体�
 ```
 sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
          --mysql-user=root --mysql-db=sysbench --mysql-host=127.0.0.1 \
-         --threads=32 --tables=1 --mysql_storage_engine=innodb \
+         --tables=1 --mysql_storage_engine=innodb \
          --table-size=450000000 --rand-type=uniform --create_secondary=on \
          --use-file=on --filename=/path/to/wikipedia-article.txt \
          /path/to/share/sysbench/oltp_insert.lua prepare
