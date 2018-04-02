@@ -60,7 +60,7 @@ sysbench 原版只能导入**自动生成**的数据，这样的数据无法体�
 sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
          --mysql-user=root --mysql-db=sysbench --mysql-host=127.0.0.1 \
          --tables=1 --mysql_storage_engine=innodb \
-         --table-size=450000000 --rand-type=uniform --create_secondary=on \
+         --table-size=38508221 --rand-type=uniform --create_secondary=on \
          --use-file=on --filename=/path/to/wikipedia-article.txt \
          /path/to/share/sysbench/oltp_insert.lua prepare
 ```
@@ -279,25 +279,25 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 TerarkDB 表结构：
 
 ```
- CREATE TABLE `sbtest1` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `k` int(11) NOT NULL DEFAULT '0',
-  `c` varchar(512) COLLATE latin1_bin NOT NULL DEFAULT '',
-  `pad` mediumtext COLLATE latin1_bin NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `k_1` (`k`)
+ CREATE TABLE sbtest1 (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  k int(11) NOT NULL DEFAULT '0',
+  c varchar(512) COLLATE latin1_bin NOT NULL DEFAULT '',
+  pad mediumtext COLLATE latin1_bin NOT NULL,
+  PRIMARY KEY (id),
+  KEY k_1 (k)
 ) ENGINE=ROCKSDB;
 ```
 
 InnoDB 表结构：
 
 ```
-CREATE TABLE `sbtest1` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `k` int(11) NOT NULL DEFAULT '0',
-  `c` varchar(512) NOT NULL DEFAULT '',
-  `pad` mediumtext,
-  PRIMARY KEY (`id`),
-  KEY `k_1` (`k`)
+CREATE TABLE sbtest1 (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  k int(11) NOT NULL DEFAULT '0',
+  c varchar(512) NOT NULL DEFAULT '',
+  pad mediumtext,
+  PRIMARY KEY (id),
+  KEY k_1 (k)
 ) ENGINE=InnoDB ROW_FORMAT=COMPRESSED;
 ```
