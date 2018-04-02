@@ -75,7 +75,7 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 * 次级索引等值查询（secondary_random_points100）
 * 次级索引范围查询（secondary_random_limit100）
 
-这四种测试分别在 192G、32G、24G、8G 的内存限制下运行，不同的内存限制使用内存挤占工具实现，内存挤占工具挤占一定数量的内存（不可换出）确保数据库所能使用的内存为以上指定值。
+这四种测试分别在 192G、32G、24G、8G 的内存限制下运行。不同的内存限制使用内存挤占工具实现，内存挤占工具挤占一定数量的内存（不可换出）确保数据库所能使用的内存为以上指定值。
 
 每次测试中 InnoDB 的 **innodb_buffer_pool_size** 总是设置为可用内存的 **70%**，TerarkDB 的 **softZipWorkingMemLimit** 和 **hardZipWorkingMemLimit** 分别设置为可用内存的 **1/8** 和 **1/4**.
 
