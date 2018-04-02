@@ -32,7 +32,7 @@ sysbench 原版只能导入**自动生成**的数据，这样的数据无法体�
 <tr>
   <th colspan="2" align="right">数据库尺寸</th>
   <th>压缩率</th>
-  <th rowspan="4"></th>
+  <th rowspan="3"></th>
   <th>数据条数</th>
   <th>单条尺寸</th>
   <th>总尺寸</th>
@@ -84,7 +84,7 @@ sysbench --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 下表中仅记录各测试结果的 **RPS**（**R**ows Per Second）。
 <table>
     <tr>
-             <th>内存</th><th>测试类型</th><th>TerarkDB</th><th colspan="3">InnoDB</th>
+             <th>内存</th><th>测试类型</th><th>TerarkDB</th><th>InnoDB</th>
     </tr>
     <tr align="right">
              <td rowspan="4">192G</td> <td align="left">point_select</td> <td>151,250</td> <td>269,841</td>
@@ -173,11 +173,13 @@ TerarkDB 的**读写混合**性能高于 InnoDB，是因为 TerarkDB 通过 Rock
 主键等值查询，测试程序每次随机生成一个 ID 值，然后查询主键与之相等的记录。测试的每个 transaction 里包含 100 个主键等值查询 query，故每个 transaction 会访问 100 行数据。
 
 - 示例 SQL：
+
 ```
 select c from sbtest1 where id = ID;
 ```
 
-- sysbench 命令
+- sysbench 命令：
+
 ```
 sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
          --mysql-user=root --mysql-db=sysbench --mysql-host=127.0.0.1 \
@@ -194,13 +196,15 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 读写混合测试，除上述主键等值查询外，还会随机生成一个 ID，然后更新主键与该 ID 相等的记录的 c 值为一个随机的 119 字节长的随机字符串。测试的每个 transaction 包含 90 个主键等值查询 query，和 10 个非主键更新 query，故每个 transaction 会访问 100 行数据，并更新 10 行数据。
 
 - 示例 SQL：
+
 ```
 select c from sbtest1 where id = ID;
 
 update sbtest1 set c = C where id = ID;
 ```
 
-- sysbench 命令
+- sysbench 命令：
+
 ```
 sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
          --mysql-user=root --mysql-db=sysbench --mysql-host=127.0.0.1 \
@@ -219,11 +223,13 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 测试的每个 transaction 包含一个 Query，每个 Query 对次级索引进行 100 次随机搜索，每次都需要进行回表操作（先从次级键拿到主键，再用主键取数据），从而每个 transaction 需要对存储引擎进行 200 次随机访问。
 
 - 示例 SQL：
+
 ```
 select id, k, c, pad from sbtest1 where k in (k1, k2, k3, ..., k100);
 ```
 
-- sysbench 命令
+- sysbench 命令：
+
 ```
 sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
          --mysql-user=root --mysql-db=sysbench --mysql-host=127.0.0.1 \
@@ -239,11 +245,13 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 测试的每个 transaction 包含 100 个次级索引范围查询 query，每个 query 会访问 100 行数据，从而每个 transaction 会访问 10,000 行数据。
 
 - 示例 SQL：
+
 ```
 select c from sbtest1 where k >= K limit 100;
 ```
 
-- sysbench 命令
+- sysbench 命令：
+
 ```
 sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
          --mysql-user=root --mysql-db=sysbench --mysql-host=127.0.0.1 \
@@ -258,6 +266,7 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 ### 附录1：
 
 数据源示例：
+
 ```
 'AccessibleComputing'	'#REDIRECT [[Computer accessibility]]\n\n{{Redr|move|from CamelCase|up}}'
 'Liberty_Hall_(Lamoni,_Iowa)'	'{{WikiProject National Register of Historic Places|class=Stub|importance=Low}}\n{{WikiProject Iowa|class=Stub|importance=Low}}\n{{reqphoto|in=Decatur County, Iowa}}'
@@ -268,6 +277,7 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 ### 附录2：
 
 TerarkDB 表结构：
+
 ```
  CREATE TABLE `sbtest1` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -280,6 +290,7 @@ TerarkDB 表结构：
 ```
 
 InnoDB 表结构：
+
 ```
 CREATE TABLE `sbtest1` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
