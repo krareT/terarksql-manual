@@ -11,7 +11,7 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具，主�
 
 ## 测试平台
 
-- CPU: Intel(R) Xeon(R) CPU E5-2630 v3 @ 2.40GHz x2 （共16核32线程）
+- CPU: Intel(R) Xeon(R) CPU E5-2630 v3 @ 2.40GHz x2 （共 16 核 32 线程）
 - 内存: DDR4 16G @ 1866 MHz x 12 （共 192 G）
 - SSD: INTEL SSDSC2BP48 0420 IOPS 89000
 - 操作系统: CentOS 7
