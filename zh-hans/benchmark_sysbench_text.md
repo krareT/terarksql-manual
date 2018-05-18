@@ -10,11 +10,25 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具，主�
 测试的数据库有：[MySQL on TerarkDB](http://terark.com/docs/mysql-on-terarkdb-manual/zh-hans/installation.html) （下简称 TerarkDB），官方原版 MySQL（下简称 InnoDB）。MySQL 开启压缩。
 
 ## 测试平台
-
-- CPU: Intel(R) Xeon(R) CPU E5-2630 v3 @ 2.40GHz x2 （共 16 核 32 线程）
-- 内存: DDR4 16G @ 1866 MHz x 12 （共 192 G）
-- SSD: INTEL SSDSC2BP48 0420 IOPS 89000
-- 操作系统: CentOS 7
+<table>
+  <tr>
+    <th>CPU</th>
+    <td>Intel(R) Xeon(R) CPU E5-2630 v3 @ 2.40GHz x2 （共 16 核 32 线程）</td>
+  </tr>
+  <tr>
+    <th>内存</th>
+    <td>DDR4 16G @ 1866 MHz x 12 （共 <strong>192 G</strong>）</td>
+  </tr>
+  <tr>
+    <th>SSD</th>
+    <td>INTEL SSDSC2BP48 0420 <strong>IOPS 89000</strong></td>
+  </tr>
+  <tr>
+    <th>操作系统</th>
+    <td>CentOS 7</td>
+  </tr>
+</table>
+  
 
 测试中使用的官方原版 MySQL 版本为 Ver 5.6.35 for linux-glibc2.5 on x86_64。
 
