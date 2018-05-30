@@ -82,7 +82,7 @@ tpcc-mysql 原版只能导入自动生成的数据，这样的数据无法体现
 
 所有的测试均使用 **32** 个线程，每次测试前先 warm up **300 秒**，每次测试持续 **30 分钟**。
 
-TpmC 描述了系统在执行 Payment、Order-Status、Delivery、Stock-Level 这四种业务的同时，每分钟可以处理多少个 New-Order 业务。其他均为总业务次数。
+TpmC 描述了系统在执行 Payment、Order-Status、Delivery、Stock-Level 这四种业务的同时，每分钟可以处理多少个 New-Order 业务，单位为 **TPM**（**T**ransactions Per Minute）。其他均为总业务次数，单位为 **T**（**T**ransactions）。
 
 <table>
     <tr>
@@ -174,27 +174,7 @@ TpmC 描述了系统在执行 Payment、Order-Status、Delivery、Stock-Level �
 <hr/>
 
 
-![192GTPCC](../images/TPC-C/192G1000WTPCC1.svg)
-
-在 192G 内存下，TerarkDB 最多占用了 61G 内存，InnoDB 最多占用了 128G 内存和 59G 系统缓存。TerarkDB 各项测试数据均高于 InnoDB。
-
-<hr/>
-
-![32GTPCC](../images/TPC-C/32G1000WTPCC.png)
-
-32G 内存，TerarkDB 和 InnoDB 各项测试数据均有所下降，但 InnoDB 下降比例更多。
-
-<hr/>
-
-![24GTPCC](../images/TPC-C/24G1000WTPCC.svg)
-
-24G 内存，TerarkDB 和 InnoDB 各项测试数据继续下降。
-
-<hr/>
-
-![8GTPCC](../images/TPC-C/8G1000WTPCC.png)
-
-8G 内存对 TerarkDB 和 InnoDB 都很不够，但 TerarkDB 各项测试数据仍然高于 InnoDB。
+![TPCC](../images/benchmark_tpcc/tpcc.svg)
 
 <hr/>
 
