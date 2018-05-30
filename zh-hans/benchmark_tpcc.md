@@ -82,10 +82,9 @@ tpcc-mysql 原版只能导入自动生成的数据，这样的数据无法体现
 
 所有的测试均使用 **32** 个线程，每次测试前先 warm up **300 秒**，每次测试持续 **30 分钟**。
 
-TpmC 描述了系统在执行 Payment、Order-Status、Delivery、Stock-Level 这四种业务的同时，每分钟可以处理多少个 New-Order 业务，单位为 **TPM**（**T**ransactions Per Minute）。其他均为总业务次数，单位为 **T**（**T**ransactions）。
+测试记录了 New-Order、Payment、Delivery、Order-Status、Stock-Level 五种业务的总业务次数，单位为 **T**（**T**ransactions）。
 
 下表同时列出了更通用的 **TPS**(**T**ransactions **P**er **S**econd) 指标（直接从上述 TPC-C 指标换算过来）。
-
 <table>
     <tr>
         <th rowspan="2">内存</th><th rowspan="2">业务类型</th><th colspan="2">30 分钟总计</th><th colspan="2"> TPS </th>
@@ -94,84 +93,72 @@ TpmC 描述了系统在执行 Payment、Order-Status、Delivery、Stock-Level �
         <th>TerarkDB</th><th>InnoDB</th><th>TerarkDB</th><th>InnoDB</th>
     </tr>
     <tr align="right">
-        <td rowspan="6">192G</td> <td align="left">New-Order</td> <td>1,882,344</td> <td>625,808</td>
+        <td rowspan="6">192G</td> <td align="left">New-Order</td> <td>1,882,344</td> <td>625,808</td> <td>1,046</td> <td>348</td>
     </tr>
     <tr align="right">
-        <td align="left">Payment</td> <td>1,882,347</td> <td>625,506</td>
+        <td align="left">Payment</td> <td>1,882,347</td> <td>625,506</td> <td>1,046</td> <td>348</td>
     </tr>
     <tr align="right">
-        <td align="left">Order-Status</td> <td>188,234</td> <td>62,583</td>
+        <td align="left">Order-Status</td> <td>188,234</td> <td>62,583</td> <td>105</td> <td>35</td>
     </tr>
     <tr align="right">
-        <td align="left">Delivery</td> <td>188,233</td> <td>62,574</td>
+        <td align="left">Delivery</td> <td>188,233</td> <td>62,574</td> <td>105</td> <td>35</td>
     </tr>
     <tr align="right">
-        <td align="left">Stock-Level</td> <td>188,233</td> <td>62,587</td>
+        <td align="left">Stock-Level</td> <td>188,233</td> <td>62,587</td> <td>105</td> <td>35</td>
     </tr>
     <tr align="right">
-        <td align="left">TpmC</td> <td>62,741</td> <td>20,860</td>
     </tr>
     <tr align="right">
-        <td rowspan="6">32G</td> <td align="left">New-Order</td> <td>1,568,769</td> <td>472,355</td>
+        <td rowspan="6">32G</td> <td align="left">New-Order</td> <td>1,568,769</td> <td>472,355</td> <td>872</td> <td>262</td>
     </tr>
     <tr align="right">
-        <td align="left">Payment</td> <td>1,568,773</td> <td>472,398</td>
+        <td align="left">Payment</td> <td>1,568,773</td> <td>472,398</td> <td>872</td> <td>262</td>
     </tr>
     <tr align="right">
-        <td align="left">Order-Status</td> <td>156,878</td> <td>47,234</td>
+        <td align="left">Order-Status</td> <td>156,878</td> <td>47,234</td> <td>87</td> <td>26</td>
     </tr>
     <tr align="right">
-        <td align="left">Delivery</td> <td>156,878</td> <td>47,238</td>
+        <td align="left">Delivery</td> <td>156,878</td> <td>47,238</td> <td>87</td> <td>26</td>
     </tr>
     <tr align="right">
-        <td align="left">Stock-Level</td> <td>156,877</td> <td>47,240</td>
+        <td align="left">Stock-Level</td> <td>156,877</td> <td>47,240</td> <td>87</td> <td>26</td>
     </tr>
     <tr align="right">
-        <td align="left">TpmC</td> <td>52,289</td> <td>15,746</td>
     </tr>
     <tr align="right">
-        <td rowspan="6">24G</td> <td align="left">New-Order</td> <td>1,400,550</td> <td>437,695</td>
+        <td rowspan="6">24G</td> <td align="left">New-Order</td> <td>1,400,550</td> <td>437,695</td> <td>778</td> <td>243</td>
     </tr>
     <tr align="right">
-        <td align="left">Payment</td> <td>1,400,549</td> <td>437,740</td>
+        <td align="left">Payment</td> <td>1,400,549</td> <td>437,740</td> <td>778</td> <td>243</td>
     </tr>
     <tr align="right">
-        <td align="left">Order-Status</td> <td>140,055</td> <td>43,775</td>
+        <td align="left">Order-Status</td> <td>140,055</td> <td>43,775</td> <td>78</td> <td>24</td>
     </tr>
     <tr align="right">
-        <td align="left">Delivery</td> <td>140,056</td> <td>43,774</td>
+        <td align="left">Delivery</td> <td>140,056</td> <td>43,774</td> <td>78</td> <td>24</td>
     </tr>
     <tr align="right">
-        <td align="left">Stock-Level</td> <td>140,054</td> <td>43,775</td>
+        <td align="left">Stock-Level</td> <td>140,054</td> <td>43,775</td> <td>78</td> <td>24</td>
     </tr>
     <tr align="right">
-        <td align="left">TpmC</td> <td>46,683</td> <td>14,591</td>
     </tr>
     <tr align="right">
-        <td rowspan="6">8G</td> <td align="left">New-Order</td> <td>499,297</td> <td>306,670</td>
+        <td rowspan="6">8G</td> <td align="left">New-Order</td> <td>499,297</td> <td>306,670</td> <td>277</td> <td>170</td>
     </tr>
     <tr align="right">
-        <td align="left">Payment</td> <td>499,307</td> <td>306,671</td>
+        <td align="left">Payment</td> <td>499,307</td> <td>306,671</td> <td>277</td> <td>170</td>
     </tr>
     <tr align="right">
-        <td align="left">Order-Status</td> <td>49,930
-</td> <td>30,668
-</td>
+        <td align="left">Order-Status</td> <td>49,930</td> <td>30,668</td> <td>28</td> <td>17</td>
     </tr>
     <tr align="right">
-        <td align="left">Delivery</td> <td>49,929
-</td> <td>30,665
-</td>
+        <td align="left">Delivery</td> <td>49,929</td> <td>30,665</td> <td>28</td> <td>17</td>
     </tr>
     <tr align="right">
-        <td align="left">Stock-Level</td> <td>49,936
-</td> <td>30,669
-</td>
+        <td align="left">Stock-Level</td> <td>49,936</td> <td>30,669</td> <td>28</td> <td>17</td>
     </tr>
     <tr align="right">
-        <td align="left">TpmC</td> <td>16,643
-</td> <td>10,222
-</td>
     </tr>
 </table>
 
