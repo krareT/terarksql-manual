@@ -166,7 +166,7 @@ tpcc-mysql 原版只能导入自动生成的数据，这样的数据无法体现
 <hr/>
 
 
-![TPCC](../images/benchmark_tpcc/tpcc.svg)
+![TPCC](../images/benchmark_tpcc/New-Order-TPS.svg)
 
 <hr/>
 
