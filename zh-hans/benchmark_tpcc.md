@@ -84,9 +84,14 @@ tpcc-mysql 原版只能导入自动生成的数据，这样的数据无法体现
 
 TpmC 描述了系统在执行 Payment、Order-Status、Delivery、Stock-Level 这四种业务的同时，每分钟可以处理多少个 New-Order 业务，单位为 **TPM**（**T**ransactions Per Minute）。其他均为总业务次数，单位为 **T**（**T**ransactions）。
 
+下表同时列出了更通用的 **TPS**(**T**ransactions **P**er **S**econd) 指标（直接从上述 TPC-C 指标换算过来）。
+
 <table>
     <tr>
-        <th>内存</th><th>业务类型</th><th>TerarkDB</th><th>InnoDB</th>
+        <th rowspan="2">内存</th><th rowspan="2">业务类型</th><th colspan="2">30 分钟总计</th><th colspan="2"> TPS </th>
+    </tr>
+    <tr>
+        <th>TerarkDB</th><th>InnoDB</th><th>TerarkDB</th><th>InnoDB</th>
     </tr>
     <tr align="right">
         <td rowspan="6">192G</td> <td align="left">New-Order</td> <td>1,882,344</td> <td>625,808</td>
@@ -170,7 +175,7 @@ TpmC 描述了系统在执行 Payment、Order-Status、Delivery、Stock-Level �
     </tr>
 </table>
 
-将上表中的数据做成更直观的图表，如下：
+将该表格中的 New-Order 的 **TPS** 指标做成更直观的图表，如下：
 <hr/>
 
 
