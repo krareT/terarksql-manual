@@ -175,7 +175,7 @@ TpmC 描述了系统在执行 Payment、Order-Status、Delivery、Stock-Level �
     </tr>
 </table>
 
-将该表格中的 New-Order 的 **TPS** 指标做成更直观的图表，如下：
+将该表格中的 New-Order **TPS** 指标做成更直观的图表，如下：
 <hr/>
 
 
