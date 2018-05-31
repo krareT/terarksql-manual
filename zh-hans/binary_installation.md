@@ -4,7 +4,7 @@
 wget http://terark-downloads.oss-cn-qingdao.aliyuncs.com/mysql_rocksdb/r5.6.35/mysql-on-terarkdb-Linux-x86_64-g%2B%2B-4.8-bmi2-0.tar.xz
 ```
 
-### 2. 添加　mysql 用户
+### 2. 添加 mysql 用户
 
 ```
 sudo groupadd mysql
