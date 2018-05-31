@@ -172,4 +172,4 @@ tpcc-mysql 原版只能导入自动生成的数据，这样的数据无法体现
 
 ### 附录1：
 
-[tpcc-mysql 表结构](https://github.com/Ashlzw/mysql-on-terarkdb-manual/blob/master/zh-hans/tpcc-mysql-table-struct.md)
+[tpcc-mysql 表结构](./tpcc_mysql_table_struct.md)
