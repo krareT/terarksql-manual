@@ -1,4 +1,4 @@
-## MySQL on TerarkDB 使用手册
+## TerarkSQL(原 MySQL on TerarkDB) 使用手册
 
 ### 1.产品简介
 
