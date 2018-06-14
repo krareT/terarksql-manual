@@ -25,3 +25,4 @@ sudo ./init.sh init
 ```
 sudo ./start.sh
 ```
+注：数据库一定要通过 **start.sh** 来启动！
