@@ -47,11 +47,3 @@
 | terarksql(patricia-vector) | 4m55.377s | 4m56.572s | 4m40.203s | 4m27.000s |
 | terarksql(patricia-batch)  | 4m21.541s | 4m27.223s |           |           |
 | terarksql(patricia-final)  | 3m53.294s | 4m19.709s | 3m43.295s |           |
-
-| suite | total | success | fail |
-| ----- |:-----:|:-----:|:-----:|
-| rocksdb | 212   | 198 | 14 |
-| rocksdb_stress | 2 | 2 | 0 |
-| rocksdb_sys_vars | 110 | 108 | 2 |
-| rocksdb_hotbackup | 6 | 4 | 2|
-| rocksdb_rpl | 12 | 11 | 1 |
