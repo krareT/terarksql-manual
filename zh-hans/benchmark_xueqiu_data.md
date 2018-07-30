@@ -81,12 +81,11 @@ time mysqlimport --columns=id,num1,num2,num3,num4 --fields-terminated-by=, \
     -h127.0.0.1 -uroot -P660x xueqiu --replace \
     --local /disk2/data/xueqiu_lmitated_data_sort.txt
 ```
-
-| 项目 | 第一次 |
-|:----|:------|
-| mysql                     |
-| terarksql(skiplist)       |
-| terarksql(patricia-final) |
+| 项目 | 第一次 | 第二次 |
+|:----|:------|:------|
+| mysql                     | 6m40.679s |
+| terarksql(skiplist)       | 12m55.138s | 12m54.280s |
+| terarksql(patricia-final) |  9m13.138s |  8m51.860s |
 
 #### 3.1.2 打开 unique_checks
 
@@ -99,8 +98,8 @@ time mysqlimport --columns=id,num1,num2,num3,num4 --fields-terminated-by=, \
 
 测试前使用 ```set global unique_checks=OFF``` 关闭 unique_checks
 
-| 项目 | 第一次 | 第二次 |
-|:----|:------|:------|
-| mysql                     | 6m40.679s |
-| terarksql(skiplist)       | 12m55.138s | 12m54.280s |
-| terarksql(patricia-final) |  9m13.138s |  8m51.860s |
+| 项目 | 第一次 |
+|:----|:------|
+| mysql                     |
+| terarksql(skiplist)       |
+| terarksql(patricia-final) |
