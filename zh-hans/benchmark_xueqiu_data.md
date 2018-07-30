@@ -39,11 +39,59 @@
 
 #### 3.1.1 关闭 unique_checks
 
+测试命令:
+```
+time mysql -uroot -h127.0.0.1 -P660x -e "use xueqiu; set unique_checks=OFF; show variables like 'unique_checks'; LOAD DATA INFILE '/disk2/data/xueqiu_lmitated_data_sort.txt' INTO TABLE xueqiu_lmitated_data FIELDS TERMINATED BY ',';"
+```
+
 | 项目 | 第一次 | 第二次 | 第三次 | 第四次 |
 |:---|:-----|:-----|:-----|:-----|
 | mysql                      | 6m6.942s  |           |           |           |
-| terarksql(rbtree)          | 4m35.630s | 4m44.055s |           |           |
+| terarksql(skiplist)        | 4m35.630s | 4m44.055s |           |           |
 | terarksql(patricia-rbtree) | 4m52.856s | 4m50.501s |           |           |
 | terarksql(patricia-vector) | 4m55.377s | 4m56.572s | 4m40.203s | 4m27.000s |
 | terarksql(patricia-batch)  | 4m21.541s | 4m27.223s |           |           |
 | terarksql(patricia-final)  | 3m53.294s | 4m19.709s | 3m43.295s |           |
+
+#### 3.1.2 打开 unique_checks
+
+测试命令:
+```
+time mysql -uroot -h127.0.0.1 -P660x -e "use xueqiu; show variables like 'unique_checks'; LOAD DATA INFILE '/disk2/data/xueqiu_lmitated_data_sort.txt' INTO TABLE xueqiu_lmitated_data FIELDS TERMINATED BY ',';"
+```
+
+| 项目 | 第一次 |
+|:----|:------|
+| mysql                     |
+| terarksql(skiplist)       |
+| terarksql(patricia-final) |
+
+### 3.2 mysqlimport
+
+#### 3.1.1 关闭 unique_checks
+
+测试命令:
+```
+time mysqlimport --columns=id,num1,num2,num3,num4 --fields-terminated-by=, -h127.0.0.1 -uroot -P660x xueqiu --replace --local /disk2/data/xueqiu_lmitated_data_sort.txt
+```
+
+| 项目 | 第一次 |
+|:----|:------|
+| mysql                     |
+| terarksql(skiplist)       |
+| terarksql(patricia-final) |
+
+#### 3.1.2 打开 unique_checks
+
+测试命令:
+```
+time mysqlimport --columns=id,num1,num2,num3,num4 --fields-terminated-by=, -h127.0.0.1 -uroot -P660x xueqiu --replace --local /disk2/data/xueqiu_lmitated_data_sort.txt
+```
+
+测试前使用 ```set global unique_checks=OFF``` 关闭 unique_checks
+
+| 项目 | 第一次 | 第二次 |
+|:----|:------|:------|
+| mysql                     | 6m40.679s |
+| terarksql(skiplist)       | 12m55.138s | 12m54.280s |
+| terarksql(patricia-final) | 
