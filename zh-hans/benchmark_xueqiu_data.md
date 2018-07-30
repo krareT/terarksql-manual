@@ -103,4 +103,4 @@ time mysqlimport --columns=id,num1,num2,num3,num4 --fields-terminated-by=, \
 |:----|:------|:------|
 | mysql                     | 6m40.679s |
 | terarksql(skiplist)       | 12m55.138s | 12m54.280s |
-| terarksql(patricia-final) | 
+| terarksql(patricia-final) | 9m13.138s  |
