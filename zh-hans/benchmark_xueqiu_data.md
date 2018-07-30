@@ -92,7 +92,7 @@ time mysqlimport --columns=id,num1,num2,num3,num4 --fields-terminated-by=, \
 测试命令:
 ```
 time mysqlimport --columns=id,num1,num2,num3,num4 --fields-terminated-by=, \
-    -h127.0.0.1 -uroot -P660x xueqiu --replace \
+    -h127.0.0.1 -uroot -P660x xueqiu \
     --local /disk2/data/xueqiu_lmitated_data_sort.txt
 ```
 
