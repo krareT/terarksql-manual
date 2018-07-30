@@ -41,7 +41,10 @@
 
 测试命令:
 ```
-time mysql -uroot -h127.0.0.1 -P660x -e "use xueqiu; set unique_checks=OFF; show variables like 'unique_checks'; LOAD DATA INFILE '/disk2/data/xueqiu_lmitated_data_sort.txt' INTO TABLE xueqiu_lmitated_data FIELDS TERMINATED BY ',';"
+time mysql -uroot -h127.0.0.1 -P660x -e "use xueqiu; set unique_checks=OFF; \
+    show variables like 'unique_checks'; \
+    LOAD DATA INFILE '/disk2/data/xueqiu_lmitated_data_sort.txt' \
+    INTO TABLE xueqiu_lmitated_data FIELDS TERMINATED BY ',';"
 ```
 
 | 项目 | 第一次 | 第二次 | 第三次 | 第四次 |
@@ -57,7 +60,9 @@ time mysql -uroot -h127.0.0.1 -P660x -e "use xueqiu; set unique_checks=OFF; show
 
 测试命令:
 ```
-time mysql -uroot -h127.0.0.1 -P660x -e "use xueqiu; show variables like 'unique_checks'; LOAD DATA INFILE '/disk2/data/xueqiu_lmitated_data_sort.txt' INTO TABLE xueqiu_lmitated_data FIELDS TERMINATED BY ',';"
+time mysql -uroot -h127.0.0.1 -P660x -e "use xueqiu; show variables like 'unique_checks'; \
+    LOAD DATA INFILE '/disk2/data/xueqiu_lmitated_data_sort.txt' \
+    INTO TABLE xueqiu_lmitated_data FIELDS TERMINATED BY ',';"
 ```
 
 | 项目 | 第一次 |
@@ -72,7 +77,9 @@ time mysql -uroot -h127.0.0.1 -P660x -e "use xueqiu; show variables like 'unique
 
 测试命令:
 ```
-time mysqlimport --columns=id,num1,num2,num3,num4 --fields-terminated-by=, -h127.0.0.1 -uroot -P660x xueqiu --replace --local /disk2/data/xueqiu_lmitated_data_sort.txt
+time mysqlimport --columns=id,num1,num2,num3,num4 --fields-terminated-by=, \
+    -h127.0.0.1 -uroot -P660x xueqiu --replace \
+    --local /disk2/data/xueqiu_lmitated_data_sort.txt
 ```
 
 | 项目 | 第一次 |
@@ -85,7 +92,9 @@ time mysqlimport --columns=id,num1,num2,num3,num4 --fields-terminated-by=, -h127
 
 测试命令:
 ```
-time mysqlimport --columns=id,num1,num2,num3,num4 --fields-terminated-by=, -h127.0.0.1 -uroot -P660x xueqiu --replace --local /disk2/data/xueqiu_lmitated_data_sort.txt
+time mysqlimport --columns=id,num1,num2,num3,num4 --fields-terminated-by=, \
+    -h127.0.0.1 -uroot -P660x xueqiu --replace \
+    --local /disk2/data/xueqiu_lmitated_data_sort.txt
 ```
 
 测试前使用 ```set global unique_checks=OFF``` 关闭 unique_checks
