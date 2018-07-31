@@ -99,7 +99,7 @@ time mysqlimport --columns=id,num1,num2,num3,num4 --fields-terminated-by=, \
 测试前使用 ```set global unique_checks=OFF``` 关闭 unique_checks
 
 | 项目 | 第一次 | 第二次 |
-|:----|:------|
+|:----|:------|:------|
 | mysql                     | 6m13.570s | 6m26.699s |
 | terarksql(skiplist)       |           |           |
 | terarksql(patricia-final) | 3m57.990s | 3m42.092s |
