@@ -78,20 +78,6 @@ time mysql -uroot -h127.0.0.1 -P660x -e "use xueqiu; show variables like 'unique
 测试命令:
 ```
 time mysqlimport --columns=id,num1,num2,num3,num4 --fields-terminated-by=, \
-    -h127.0.0.1 -uroot -P660x xueqiu --replace \
-    --local /disk2/data/xueqiu_lmitated_data_sort.txt
-```
-| 项目 | 第一次 | 第二次 |
-|:----|:------|:------|
-| mysql                     | 6m40.679s |
-| terarksql(skiplist)       | 12m55.138s | 12m54.280s |
-| terarksql(patricia-final) |  9m13.138s |  8m51.860s |
-
-#### 3.1.2 打开 unique_checks
-
-测试命令:
-```
-time mysqlimport --columns=id,num1,num2,num3,num4 --fields-terminated-by=, \
     -h127.0.0.1 -uroot -P660x xueqiu \
     --local /disk2/data/xueqiu_lmitated_data_sort.txt
 ```
@@ -103,3 +89,17 @@ time mysqlimport --columns=id,num1,num2,num3,num4 --fields-terminated-by=, \
 | mysql                     | 6m13.570s | 6m26.699s |
 | terarksql(skiplist)       |           |           |
 | terarksql(patricia-final) | 3m57.990s | 3m42.092s |
+
+#### 3.1.2 打开 unique_checks
+
+测试命令:
+```
+time mysqlimport --columns=id,num1,num2,num3,num4 --fields-terminated-by=, \
+    -h127.0.0.1 -uroot -P660x xueqiu --replace \
+    --local /disk2/data/xueqiu_lmitated_data_sort.txt
+```
+| 项目 | 第一次 | 第二次 |
+|:----|:------|:------|
+| mysql                     | 6m40.679s |
+| terarksql(skiplist)       | 12m55.138s | 12m54.280s |
+| terarksql(patricia-final) |  9m13.138s |  8m51.860s |
