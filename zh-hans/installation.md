@@ -4,7 +4,7 @@
 
 
 ### 2.下载安装包
-- 进入 [Terark.com](terark.com)，选择 MySQL on TerarkDB
+- 进入 [Terark.com](http://terark.com)，选择 MySQL on TerarkDB
 - 点击"下载"，进入下载页面
 - 填写表单即可获取最新的下载链接，如果在下载页面没有看到适合您平台的安装包（可通过文件名识别），请联系我们进一步支持
   - 目前我们仅提供 Linux 环境下，64 位操作系统的安装版本
