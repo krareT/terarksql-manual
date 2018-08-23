@@ -1,24 +1,18 @@
-## 安装部署
-
-### 1.环境要求
-Linux 操作系统
-
-### 2.下载安装包
+### 1.下载安装包
 [填写表单](http://terark.com/zh/download/mysql_rocksdb/latest)即可获得最新的下载链接
 
-### 3.安装
 下载后解压到任意目录即可直接使用
 
-### 4.启动
+### 2.启动
 
-#### 4.1. 添加 mysql 用户
+#### 2.1. 添加 mysql 用户
 
 ```
 sudo groupadd mysql
 sudo useradd -g mysql mysql
 ```
 
-#### 4.2. 初始化
+#### 2.2. 初始化
 
 ```
 tar Jxvf terarksql-Linux-x86_64-g++-4.8-bmi2-0.tar.xz
@@ -27,7 +21,7 @@ sudo ./init.sh prepare /path/to/datadir
 sudo ./init.sh init
 ```
 
-#### 4.3. 启动
+#### 2.3. 启动
 
 ```
 sudo ./start.sh
@@ -35,7 +29,7 @@ sudo ./start.sh
 注：数据库一定要通过 **start.sh** 来启动！
 
 
-#### 4.4. 参数说明
+#### 2.4. 参数说明
 
 - **TerarkDB** 相关的参数是通过环境变量设置的，我们通常在 start.sh 里设置，完整的参数说明在[这里](http://terark.com/docs/terarksql-manual/zh-hans/full_config_options.html)
 - **MyRocks** 相关的参数通过 my.cnf 配置文件设置，具体的说明在[这里](https://github.com/facebook/mysql-5.6/wiki/New-MySQL-RocksDB-Server-Variables)
