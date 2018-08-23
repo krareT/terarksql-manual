@@ -10,7 +10,7 @@ MyRocks 针对自身特点提供了一系列的测试,这些测试共有五类�
 - rocksdb_stress
 - rocksdb_sys_vars
 
-针对这几类测试，以下是 MySQL on TerarkDB 的运行结果如下，其中部分失败的原因，在详细说明中做了阐述：
+针对这几类测试，以下是 TerarkSQL 的运行结果如下，其中部分失败的原因，在详细说明中做了阐述：
 
 | suite | total | success | fail |
 | ----- |:-----:|:-----:|:-----:|
@@ -27,7 +27,7 @@ MyRocks 针对自身特点提供了一系列的测试,这些测试共有五类�
 ### 1. rocksdb
 #### 1.1 rocksdb.show_engine
 
-相关语句：`SELECT * FROM INFORMATION_SCHEMA.ROCKSDB_CF_OPTIONS;` MySQL on TerarkDB 在 INFORMATION_SCHEMA 数据库的表 ROCKSDB_CF_OPTIONS 中添加了 TABLE_FACTORY_NAME 相关的记录，用于显示所使用的 `table factory`，故与 MyRocks 预期结果不一致。
+相关语句：`SELECT * FROM INFORMATION_SCHEMA.ROCKSDB_CF_OPTIONS;` TerarkSQL 在 INFORMATION_SCHEMA 数据库的表 ROCKSDB_CF_OPTIONS 中添加了 TABLE_FACTORY_NAME 相关的记录，用于显示所使用的 `table factory`，故与 MyRocks 预期结果不一致。
 
 添加内容如下：
 ```
@@ -61,7 +61,7 @@ case when variable_value - @a > 100 then 'true' else 'false' end`
 false
 ```
 
-MySQL on TerarkDB 不使用 block cache，故相关统计数据与预期不符，不影响功能。
+TerarkSQL 不使用 block cache，故相关统计数据与预期不符，不影响功能。
 
 #### 1.3 rocksdb.cardinality
 
@@ -157,7 +157,7 @@ checking sst file reduction on optimize table from 0 to 1..
 sst file reduction was not enough. 7140->7140 (minimum 1000kb)
 ```
 
-测试中先创建 6 张表，然后依次插入 `10,000` 条数据，再依次删除 `9,900` 条，最后依次 compact 每张表，比较对每张表进行 compact 前后的空间压缩是否大于 1,000 kb。MySQL on TerarkDb 使用 universal compaction，MyRocks 未对其优化，故 MySQL on TerarkDB 不使用 `optimize table tablename;` 触发主动 compact，且 MySQL on TerarkDB 不能单独对一张表进行 compact。故与测试预期行为不一致，但是这不会对功能有任何影响。
+测试中先创建 6 张表，然后依次插入 `10,000` 条数据，再依次删除 `9,900` 条，最后依次 compact 每张表，比较对每张表进行 compact 前后的空间压缩是否大于 1,000 kb。MySQL on TerarkDb 使用 universal compaction，MyRocks 未对其优化，故 TerarkSQL 不使用 `optimize table tablename;` 触发主动 compact，且 TerarkSQL 不能单独对一张表进行 compact。故与测试预期行为不一致，但是这不会对功能有任何影响。
 
 #### 1.5 rocksdb.rocksdb_cf_per_partition
 
@@ -190,7 +190,7 @@ INDEX_LENGTH
 1504
 ```
 
-MySQL on TerarkDB 使用的索引算法与 MyRocks 不同，故 index_length 不同。
+TerarkSQL 使用的索引算法与 MyRocks 不同，故 index_length 不同。
 
 #### 1.7 rocksdb.drop_table2
 
@@ -198,7 +198,7 @@ MySQL on TerarkDB 使用的索引算法与 MyRocks 不同，故 index_length 不
 1. 把**只包含该 table(极其 index)** 的 sst 直接删除
 2. 执行 CompactRange，彻底删除该 table 所有相关的数据。
 
-对于 Level Compaction，这个策略很高效，但是，MySQL on TerarkDB 默认使用的是 universal compaction，事情就比较麻烦了————
+对于 Level Compaction，这个策略很高效，但是，TerarkSQL 默认使用的是 universal compaction，事情就比较麻烦了————
 
 在 universal compaction 中，所有 Level 之间没有重叠的 seqnum（相当于数据插入的时间），从而，要保持这个不变式，就不能按 Key Range 去 Compact 不同 Level 中的数据，所以，在 CompactRange 的实现中，如果是 universal compaction，就忽略 Key Range，总是 compact 所有数据。
 
@@ -211,7 +211,7 @@ MySQL on TerarkDB 使用的索引算法与 MyRocks 不同，故 index_length 不
 
 #### 1.8 rocksdb.rocksdb
 
-MyRocks 对 universal compaction 支持不完善，在该模式下使用 MyRocks bulk load 模式时会发生死锁，MySQL on TerarkDB 不支持 MyRocks bulk load 模式，在使用中不能开启（`set rocksdb_bulk_load=1`）该模式。
+MyRocks 对 universal compaction 支持不完善，在该模式下使用 MyRocks bulk load 模式时会发生死锁，TerarkSQL 不支持 MyRocks bulk load 模式，在使用中不能开启（`set rocksdb_bulk_load=1`）该模式。
 
 #### 1.9 rocksdb.compact_deletes
 
@@ -237,7 +237,7 @@ true
 case when variable_value-@s = 0 then 'true' else 'false' end
 false
 ```
-singledelete 相关统计数据与 compact 次数相关，而 MySQL on TerarkDB 的 write_buffer_size 默认设置（1G）与该测试中 MyRocks 不一致，write_buffer_size 不同时触发的 compact 次数不同，从而导致相关统计数据不一致，手动设置为与测试中一致（64K）即可通过。
+singledelete 相关统计数据与 compact 次数相关，而 TerarkSQL 的 write_buffer_size 默认设置（1G）与该测试中 MyRocks 不一致，write_buffer_size 不同时触发的 compact 次数不同，从而导致相关统计数据不一致，手动设置为与测试中一致（64K）即可通过。
 
 #### 1.11 rocksdb.bulk_load_errors
 
@@ -246,15 +246,15 @@ singledelete 相关统计数据与 compact 次数相关，而 MySQL on TerarkDB 
 mysqltest: At line 27: query 'SET rocksdb_bulk_load=0' succeeded - should have failed with errno 2013...
 ```
 
-同 1.8，MySQL on TerarkDB 不支持 MyRocks bulk load 模式。
+同 1.8，TerarkSQL 不支持 MyRocks bulk load 模式。
 
 #### 1.12 rocksdb.compression_zstd
 
-MySQL on TerarkDB 不使用 zstd 压缩算法。
+TerarkSQL 不使用 zstd 压缩算法。
 
 #### 1.13 rocksdb.bulk_load_rev_data，rocksdb.bulk_load_rev_cf_and_data
 
-MySQL on TerarkDB 默认设置 `TerarkZipTable_target_file_size_base` 为系统内存的一半，但是 MyRocks 会使用该值的 3 倍来申请内存而引发  `bad_alloc` 异常。将其设置为较小的数值即可通过。
+TerarkSQL 默认设置 `TerarkZipTable_target_file_size_base` 为系统内存的一半，但是 MyRocks 会使用该值的 3 倍来申请内存而引发  `bad_alloc` 异常。将其设置为较小的数值即可通过。
 
 
 ### 2. rocksdb_sys_vars
@@ -281,7 +281,7 @@ ROCKSDB_SYSTEM_CF_BACKGROUND_FLUSH_INTERVAL
 ROCKSDB_SYSTEM_CF_BACKGROUND_FLUSH_INTERVAL
 ```
 
-因 MySQL on TerarkDB 有更多的背景线程用于 flush `__system__` cloumn famliy 以及时删除 WAL log 文件，故输出结果与预期不一致。
+因 TerarkSQL 有更多的背景线程用于 flush `__system__` cloumn famliy 以及时删除 WAL log 文件，故输出结果与预期不一致。
 
 #### 2.2 rocksdb_sys_vars.rocksdb_flush_memtable_on_analyze_basic
 
@@ -299,7 +299,7 @@ Name	Engine	Version	Row_format	Rows	Avg_row_length	Data_length	Max_data_length	I
 t1	ROCKSDB	10	Fixed	#	#	400	0	0	0	4	NULL	NULL	NULL	latin1_swedish_ci	NULL
 ```
 
-其中 Rows 为估计值，MySQL on TerarkDB 压缩算法与 MyRocks 不同，故结果不一致，不影响功能。
+其中 Rows 为估计值，TerarkSQL 压缩算法与 MyRocks 不同，故结果不一致，不影响功能。
 
 ### 3. rocksdb_hostbackup
 

@@ -16,7 +16,7 @@ TPC-C 是一个联机事物处理基准，tpcc-mysql 是 percona 基于 TPC-C �
 
 测试程序使用 [terark/tpcc-mysql](https://github.com/Terark/tpcc-mysql)，我们在原版 tpcc-mysql 的基础上添加了读取文本文件作为数据源的功能。
 
-测试的数据库有：[MySQL on TerarkDB](http://terark.com/docs/mysql-on-terarkdb-manual/zh-hans/installation.html) （下简称 TerarkDB），官方原版 MySQL（下简称 InnoDB）。MySQL 开启压缩。
+测试的数据库有：[TerarkSQL](http://terark.com/docs/mysql-on-terarkdb-manual/zh-hans/installation.html) （下简称 TerarkDB），官方原版 MySQL（下简称 InnoDB）。MySQL 开启压缩。
 
 ## 测试平台
 <table>

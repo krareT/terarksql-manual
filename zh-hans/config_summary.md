@@ -1,7 +1,7 @@
 ## 配置参数说明
 
 ### 1.简介
-MySQL on TerarkDB 的配置分为两部分：
+TerarkSQL 的配置分为两部分：
 - MySQL 自身的配置选项，依然通过 my.cnf 进行配置（包括 MyRocks 新支持的部分配置）
 - TerarkDB 相关的配置，均通过环境变量进行配置
 

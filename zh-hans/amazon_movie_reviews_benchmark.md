@@ -13,7 +13,7 @@
   - 5.4.数据远大于内存（内存 2GB）
 
 ### 1.前言
-[MySQL on TerarkDB](https://github.com/Terark/mysql-on-terarkdb) 是使用 [TerarkDB](https://github.com/Terark/terarkdb)(替换了 SSTable 的 RocksDB) 作为存储引擎的 MySQL。
+[TerarkSQL](https://github.com/Terark/mysql-on-terarkdb) 是使用 [TerarkDB](https://github.com/Terark/terarkdb)(替换了 SSTable 的 RocksDB) 作为存储引擎的 MySQL。
 
 [MyRocks](https://github.com/facebook/mysql-5.6) 是使用了 [RocksDB](https://github.com/facebook/rocksdb) 作为存储引擎的 MySQL，我们通过 MyRocks 将 TerarkDB 集成进入 MySQL。
 
@@ -30,7 +30,7 @@
 - 测试使用的引擎
   - MySQL + InnoDB，以下简称 InnoDB
   - [MySQL on RocksDB](https://github.com/facebook/mysql-5.6)，使用 RocksDB 作为存储引擎（即 MyRocks），以下简称 RocksDB
-  - [MySQL on TerarkDB](https://github.com/Terark/mysql-on-terarkdb)，使用 TerarkDB 作为存储引擎，以下简称 TerarkDB
+  - [TerarkSQL](https://github.com/Terark/mysql-on-terarkdb)，使用 TerarkDB 作为存储引擎，以下简称 TerarkDB
 - 读性能测试均是**均匀分布**与**齐普夫（Zipf）分布**测试
 - 这里记录了读测试 95/99 分位延迟数据
 

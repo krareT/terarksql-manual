@@ -1,5 +1,5 @@
 ## 简介
-sysbench 是一个模块化的、跨平台、多线程基准测试工具，主要用于评估测试各种不同系统参数下的数据库负载情况。本测试使用修改版的 sysbench 分别向官方原版 MySQL 和 MySQL on TerarkDB 导入 **38,508,221** 条 [wikipedia](https://dumps.wikimedia.org/backup-index.html) 文章数据，并测试在不同内存下两者的读写性能。
+sysbench 是一个模块化的、跨平台、多线程基准测试工具，主要用于评估测试各种不同系统参数下的数据库负载情况。本测试使用修改版的 sysbench 分别向官方原版 MySQL 和 TerarkSQL 导入 **38,508,221** 条 [wikipedia](https://dumps.wikimedia.org/backup-index.html) 文章数据，并测试在不同内存下两者的读写性能。
 
 非常值得注意的是，sysbench 测试中默认的数据分布是 `special`，表示热点非常集中的数据，从而**测试结果主要体现的是缓存的性能**。这就是为什么大家经常发现 sysbench 测试出来性能很高，一到生产环境，性能就跪了。
 
@@ -7,7 +7,7 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具，主�
 
 测试程序使用 [terark/sysbench 1.0.1](https://github.com/Terark/sysbench)，我们在原版 sysbench 的基础上添加了读取文本文件作为数据源的功能，以及一个次级索引范围查询测试。
 
-测试的数据库有：[MySQL on TerarkDB](http://terark.com/docs/mysql-on-terarkdb-manual/zh-hans/installation.html) （下简称 TerarkDB），官方原版 MySQL（下简称 InnoDB）。MySQL 开启压缩。
+测试的数据库有：[TerarkSQL](http://terark.com/docs/mysql-on-terarkdb-manual/zh-hans/installation.html) （下简称 TerarkDB），官方原版 MySQL（下简称 InnoDB）。MySQL 开启压缩。
 
 ## 测试平台
 <table>

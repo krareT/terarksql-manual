@@ -1,8 +1,8 @@
 ## 使用 YCSB 进行测试
 
-### 1. 安装并运行 MySQL on TerarkDB
+### 1. 安装并运行 TerarkSQL
 
-请先到官网下载并安装 MySQL on TerarkDB
+请先到官网下载并安装 TerarkSQL
 
 测试时所使用的配置如下：(MyRocks 部分设置使用官方[推荐配置](https://github.com/facebook/mysql-5.6/wiki/my.cnf-tuning))
 ```ini

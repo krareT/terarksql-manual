@@ -1,11 +1,11 @@
 # 常见问题
-## MySQL on TerarkDB 在什么场景下最适用?
-MySQL on TerarkDB 在大多数场景下都很出色，尤其在随机读非常多，并且文本数据较多的场景下表现最为出众。
+## TerarkSQL 在什么场景下最适用?
+TerarkSQL 在大多数场景下都很出色，尤其在随机读非常多，并且文本数据较多的场景下表现最为出众。
 
 ## MySQL on TearkDB 和原生的 MySQL 兼容性如何?
-MySQL on TerarkDB 使用 [MyRocks](https://github.com/facebook/mysql-5.6/wiki/) 作为 TerarkDB 和 MySQL 的适配层.
+TerarkSQL 使用 [MyRocks](https://github.com/facebook/mysql-5.6/wiki/) 作为 TerarkDB 和 MySQL 的适配层.
 
-MySQL on TerarkDB 支持所有 MyRocks 有的特性, 当然，MyRocks 对于部分 MySQL 特性还未支持（因此 MySQL on TerarkDB 也暂时不支持）
+TerarkSQL 支持所有 MyRocks 有的特性, 当然，MyRocks 对于部分 MySQL 特性还未支持（因此 TerarkSQL 也暂时不支持）
 
 具体的功能限制可以参考：[MyRocks Limits](https://github.com/facebook/mysql-5.6/wiki/MyRocks-limitations)
 
@@ -22,7 +22,7 @@ set global rocksdb_compact_cf = '__system__';
 
 ## 如何通过 `load data infile` 快速加载巨大的数据文件?
 
-由于 MySQL on TerarkDB 基于 MyRocks 开发, 而 MyRocks 主要针对较小的事务进行了优化，所以对于较大的数据集加载需要一些特殊操作：
+由于 TerarkSQL 基于 MyRocks 开发, 而 MyRocks 主要针对较小的事务进行了优化，所以对于较大的数据集加载需要一些特殊操作：
 
 MyRocks 通过一些环境变量来加速大数据集的加载，详情可以参考 [MyRocks Data Loading Details](https://github.com/facebook/mysql-5.6/wiki/data-loading).
 

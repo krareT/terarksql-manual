@@ -2,7 +2,7 @@
 
 ## 总结
 
-MySQL on TerarkDB 使用了 MyRocks 适配层，除了部分功能不同于 MyRocks 之外，我们和 MySQL 的兼容性和 MyRocks 对 MySQL 的兼容性一致。
+TerarkSQL 使用了 MyRocks 适配层，除了部分功能不同于 MyRocks 之外，我们和 MySQL 的兼容性和 MyRocks 对 MySQL 的兼容性一致。
 
 由于兼容性测试非常复杂，我们会逐步补充相关的兼容性总结并更新：
 
