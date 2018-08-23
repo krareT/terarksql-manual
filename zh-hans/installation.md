@@ -1,14 +1,12 @@
 ## 安装部署
 
 ### 1.环境要求
-
+Linux 操作系统
 
 ### 2.下载安装包
-- 进入 [Terark.com](http://terark.com)，选择 MySQL on TerarkDB
-- 点击"下载"，进入下载页面
-- 填写表单即可获取最新的下载链接，如果在下载页面没有看到适合您平台的安装包（可通过文件名识别），请联系我们进一步支持
+- [填写表单]((http://terark.com/zh/download/mysql_rocksdb/latest))即可获得最新的下载链接
   - 目前我们仅提供 Linux 环境下，64 位操作系统的安装版本
-  - 文件名中的 `bmi2-0` 表示不支持 `bmi2` CPU 指令，`bmi2-1` 表示支持 `bmi2` CPU 指令, 您可以通过`cat /proc/cpuinfo  | grep bmi2` 查看您的 CPU 是否支持 `bmi2`
+  - 文件名中的 `bmi2-0` 表示不支持 `bmi2` CPU 指令，`bmi2-1` 表示支持 `bmi2` CPU 指令(使用`cat /proc/cpuinfo  | grep bmi2` 可以查看 CPU 是否支持 `bmi2`)
 
 ### 3.安装
 目前我们提供针对不同平台打包好的压缩包，您可以在下载后解压到任意目录即可直接使用
