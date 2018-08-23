@@ -4,7 +4,7 @@
 ### 1.说明
 下表中所有的环境变量均需要在使用时添加前缀 `TerarkZipTable_`，如对于 `localTempDir` 变量，您需要设置的环境变量是`TerarkZipTable_localTempDir`.
 
-这些环境变量中，只有 TerarkZipTable_localTempDir 是必须的，其他的环境变量可以留空使用默认值即可.
+这些环境变量中，只有 `TerarkZipTable_localTempDir` 是必须的，其他的环境变量都可以留空使用默认值.
 
 ### 2.参数表
 

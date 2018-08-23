@@ -7,7 +7,7 @@ MySQL on TerarkDB 的配置分为两部分：
 
 由于 `Terark RocksDB` 和官方的 RocksDB 是二进制兼容的，您并不需要重新编译自己的应用层代码
 
-**Note:** `官方的 RocksDB` 不同版本有可能互不兼容，目前我们经过测试兼容 [rocksdb 5.3.fb](https://github.com/facebook/rocksdb/tree/5.3.fb)
+**Note:** `官方的 RocksDB` 不同版本的动态库一般互不兼容，目前我们兼容的版本是 [release v5.9.2](https://github.com/facebook/rocksdb/releases/tag/v5.9.2)，只要使用的是这个官方版，就可以使用 TerarkDB 的动态库直接替换。
 
 ### 2.使用方法
 
@@ -21,7 +21,6 @@ export LD_LIBRARY_PATH=terark-zip-rocksdb-XXX/lib:$LD_LIBRARY_PATH
 env LD_PRELOAD=libterark-zip-rocksdb-r.so \
     TerarkZipTable_localTempDir=/path/to/some/temp/dir \
     TerarkZipTable_indexNestLevel=2 \
-    TerarkZipTable_indexCacheRatio=0.005 \
     TerarkZipTable_smallTaskMemory=1G \
     TerarkZipTable_softZipWorkingMemLimit=16G \
     TerarkZipTable_hardZipWorkingMemLimit=32G \

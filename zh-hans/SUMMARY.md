@@ -1,12 +1,10 @@
 # 目录
 
 - [产品介绍](README.md)
-- [安装部署](installation.md)
-- [配置参数说明](config_summary.md)
-    * [数据导入配置](config_data_loading.md)
-    * [日常使用配置](config_read_write.md)
-    * [完整配置项](full_config_options.md)
-    * [my.cnf](my_cnf.md)
+- [安装](installation.md)
+- [配置](config_summary.md)
+    * [start.sh](config_read_write.md)
+    * [所有配置](full_config_options.md)
 - [性能测试报告](benchmarks.md)
     * [Amazon Movie Reviews 测试](amazon_movie_reviews_benchmark.md)
     * [MySQL Sysbench 测试](benchmark_sysbench.md)
