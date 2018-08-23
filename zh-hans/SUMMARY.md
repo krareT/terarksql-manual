@@ -1,7 +1,7 @@
 # 目录
 
 - [产品介绍](README.md)
-- [安装](installation.md)
+- [安装 & 快速开始](installation.md)
 - [配置](config_summary.md)
     * [start.sh](config_read_write.md)
     * [所有配置](full_config_options.md)
