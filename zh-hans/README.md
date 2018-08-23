@@ -1,13 +1,13 @@
-## TerarkSQL(原 MySQL on TerarkDB) 使用手册
+## TerarkSQL 使用手册
 
 ### 1.产品简介
 
-MySQL on TerarkDB 是一款依托于 Terark(terark.com) 公司研发的 TerarkDB 存储引擎实现的 MySQL 修改版，该产品目前对于非商业用途完全免费。
+TerarkSQL 是一款依托于 Terark(terark.com) 公司研发的 TerarkDB 存储引擎实现的 MySQL 修改版，该产品目前对于非商业用途完全免费。
 
-MySQL on TerarkDB 由 TerarkDB 存储引擎和 MyRocks 组成：
+TerarkSQL 由 TerarkDB 存储引擎和 MyRocks 组成：
 
-- TerarkDB 使用了 RocksDB 的上层框架，我们实际上实现了一个 RocksDB 的 `SSTable` 并且命名为 `TerarkZipTable`. 基于上面的环境变量，我们可以让 RocksDB 使用我们的 SSTable. 我们所有的算法均封装在 `TerarkZipTable ` 并且不影响现有的 `SSTable`, 也就是说您可以不启动我们版本的 SSTable，继续使用默认版本。
-- MyRocks 是 Facebook 发布并在使用的 MySQL 修改版，它使用了 RocksDB 作为存储引擎，所以自然我们也可以通过它将 TerarkDB 嵌入 MySQL
+- **TerarkDB** 使用 RocksDB 的上层框架，在底层实现了一个的 `SSTable`，从而，TerarkDB 完全兼容 RocksDB API，应用程序甚至无需重新编译，只需要替换 RocksDB 的动态库(`librocksdb.so`) 即可，并且，原有的 RocksDB 数据可以透明地迁移到 TerarkDB。
+- **MyRocks** 是 Facebook 发布并在使用的 MySQL 修改版，它使用了 RocksDB 作为存储引擎，所以自然我们也可以通过它将 TerarkDB 嵌入 MySQL。
 
 ### 2.产品优势
 - 更好的压缩率，通常可以比使用了 InnoDB/RocksDB 存储引擎的 MySQL 节省至少一倍的存储空间
