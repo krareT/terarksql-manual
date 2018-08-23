@@ -19,4 +19,4 @@ datadir : 数据文件存储路径
 log-bin : log 存储路径
 pid-file : 进程 pid 文件存放位置
 ```
-运行安装目录下的 `start.sh` 即可。
+然后运行安装目录下的 `start.sh` 即可。
