@@ -1,7 +1,5 @@
 ### 1.下载安装包
-[填写表单](http://terark.com/zh/download/mysql_rocksdb/latest)即可获得最新的下载链接
-
-下载后解压到任意目录即可直接使用
+[填写表单](http://terark.com/zh/download/mysql_rocksdb/latest)即可获得最新的下载链接，下载后解压到任意目录即可直接使用
 
 ### 2. 添加 mysql 用户
 
