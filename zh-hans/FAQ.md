@@ -49,7 +49,7 @@ MyRocks 对这两个选项的说明如下：
 rocksdb_flush_log_at_trx_commit=2
 rocksdb_background_sync=ON
 ```
-这样 MySQL-on-TerarkDB 会在后台**每秒同步一次 WAL 文件**，此时若发生 crash 将可能会丢失一秒的数据。
+这样 TerarkSQL 会在后台**每秒同步一次 WAL 文件**，此时若发生 crash 将可能会丢失一秒的数据。
 
 在 `my.cnf` 中添加如下设置时
 ```

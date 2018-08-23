@@ -46,7 +46,7 @@ CREATE TABLE `lineitem` (
 
 - 原生 MySQL : 使用 InnoDB 为存储引擎，下记为 innodb；
 - 原生 MyRocks: 使用 RocksDB 为存储引擎，下记为 rocksdb；
-- MySQL-on-TerarkDB：使用 TerarkDB 为存储引擎，下记为 terarkdb。
+- TerarkSQL：使用 TerarkDB 为存储引擎，下记为 terarkdb。
 
 各个主、从数据库配置见附录 3 。
 

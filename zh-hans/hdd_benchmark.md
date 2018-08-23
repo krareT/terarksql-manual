@@ -48,10 +48,10 @@ OS: CentOS 7
 
 参数 fsync 开启，则每次写操作都会落盘，此时机械硬盘的性能极大的影响了数据库的写入性能。对比第三、四行，此时性能落差有2个数量级之大。
 
-故在机械硬盘上使用 MySQL-on-TerarkDB 时，建议关闭 fsync， 即将
+故在机械硬盘上使用 TerarkSQL 时，建议关闭 fsync， 即将
 ```rocksdb_flush_log_at_trx_commit``` 设为 2、 ```rocksdb_background_sync``` 设为 ON（具体选项说明见 1.2.1），这样能极大的提升性能（但因为持久化的间隔变为每秒一次，所以在断电等意外情况发生时最近一秒钟的数据可能会丢失）。
 
-在默认开启 fsync 的写测试中，因写入速度太慢，仅插入了一小部分数据，此时并不会引发 compact，这时无论 TerarkDB 临时目录是否和 MySQL-on-TerarkDB 在同一个磁盘，对性能都不会有影响。
+在默认开启 fsync 的写测试中，因写入速度太慢，仅插入了一小部分数据，此时并不会引发 compact，这时无论 TerarkDB 临时目录是否和 TerarkSQL 在同一个磁盘，对性能都不会有影响。
 
 在随机读测试中，八个线程时，磁盘 IO 已经基本被占满，磁盘的性能成为瓶颈，这时即使使用 16 个线程性能也没有多大提升。读写混合测试时，若默认开启 fsync，写性能过低而导致整体 ops 不高，读写比例越高则读写混合 ops 越低。关闭 fsync 后，写性能大大提高，读写比例的提高也不会导致读写混合的 ops 迅速下降。
 
@@ -82,7 +82,7 @@ db.passwd=
 mysql.upsert=true
 ```
 
-MySQL-on-TerarkDB 配置文件如下：
+TerarkSQL 配置文件如下：
 ```bash
 [mysqld]
 rocksdb
@@ -167,7 +167,7 @@ TerarkZipTable_indexCacheRatio=0.001
 
 ##### 3.2.2. 开启 write ahread log
 
-wikipedia 数据经过压缩后大大小为 22G。为了测试 MySQL-on-TerarkDB 在机械硬盘上的实际读写性能，这里使用 cgroup 将其能使用内存限制为 16G，此时设置 ```TerarkZipTable_softZipWorkingMemLimit``` 为 2G、```TerarkZipTable_hardZipWorkingMemLimit``` 为 4G。
+wikipedia 数据经过压缩后大大小为 22G。为了测试 TerarkSQL 在机械硬盘上的实际读写性能，这里使用 cgroup 将其能使用内存限制为 16G，此时设置 ```TerarkZipTable_softZipWorkingMemLimit``` 为 2G、```TerarkZipTable_hardZipWorkingMemLimit``` 为 4G。
 
 ###### 3.2.2.1. 开启 fsync，TerarkDB 的临时目录和数据库在同一个机械硬盘中
 
