@@ -12,7 +12,7 @@
     * [memtable 对比测试](benchmark_memtable.md)
     * [机械硬盘](hdd_benchmark.md)
 - [常见测试工具](benchmark_tools.md)
-    * [使用 YCSB 进行测试](benchmark_tool_ycsb.md)
+    * [YCSB](benchmark_tool_ycsb.md)
 - [兼容性](compatibility.md)
     * [对比 MyRocks 的兼容性](compatibility_myrocks_v2.md)
     * [对比 MySQL 的兼容性](compatibility_mysql.md)
