@@ -15,7 +15,6 @@ MySQL on TerarkDB 由 TerarkDB 存储引擎和 MyRocks 组成：
 
 
 ### 3.注意事项
-#### 3.1.MyRocks
 - MyRocks 基于 MySQL-5.6，同时也 Back port 了部分 MySQL-5.7 特有的功能
 - MyRocks 功能上相对原生 MySQL-5.6 有一些限制：[MyRocks-limitations](https://github.com/facebook/mysql-5.6/wiki/MyRocks-limitations)
 
