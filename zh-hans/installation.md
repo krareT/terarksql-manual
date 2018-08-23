@@ -39,5 +39,3 @@ sudo ./start.sh
 
 - **TerarkDB** 相关的参数是通过环境变量设置的，我们通常在 start.sh 里设置，完整的参数说明在[这里](http://terark.com/docs/terarksql-manual/zh-hans/full_config_options.html)
 - **MyRocks** 相关的参数通过 my.cnf 配置文件设置，具体的说明在[这里](https://github.com/facebook/mysql-5.6/wiki/New-MySQL-RocksDB-Server-Variables)
-
-然后运行安装目录下的 `start.sh` 即可。
