@@ -236,7 +236,7 @@ TerarkSQL 使用的索引算法与 MyRocks 不同，故 index_length 不同。
 TerarkSQL 增加了一个后台线程用于定时 compact ```__system__``` column family，故统计信息中会多出这个线程的信息，这与预期结果不一致。错误信息如下：
 
 ```
---- /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/suite/rocksdb/r/rocksdb.result        2018-01-02 14:11:45.000000000 +0300
+--- /newssd1/temp/terarksql-4.8-bmi2-0/mysql-test/suite/rocksdb/r/rocksdb.result        2018-01-02 14:11:45.000000000 +0300
 +++ /oldssd2/tempvar/1/log/rocksdb.reject       2018-01-10 16:09:18.590916677 +0300
 @@ -956,6 +956,7 @@
  rocksdb_store_row_debug_checksums      OFF
@@ -311,7 +311,7 @@ t1     ROCKSDB 10      Fixed   4910123 #       #       #       #       0       N
 
 测试输出如下：
 ```
---- /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/suite/rocksdb/r/bulk_load_rev_cf_and_data.result      2018-01-02 14:11:45.000000000 +0300
+--- /newssd1/temp/terarksql-4.8-bmi2-0/mysql-test/suite/rocksdb/r/bulk_load_rev_cf_and_data.result      2018-01-02 14:11:45.000000000 +0300
 +++ /oldssd2/tempvar/3/log/bulk_load_rev_cf_and_data.reject     2018-01-23 12:13:48.943023180 +0300
 @@ -36,7 +36,7 @@
  set rocksdb_bulk_load=0;
@@ -341,7 +341,7 @@ At line 37: Can't initialize replace from 'replace_result $NP_EXAMPLE_LIB NP_EXA
 TerarkSQL 为针对自身特点，使用了不同于原版 MyRocks 的默认 cf options，故与测试预期结果不符合。其错误信息如下：
 
 ```
---- /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/suite/rocksdb/r/rocksdb_cf_options.result     2017-06-08 06:26:45.000000000 +0300
+--- /newssd1/temp/terarksql-4.8-bmi2-0/mysql-test/suite/rocksdb/r/rocksdb_cf_options.result     2017-06-08 06:26:45.000000000 +0300
 +++ /oldssd2/tempvar/1/log/rocksdb_cf_options.reject    2018-01-10 16:12:53.374043657 +0300
 @@ -17,21 +17,21 @@
  'MAX_BYTES_FOR_LEVEL_MULTIPLIER')
@@ -386,7 +386,7 @@ TerarkSQL 为针对自身特点，使用了不同于原版 MyRocks 的默认 cf 
 错误信息类似如下：
 
 ```
---- /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/suite/rocksdb/r/records_in_range.result       2017-06-08 06:26:45.000000000 +0300
+--- /newssd1/temp/terarksql-4.8-bmi2-0/mysql-test/suite/rocksdb/r/records_in_range.result       2017-06-08 06:26:45.000000000 +0300
 +++ /oldssd2/tempvar/6/log/records_in_range.reject      2018-01-23 11:39:56.283711337 +0300
 @@ -56,7 +56,7 @@
  Note   1003    /* select#1 */ select `test`.`t1`.`a` AS `a` from `test`.`t1` where (`test`.`t1`.`a` < 750)
@@ -410,7 +410,7 @@ TerarkSQL 为针对自身特点，使用了不同于原版 MyRocks 的默认 cf 
 错误信息如下：
 
 ```
---- /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/suite/rocksdb/r/statistics.result     2017-06-08 06:26:45.000000000 +0300
+--- /newssd1/temp/terarksql-4.8-bmi2-0/mysql-test/suite/rocksdb/r/statistics.result     2017-06-08 06:26:45.000000000 +0300
 +++ /oldssd2/tempvar/4/log/statistics.reject    2018-01-23 11:42:12.405805520 +0300
 @@ -21,8 +21,8 @@
  ) engine=rocksdb;
@@ -434,7 +434,7 @@ tables_rows 估计值，同 1.5。
 错误信息类似如下：
 
 ```
---- /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/suite/rocksdb/r/issue255.result       2018-01-02 14:11:45.000000000 +0300
+--- /newssd1/temp/terarksql-4.8-bmi2-0/mysql-test/suite/rocksdb/r/issue255.result       2018-01-02 14:11:45.000000000 +0300
 +++ /oldssd2/tempvar/5/log/issue255.reject      2018-01-23 11:50:13.060075980 +0300
 @@ -2,7 +2,7 @@
  INSERT INTO t1 VALUES (5);
@@ -523,7 +523,7 @@ MyRocks 版本更新，参数 ```ROCKSDB_MAX_BACKGROUND_COMPACTIONS``` 被移除
 错误信息如下：
 
 ```
---- /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/suite/rocksdb_sys_vars/r/rocksdb_update_cf_options_basic.result       2017-06-08 06:26:45.000000000 +0300
+--- /newssd1/temp/terarksql-4.8-bmi2-0/mysql-test/suite/rocksdb_sys_vars/r/rocksdb_update_cf_options_basic.result       2017-06-08 06:26:45.000000000 +0300
 +++ /oldssd2/tempvar/1/log/rocksdb_update_cf_options_basic.reject       2018-01-05 19:56:00.905260769 +0300
 @@ -38,10 +38,10 @@
  NULL
@@ -548,7 +548,7 @@ MyRocks 版本更新，参数 ```ROCKSDB_MAX_BACKGROUND_COMPACTIONS``` 被移除
 
 错误信息：
 ```
-mysqltest: Could not open connection 'default' after 500 attempts: 2002 Can't connect to local MySQL server through socket '/newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/var/tmp/1/mysqld.2.sock' (2)
+mysqltest: Could not open connection 'default' after 500 attempts: 2002 Can't connect to local MySQL server through socket '/newssd1/temp/terarksql-4.8-bmi2-0/mysql-test/var/tmp/1/mysqld.2.sock' (2)
 ```
 
 测试中第二个实例不能启动，导致测试超时，测试程序有误，原版 MyRocks 也不能通过。

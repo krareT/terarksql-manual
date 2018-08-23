@@ -99,14 +99,14 @@ port = 3306
 back_log = 600
 max_connections = 6000
 
-basedir = /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0
-log_error        = /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/log/mysql_error.log
-#general_log_file = /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/log/mysql.log
+basedir = /newssd1/temp/terarksql-4.8-bmi2-0
+log_error        = /newssd1/temp/terarksql-4.8-bmi2-0/log/mysql_error.log
+#general_log_file = /newssd1/temp/terarksql-4.8-bmi2-0/log/mysql.log
 #general_log      = 1
 
-datadir = /disk2/mysql-on-terarkdb-data
-#datadir = /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/data
-#log-bin = /newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/log/mysql-bin.log
+datadir = /disk2/terarksql-data
+#datadir = /newssd1/temp/terarksql-4.8-bmi2-0/data
+#log-bin = /newssd1/temp/terarksql-4.8-bmi2-0/log/mysql-bin.log
 
 binlog-format=ROW
 secure_file_priv=""

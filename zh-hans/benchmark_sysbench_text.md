@@ -7,7 +7,7 @@ sysbench 是一个模块化的、跨平台、多线程基准测试工具，主�
 
 测试程序使用 [terark/sysbench 1.0.1](https://github.com/Terark/sysbench)，我们在原版 sysbench 的基础上添加了读取文本文件作为数据源的功能，以及一个次级索引范围查询测试。
 
-测试的数据库有：[TerarkSQL](http://terark.com/docs/mysql-on-terarkdb-manual/zh-hans/installation.html) （下简称 TerarkDB），官方原版 MySQL（下简称 InnoDB）。MySQL 开启压缩。
+测试的数据库有：[TerarkSQL](http://terark.com/docs/terarksql-manual/zh-hans/installation.html) （下简称 TerarkDB），官方原版 MySQL（下简称 InnoDB）。MySQL 开启压缩。
 
 ## 测试平台
 <table>

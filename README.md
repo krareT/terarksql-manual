@@ -3,8 +3,8 @@
 该仓库是用来生成 gitbook 文档用的，请严格按照以下说明来添加资料
 
 - Gitbook 访问地址(会自动发布)
-  - [中文版](https://terark.gitbooks.io/mysql-on-terarkdb-manual/zh-hans/)
-  - [英文版](https://terark.gitbooks.io/mysql-on-terarkdb-manual/en) 正在编辑中……
+  - [中文版](https://terark.gitbooks.io/terarksql-manual/zh-hans/)
+  - [英文版](https://terark.gitbooks.io/terarksql-manual/en) 正在编辑中……
 - Terark 官网访问地址（会自动发布）
   - [中文版](http://terark.com/docs/terarksql-manual/zh-hans)
   - [英文版](http://terark.com/docs/terarksql-manual/en)

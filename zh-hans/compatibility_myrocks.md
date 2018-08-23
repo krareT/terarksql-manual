@@ -307,7 +307,7 @@ t1	ROCKSDB	10	Fixed	#	#	400	0	0	0	4	NULL	NULL	NULL	latin1_swedish_ci	NULL
 
 错误信息：
 ```
-mysqltest: Could not open connection 'default' after 500 attempts: 2002 Can't connect to local MySQL server through socket '/newssd1/temp/mysql-on-terarkdb-4.8-bmi2-0/mysql-test/var/tmp/1/mysqld.2.sock' (2)
+mysqltest: Could not open connection 'default' after 500 attempts: 2002 Can't connect to local MySQL server through socket '/newssd1/temp/terarksql-4.8-bmi2-0/mysql-test/var/tmp/1/mysqld.2.sock' (2)
 ```
 
 测试中第二个实例不能启动，导致测试超时，原版 MyRocks 也不能通过。
