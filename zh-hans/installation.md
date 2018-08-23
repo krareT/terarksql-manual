@@ -11,12 +11,33 @@ Linux 操作系统
 
 ### 4.启动
 
-在启动之前，请修改 MySQL 目录下的 `my.cnf` 配置文件，将以下几个参数，修改为你的 MySQL 安装路径或者其他对应的路径：
+#### 4.1. 添加 mysql 用户
 
 ```
-basedir : MySQL 的安装路径
-datadir : 数据文件存储路径
-log-bin : log 存储路径
-pid-file : 进程 pid 文件存放位置
+sudo groupadd mysql
+sudo useradd -g mysql mysql
 ```
+
+#### 4.2. 初始化
+
+```
+tar Jxvf terarksql-Linux-x86_64-g++-4.8-bmi2-0.tar.xz
+cd terarksql-4.8-bmi2-0/
+sudo ./init.sh prepare /path/to/datadir
+sudo ./init.sh init
+```
+
+#### 4.3. 启动
+
+```
+sudo ./start.sh
+```
+注：数据库一定要通过 **start.sh** 来启动！
+
+
+#### 4.4. 参数说明
+
+- **TerarkDB** 相关的参数是通过环境变量设置的，我们通常在 start.sh 里设置，完整的参数说明在[这里](http://terark.com/docs/terarksql-manual/zh-hans/full_config_options.html)
+- **MyRocks** 相关的参数通过 my.cnf 配置文件设置，具体的说明在[这里](https://github.com/facebook/mysql-5.6/wiki/New-MySQL-RocksDB-Server-Variables)
+
 然后运行安装目录下的 `start.sh` 即可。
