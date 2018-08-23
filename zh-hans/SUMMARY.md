@@ -26,8 +26,4 @@
       * [innodb 特有表](compatibility_mysql_schema_innodb.md)
       * [rocksdb 特有表](compatibility_mysql_schema_rocksdb.md)
 - [主从同步测试](replication.md)
-- 技术背景
-    * 系统架构
-    * RocksDB 简介
-    * MyRocks 简介
 - [FAQ](FAQ.md)
