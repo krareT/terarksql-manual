@@ -5,3 +5,7 @@
 .navigation {
   display: none!important;
 }
+
+.book-header h1 {
+  opacity: 0!important;
+}
