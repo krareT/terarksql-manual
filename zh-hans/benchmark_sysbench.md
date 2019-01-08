@@ -206,6 +206,7 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 读写混合测试，除上述主键等值查询外，还会随机生成一个 ID，然后更新主键与该 ID 相等的记录的 c 值。测试的每个 transaction 包含 90 个主键等值查询 query，和 10 个非主键更新 query，故每个 transaction 会访问 100 行数据，并更新 10 行数据。
 
 - 示例 SQL：
+
 ```
 select c from sbtest1 where id = ID;
 
@@ -213,6 +214,7 @@ update sbtest1 set c = C where id = ID;
 ```
 
 - sysbench 命令
+
 ```
 sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
          --mysql-user=root --mysql-db=sysbench --mysql-host=127.0.0.1 \
