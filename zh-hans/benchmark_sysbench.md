@@ -209,11 +209,14 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 - 示例 SQL：
 
-```
-select c from sbtest1 where id = ID;
 
-update sbtest1 set c = C where id = ID;
+
 ```
+    select c from sbtest1 where id = ID;
+    
+    update sbtest1 set c = C where id = ID;
+```
+
 
 - sysbench 命令
 
@@ -236,11 +239,15 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 
 - 示例 SQL：
 
+
+
 ```
-select id, k, c, pad from sbtest1 where k in (k1, k2, k3, ..., k100);
+    select id, k, c, pad from sbtest1 where k in (k1, k2, k3, ..., k100);
 ```
 
+
 - sysbench 命令
+
 
 ```
 sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
