@@ -185,11 +185,13 @@ TerarkDB 的**读写混合**性能高于 InnoDB，是因为 TerarkDB 通过 Rock
 主键等值查询，测试程序每次随机生成一个 ID 值，然后查询主键与之相等的记录。测试的每个 transaction 里包含 100 个主键等值查询 query，故每个 transaction 会访问 100 行数据。
 
 - 示例 SQL：
+
 ```
 select c from sbtest1 where id = ID;
 ```
 
 - sysbench 命令
+
 ```
 sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
          --mysql-user=root --mysql-db=sysbench --mysql-host=127.0.0.1 \
@@ -233,11 +235,13 @@ sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
 测试的每个 transaction 包含一个 Query，每个 Query 对次级索引进行 100 次随机搜索，每次都需要进行回表操作（先从次级键拿到主键，再用主键取数据），从而每个 transaction 需要对存储引擎进行 200 次随机访问。
 
 - 示例 SQL：
+
 ```
 select id, k, c, pad from sbtest1 where k in (k1, k2, k3, ..., k100);
 ```
 
 - sysbench 命令
+
 ```
 sysbench --time=900 --report-interval=1 --db-driver=mysql --mysql-port=3306 \
          --mysql-user=root --mysql-db=sysbench --mysql-host=127.0.0.1 \
