@@ -105,6 +105,7 @@ db.passwd=
 datafile=/path/to/movies_flat.txt
 
 fieldnames=productproductId,reviewuserId,reviewprofileName,reviewhelpfulness,reviewscore,reviewtime,reviewsummary,reviewtext
+fieldnum=8
 delimiter=\t
 usecustomkey=flase
 
