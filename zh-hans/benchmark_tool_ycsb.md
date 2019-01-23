@@ -73,7 +73,7 @@ movies_flat.txt 即为转换后的行文本文件
 
 ### 4. 获取并编译 Terark 修改版的 YCSB
 ```bash
-git clone git@github.com:Terark/YCSB.git
+git clone https://github.com/Terark/YCSB.git
 cd YCSB
 checkout dev
 mvn clean package
